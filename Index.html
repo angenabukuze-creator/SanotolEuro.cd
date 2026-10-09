@@ -1,1 +1,236 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SanotolEuro</title>
+<style>
+:root{--green:#087b45;--light:#eaf8ef;--gold:#f4c542}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#222;padding-bottom:75px}
+header{background:var(--green);color:white;padding:20px 15px;text-align:center}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0;font-size:14px}
+nav{display:flex;justify-content:space-around;background:white;padding:12px 3px;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px #ddd}
+nav button{border:0;background:white;color:var(--green);font-weight:bold;font-size:12px}
+main{max-width:650px;margin:auto;padding:14px}
+.hero{background:linear-gradient(135deg,#087b45,#21a366);color:white;padding:22px;border-radius:14px}
+.hero h2{margin-top:0}
+.btn{display:inline-block;background:var(--gold);color:#222;border:0;padding:12px 15px;border-radius:8px;font-weight:bold;text-decoration:none;cursor:pointer;margin:4px 0}
+.btn-green{background:var(--green);color:white}
+.btn-outline{background:white;color:var(--green);border:1px solid var(--green)}
+.section{background:white;padding:16px;border-radius:12px;margin:14px 0;box-shadow:0 2px 7px #0000000b}
+input{width:100%;padding:13px;margin:7px 0;border:1px solid #ccc;border-radius:8px;font-size:16px}
+.product{border:1px solid #e0e8e2;border-radius:12px;margin:12px 0;overflow:hidden;background:white}
+.product-top{background:var(--light);padding:14px;display:flex;justify-content:space-between;align-items:center}
+.product-body{padding:14px}
+.price{color:var(--green);font-size:21px;font-weight:bold}
+.small{font-size:13px;color:#666}
+.hidden{display:none!important}
+.notice{background:#fff7dc;border-left:4px solid var(--gold);padding:12px;border-radius:5px;font-size:14px}
+footer{text-align:center;padding:20px;color:#777;font-size:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🧼 SanotolEuro</h1>
+  <p>Hygiène, santé et produits essentiels en RDC</p>
+</header>
+
+<nav>
+  <button onclick="showPage('accueil')">Accueil</button>
+  <button onclick="showPage('produits')">Produits</button>
+  <button onclick="showPage('inscription')">Inscription</button>
+  <button onclick="showPage('compte')">Mon compte</button>
+</nav>
+
+<main>
+<section id="accueil">
+  <div class="hero">
+    <h2>Bienvenue chez SanotolEuro</h2>
+    <p>Découvrez notre catalogue de savons, savons liquides, désinfectants, blouses médicales et produits de santé.</p>
+    <p>Notre objectif est de faciliter l'accès aux produits essentiels en République démocratique du Congo.</p>
+    <button class="btn" onclick="showPage('produits')">Découvrir les produits</button>
+    <button class="btn btn-outline" onclick="showPage('inscription')">Créer un compte</button>
+  </div>
+
+  <div class="section">
+    <h3>🤝 Rejoignez notre communauté</h3>
+    <p>Retrouvez nos annonces et demandez de l'aide à notre équipe.</p>
+    <!-- Remplacez les liens # par vos vrais liens WhatsApp et Telegram -->
+    <a class="btn btn-green" href="#" onclick="contactPlaceholder(event,'WhatsApp')">Groupe WhatsApp</a>
+    <a class="btn btn-green" href="#" onclick="contactPlaceholder(event,'Telegram')">Groupe Telegram</a>
+    <a class="btn" href="#" onclick="contactPlaceholder(event,'service client')">Service client</a>
+  </div>
+
+  <div class="section">
+    <h3>Pourquoi SanotolEuro ?</h3>
+    <p>✓ Catalogue de produits essentiels</p>
+    <p>✓ Informations claires sur les prix</p>
+    <p>✓ Assistance aux clients</p>
+    <p>✓ Service destiné au marché congolais</p>
+  </div>
+</section>
+
+<section id="produits" class="hidden">
+  <h2>Notre catalogue</h2>
+  <p class="small">Les prix ci-dessous sont des exemples de présentation à confirmer avant la mise en vente.</p>
+
+  <div class="product">
+    <div class="product-top"><strong>🧼 Pack découverte</strong><span>Essai</span></div>
+    <div class="product-body">
+      <p>Savon et produits d'hygiène.</p>
+      <div class="price">15 000 FC</div>
+      <p class="small">Prix indicatif du pack. Confirmez le contenu et le prix réel avant publication.</p>
+      <button class="btn btn-green" onclick="chooseProduct('Pack découverte',15000)">Demander ce produit</button>
+    </div>
+  </div>
+
+  <div class="product">
+    <div class="product-top"><strong>🧴 Savon liquide</strong><span>Hygiène</span></div>
+    <div class="product-body">
+      <p>Produit de nettoyage pour la maison.</p>
+      <div class="price">Prix à confirmer</div>
+      <button class="btn btn-green" onclick="chooseProduct('Savon liquide',0)">Demander ce produit</button>
+    </div>
+  </div>
+
+  <div class="product">
+    <div class="product-top"><strong>🧽 Désinfectant</strong><span>Hygiène</span></div>
+    <div class="product-body">
+      <p>Produit d'hygiène à utiliser selon les instructions figurant sur l'étiquette.</p>
+      <div class="price">Prix à confirmer</div>
+      <button class="btn btn-green" onclick="chooseProduct('Désinfectant',0)">Demander ce produit</button>
+    </div>
+  </div>
+
+  <div class="product">
+    <div class="product-top"><strong>🥼 Blouse médicale</strong><span>Équipement</span></div>
+    <div class="product-body">
+      <p>Blouses destinées aux professionnels de santé.</p>
+      <div class="price">Prix à confirmer</div>
+      <button class="btn btn-green" onclick="chooseProduct('Blouse médicale',0)">Demander ce produit</button>
+    </div>
+  </div>
+
+  <div class="product">
+    <div class="product-top"><strong>💊 Produits de santé</strong><span>Pharmacie</span></div>
+    <div class="product-body">
+      <p>Les médicaments doivent provenir de circuits autorisés et être vendus dans le respect des règles applicables.</p>
+      <div class="price">Disponibilité à confirmer</div>
+      <button class="btn btn-green" onclick="chooseProduct('Produits de santé',0)">Demander des informations</button>
+    </div>
+  </div>
+</section>
+
+<section id="inscription" class="hidden">
+  <div class="section">
+    <h2>Créer un compte</h2>
+    <p class="small">Remplissez les champs ci-dessous. Cette maquette ne crée pas encore de compte sécurisé.</p>
+    <form id="signupForm">
+      <label>Nom complet</label>
+      <input id="nom" required placeholder="Votre nom complet">
+
+      <label>Numéro de téléphone</label>
+      <div style="display:flex;gap:6px;align-items:center">
+        <strong style="padding:12px;background:#eaf8ef;border-radius:8px">+243</strong>
+        <input id="telephone" required inputmode="numeric" maxlength="9" placeholder="Ex. 812345678">
+      </div>
+
+      <label>Adresse e-mail</label>
+      <input id="email" type="email" required placeholder="Votre e-mail">
+
+      <label>Mot de passe</label>
+      <input id="password" type="password" minlength="6" required placeholder="6 caractères minimum">
+
+      <label>Confirmer le mot de passe</label>
+      <input id="confirmPassword" type="password" required placeholder="Répétez le mot de passe">
+
+      <label>Code de parrainage (facultatif)</label>
+      <input id="parrainage" placeholder="Code de parrainage">
+
+      <button class="btn btn-green" type="submit">S'inscrire</button>
+      <button class="btn btn-outline" type="button" onclick="showPage('compte')">Connexion</button>
+      <p id="signupMessage" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section id="compte" class="hidden">
+  <div class="section">
+    <h2>Mon compte</h2>
+    <div class="notice">La connexion réelle sera activée après la configuration d'une base de données et d'un système d'authentification sécurisé.</div>
+    <p>Nom : <strong id="displayNom">Non connecté</strong></p>
+    <p>Téléphone : <strong id="displayTel">—</strong></p>
+    <button class="btn btn-green" onclick="showPage('inscription')">Créer un compte</button>
+  </div>
+</section>
+
+<section id="demande" class="hidden">
+  <div class="section">
+    <h2>Demande de produit</h2>
+    <p id="selectedProduct"></p>
+    <p>Pour finaliser une commande, le vendeur doit confirmer le prix, la disponibilité et les modalités de livraison.</p>
+    <button class="btn btn-green" onclick="showPage('inscription')">Créer un compte</button>
+    <button class="btn btn-outline" onclick="showPage('produits')">Retour au catalogue</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  © 2026 SanotolEuro — Démonstration de site web<br>
+  Les informations affichées ne constituent pas une promesse de bénéfices.
+</footer>
+
+<script>
+function showPage(page){
+  document.querySelectorAll('main > section').forEach(s=>s.classList.add('hidden'));
+  const target=document.getElementById(page);
+  if(target) target.classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function contactPlaceholder(event,service){
+  event.preventDefault();
+  alert("Le lien "+service+" n'est pas encore configuré. Ajoutez votre vrai lien avant de publier le site.");
+}
+
+function chooseProduct(name,price){
+  document.getElementById('selectedProduct').textContent =
+    "Produit sélectionné : "+name+(price ? " — "+price.toLocaleString('fr-FR')+" FC" : " — prix à confirmer");
+  showPage('demande');
+}
+
+document.getElementById('signupForm').addEventListener('submit',function(e){
+  e.preventDefault();
+
+  const nom=document.getElementById('nom').value.trim();
+  const tel=document.getElementById('telephone').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('password').value;
+  const confirm=document.getElementById('confirmPassword').value;
+  const msg=document.getElementById('signupMessage');
+
+  if(!/^[0-9]{9}$/.test(tel)){
+    msg.textContent="Entrez les 9 chiffres de votre numéro après +243.";
+    return;
+  }
+  if(pass.length<6){
+    msg.textContent="Le mot de passe doit contenir au moins 6 caractères.";
+    return;
+  }
+  if(pass!==confirm){
+    msg.textContent="Les deux mots de passe ne correspondent pas.";
+    return;
+  }
+
+  // Démonstration uniquement : aucun compte n'est enregistré sur un serveur.
+  document.getElementById('displayNom').textContent=nom;
+  document.getElementById('displayTel').textContent="+243 "+tel;
+  msg.textContent="Formulaire vérifié. Pour créer un compte réel, connectez l'inscription à Supabase.";
+});
+</script>
+</body>
+</html>
