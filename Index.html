@@ -1,283 +1,995 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#087d45">
-<title>SanotolEuro — Hygiène et santé en RDC</title>
+<meta name="theme-color" content="#087f72">
+
+<title>SANOTOLEURO — Boutique médicale</title>
+
 <style>
-:root{--green:#087d45;--light:#eaf7ef;--white:#fff;--dark:#20342a;--orange:#e66b60}
+:root{
+  --green:#087f72;
+  --dark:#07564f;
+  --light:#e8f6f2;
+  --white:#fff;
+  --bg:#f5f9f7;
+  --text:#173b36;
+  --muted:#647773;
+  --border:#dce9e5;
+  --red:#b42318;
+}
+
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f8f4;color:var(--dark)}
-header{background:linear-gradient(135deg,#087d45,#24ae69);color:white;padding:25px 18px;text-align:center}
-header h1{margin:0;font-size:29px}
-header p{line-height:1.5}
-nav{display:flex;gap:7px;overflow:auto;background:white;padding:10px;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0001}
-nav button{border:0;background:var(--light);color:var(--green);border-radius:10px;padding:12px;font-weight:bold;white-space:nowrap}
-main{max-width:850px;margin:auto;padding:16px}
-section{display:none}
-section.active{display:block}
-.card{background:white;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 4px 18px #153c2410}
-h2{color:var(--green)}
-h3{margin-top:0}
-input,select,textarea{width:100%;padding:13px;margin:7px 0 14px;border:1px solid #d2e2d7;border-radius:10px;font-size:16px;background:white}
-button.primary,.primary{background:var(--green);color:white;border:0;border-radius:11px;padding:14px;font-size:16px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
-button.secondary{background:white;color:var(--green);border:1px solid var(--green);border-radius:11px;padding:12px;font-weight:bold}
-.full{width:100%}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.product{border:1px solid #dcebe0;border-radius:16px;padding:15px;background:#fbfefc}
-.emoji{font-size:42px}
-.price{font-size:22px;color:var(--orange);font-weight:bold}
-.muted{color:#68786d;font-size:14px;line-height:1.6}
-.actions{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
-.actions a{flex:1;min-width:140px}
-.notice{background:#fff5df;padding:13px;border-radius:10px;color:#6c4b0c;line-height:1.5}
-.stat{background:var(--light);padding:14px;border-radius:12px}
-footer{text-align:center;padding:25px;color:#65756a;font-size:13px}
-.hidden{display:none!important}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:15px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.header-inner{
+  max-width:1050px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  font-size:20px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px;
+  letter-spacing:1px;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:12px 15px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.primary{
+  background:var(--green);
+  color:white;
+}
+
+.secondary{
+  background:var(--light);
+  color:var(--dark);
+}
+
+.danger{
+  background:#fff0ee;
+  color:var(--red);
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+main{
+  max-width:1050px;
+  margin:auto;
+  padding:18px 14px 100px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#07564f,#109b86);
+  color:white;
+  padding:30px 22px;
+  border-radius:18px;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:30px;
+  margin:0 0 12px;
+}
+
+.hero p{
+  line-height:1.6;
+  margin-bottom:20px;
+}
+
+.section{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+h2{
+  margin-top:0;
+  font-size:21px;
+}
+
+h3{
+  font-size:17px;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin:13px 0 6px;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:white;
+  color:var(--text);
+}
+
+input:focus,select:focus{
+  outline:2px solid #a5ded2;
+  border-color:var(--green);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.product{
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:15px;
+  background:white;
+}
+
+.product-icon{
+  height:65px;
+  display:grid;
+  place-items:center;
+  background:var(--light);
+  border-radius:10px;
+  font-size:34px;
+}
+
+.product h3{
+  min-height:38px;
+}
+
+.product p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.price{
+  color:var(--green);
+  font-weight:900;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.member{
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.member:last-child{
+  border-bottom:0;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.notice{
+  background:var(--light);
+  border-radius:9px;
+  padding:12px;
+  line-height:1.5;
+  font-size:13px;
+}
+
+.message{
+  padding:12px;
+  border-radius:9px;
+  margin:12px 0;
+  background:var(--light);
+  overflow-wrap:anywhere;
+}
+
+.error{
+  background:#fff0ee;
+  color:var(--red);
+}
+
+.hidden{
+  display:none!important;
+}
+
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:center;
+  gap:5px;
+  padding:8px 5px;
+  z-index:20;
+}
+
+nav button{
+  flex:1;
+  max-width:180px;
+  padding:10px 4px;
+  background:white;
+  color:var(--muted);
+  font-size:12px;
+}
+
+nav button.active{
+  background:var(--light);
+  color:var(--green);
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  padding:20px 5px;
+}
+
+@media(max-width:650px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-grid{grid-template-columns:1fr}
+  .hero h1{font-size:25px}
+  .brand{font-size:17px}
+}
+
+@media(max-width:360px){
+  .cards{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <h1>SanotolEuro</h1>
-  <p>Hygiène, protection médicale et santé en République démocratique du Congo.</p>
-  <strong>Des produits utiles pour votre quotidien.</strong>
+  <div class="header-inner">
+    <div class="brand">
+      SANOTOLEURO
+      <small>BOUTIQUE MÉDICALE</small>
+    </div>
+    <button id="headerLogin" class="primary"
+      onclick="showPage('auth')">Connexion</button>
+    <button id="headerLogout" class="danger hidden"
+      onclick="logout()">Déconnexion</button>
+  </div>
 </header>
 
-<nav>
-  <button onclick="showPage('home')">Accueil</button>
-  <button onclick="showPage('shop')">Boutique</button>
-  <button onclick="showPage('register')">Inscription</button>
-  <button onclick="showPage('login')">Connexion</button>
-  <button onclick="showPage('member')">Mon espace</button>
-  <button onclick="showPage('admin')">Administration</button>
-</nav>
-
 <main>
-<section id="home" class="active">
-  <div class="card">
-    <h2>Bienvenue chez SanotolEuro</h2>
-    <p>Découvrez notre catalogue de savons, savons liquides,
-    désinfectants, blouses médicales et produits de santé.</p>
-    <p>Notre objectif est de faciliter l'accès aux produits
-    d'hygiène et de protection en RDC, avec des prix affichés en FC.</p>
-    <button class="primary full" onclick="showPage('shop')">Découvrir la boutique</button>
+
+<!-- ACCUEIL -->
+<section id="homePage" class="page">
+  <div class="hero">
+    <h1>Votre santé, notre priorité.</h1>
+    <p>
+      Découvrez notre sélection de produits médicaux,
+      d'hygiène et d'équipements de santé.
+    </p>
+    <button class="secondary" onclick="showPage('shop')">
+      Découvrir la boutique
+    </button>
   </div>
-  <div class="card">
-    <h3>Nos services</h3>
-    <div class="actions">
-      <a class="primary" href="https://chat.whatsapp.com/DzKHiqrdBbPI22W7afe9ps" target="_blank" rel="noopener">Groupe WhatsApp</a>
-      <a class="primary" href="https://t.me/francscongolais" target="_blank" rel="noopener">Groupe Telegram</a>
+
+  <div class="section">
+    <h2>Bienvenue chez SANOTOLEURO</h2>
+    <p>
+      Une plateforme dédiée aux produits médicaux,
+      aux fournitures professionnelles et à l'hygiène.
+    </p>
+    <div class="notice">
+      Les prix et disponibilités sont à confirmer avant toute commande.
+      Les médicaments sont proposés uniquement dans le respect
+      de la réglementation applicable.
     </div>
-    <p class="muted">Service client : contactez notre équipe par l'un des groupes ci-dessus. Un numéro direct de service client pourra être ajouté dans la configuration.</p>
   </div>
-  <div class="notice">
-    Important : les produits et les prix doivent être vérifiés avant la vente.
-    Aucun revenu financier n'est garanti par cette démonstration.
-  </div>
-</section>
 
-<section id="shop">
-  <h2>Notre boutique</h2>
-  <p class="muted">Catalogue de démonstration. Les prix doivent être confirmés par l'administrateur avant publication.</p>
-  <div class="grid" id="products"></div>
-</section>
-
-<section id="register">
-  <div class="card">
-    <h2>Créer un compte</h2>
-    <form id="registerForm">
-      <label>Nom complet</label>
-      <input id="regName" required placeholder="Votre nom complet">
-      <label>Numéro de téléphone</label>
-      <input id="regPhone" required type="tel" placeholder="+243XXXXXXXXX" pattern="^\+243[0-9]{9}$">
-      <label>Adresse e-mail</label>
-      <input id="regEmail" required type="email" placeholder="nom@exemple.com">
-      <label>Mot de passe (6 caractères minimum)</label>
-      <input id="regPassword" required type="password" minlength="6">
-      <label>Confirmer le mot de passe</label>
-      <input id="regConfirm" required type="password" minlength="6">
-      <button class="primary full" type="submit">S'inscrire</button>
-    </form>
-    <p id="regMessage" role="status"></p>
-    <p class="muted">Prototype uniquement : les comptes enregistrés ici ne sont pas sécurisés et ne sont pas partagés entre appareils.</p>
-  </div>
-</section>
-
-<section id="login">
-  <div class="card">
-    <h2>Connexion membre</h2>
-    <form id="loginForm">
-      <label>Numéro +243</label>
-      <input id="loginPhone" required type="tel" placeholder="+243XXXXXXXXX">
-      <label>Mot de passe</label>
-      <input id="loginPassword" required type="password">
-      <button class="primary full" type="submit">Connexion</button>
-    </form>
-    <p id="loginMessage" role="status"></p>
-  </div>
-</section>
-
-<section id="member">
-  <div class="card">
-    <h2>Mon espace membre</h2>
-    <p id="memberGreeting">Connectez-vous pour consulter votre profil.</p>
-    <div class="grid">
-      <div class="stat"><strong>Solde</strong><p>Non connecté au système de paiement</p></div>
-      <div class="stat"><strong>Mes commandes</strong><p>La gestion des commandes sera ajoutée au backend.</p></div>
+  <div class="section">
+    <h2>Nos catégories</h2>
+    <div class="cards">
+      <div class="product">
+        <div class="product-icon">🥼</div>
+        <h3>Blouses médicales</h3>
+        <button class="secondary" onclick="showPage('shop')">
+          Explorer
+        </button>
+      </div>
+      <div class="product">
+        <div class="product-icon">🧼</div>
+        <h3>Hygiène et savons</h3>
+        <button class="secondary" onclick="showPage('shop')">
+          Explorer
+        </button>
+      </div>
+      <div class="product">
+        <div class="product-icon">🩺</div>
+        <h3>Appareils médicaux</h3>
+        <button class="secondary" onclick="showPage('shop')">
+          Explorer
+        </button>
+      </div>
     </div>
-    <button class="secondary" onclick="logout()">Déconnexion</button>
-  </div>
-  <div class="card">
-    <h3>Moyens de paiement annoncés</h3>
-    <p><strong>Airtel Money</strong><br>973087965 — BASHIMBE</p>
-    <p><strong>Orange Money</strong><br>899532643 — JEANCQUELINE</p>
-    <p><strong>M-Pesa</strong><br>0861823718 — REGINA</p>
-    <p class="muted">Vérifiez le bénéficiaire et le montant avant tout transfert. Ces coordonnées sont affichées à titre informatif ; aucun paiement n'est vérifié automatiquement.</p>
   </div>
 </section>
 
-<section id="admin">
-  <div class="card">
-    <h2>Administration</h2>
-    <p>Cette page est une maquette et n'est pas protégée par un véritable compte administrateur. Ne publiez pas de données confidentielles ici.</p>
-    <h3>Paramètres de la plateforme</h3>
-    <label>Nom de la plateforme</label>
-    <input id="cfgName" value="SanotolEuro">
-    <label>Minimum de recharge (FC)</label>
-    <input id="cfgDeposit" type="number" min="0" value="15000">
-    <label>Minimum de retrait (FC)</label>
-    <input id="cfgWithdraw" type="number" min="0" value="3000">
-    <label>Bonus d'inscription indicatif (FC)</label>
-    <input id="cfgBonus" type="number" min="0" value="1500">
-    <label>Frais de retrait indicatifs (%)</label>
-    <input id="cfgFee" type="number" min="0" max="100" value="7">
-    <label>Commission de parrainage niveau 1 (%)</label>
-    <input id="cfgRef1" type="number" min="0" max="100" value="10">
-    <label>Commission de parrainage niveau 2 (%)</label>
-    <input id="cfgRef2" type="number" min="0" max="100" value="2">
-    <label>Commission de parrainage niveau 3 (%)</label>
-    <input id="cfgRef3" type="number" min="0" max="100" value="1">
-    <button class="primary full" onclick="saveConfig()">Enregistrer sur cet appareil</button>
-    <p id="cfgMessage" role="status"></p>
-    <p class="muted">Ces réglages sont stockés localement, ne sont pas sécurisés et ne modifient pas un serveur.</p>
+<!-- BOUTIQUE -->
+<section id="shopPage" class="page hidden">
+  <div class="section">
+    <h2>Notre boutique médicale</h2>
+    <p class="muted">
+      Catalogue de présentation. Les articles doivent être confirmés
+      par le vendeur avant achat.
+    </p>
+    <div id="products" class="cards"></div>
   </div>
 </section>
-</main>
+
+<!-- AUTHENTIFICATION -->
+<section id="authPage" class="page hidden">
+  <div class="section">
+    <h2 id="authTitle">Créer un compte</h2>
+
+    <div id="authMessage" class="message hidden"></div>
+
+    <form id="authForm">
+      <div id="nameField">
+        <label for="fullName">Nom complet</label>
+        <input id="fullName" autocomplete="name"
+          placeholder="Votre nom complet">
+      </div>
+
+      <label for="email">Adresse e-mail</label>
+      <input id="email" type="email" required
+        autocomplete="email" placeholder="nom@exemple.com">
+
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" required
+        minlength="8" autocomplete="new-password"
+        placeholder="8 caractères minimum">
+
+      <div id="refField">
+        <label for="referral">Code du parrain (facultatif)</label>
+        <input id="referral" autocomplete="off"
+          placeholder="Code rempli depuis le lien d'invitation">
+      </div>
+
+      <button id="authSubmit" class="primary"
+        type="submit" style="width:100%;margin-top:18px">
+        Créer mon compte
+      </button>
+    </form>
+
+    <p id="authSwitch" class="muted">
+      Vous avez déjà un compte ?
+      <button class="secondary" onclick="toggleAuth()">
+        Se connecter
+      </button>
+    </p>
+
+    <p class="muted">
+      Utilisez une adresse e-mail qui vous appartient et un mot de
+      passe unique. Si la confirmation e-mail est activée dans
+      Supabase, vous devrez confirmer votre adresse avant de vous
+      connecter.
+    </p>
+  </div>
+</section>
+
+<!-- COMPTE -->
+<section id="accountPage" class="page hidden">
+  <div class="section">
+    <h2>Mon espace</h2>
+    <div id="accountMessage" class="message hidden"></div>
+    <p><strong>Nom :</strong> <span id="accountName">—</span></p>
+    <p><strong>E-mail :</strong> <span id="accountEmail">—</span></p>
+    <p><strong>Mon code de parrainage :</strong></p>
+    <div class="row">
+      <strong id="myCode">Chargement...</strong>
+      <button class="secondary" onclick="copyCode()">
+        Copier mon code
+      </button>
+    </div>
+    <label for="myLink">Mon lien d'invitation</label>
+    <input id="myLink" readonly>
+    <button class="primary" style="margin-top:10px"
+      onclick="copyLink()">Copier le lien</button>
+  </div>
+</section>
+
+<!-- ÉQUIPE -->
+<section id="teamPage" class="page hidden">
+  <div class="section">
+    <h2>Mon équipe</h2>
+    <p class="muted">
+      Membres directement inscrits avec votre code de parrainage.
+    </p>
+    <button class="secondary" onclick="loadTeam()">
+      Actualiser mon équipe
+    </button>
+    <div id="teamMessage" class="message hidden"></div>
+    <div id="teamList"></div>
+  </div>
+</section>
+
+<!-- COMMANDES -->
+<section id="ordersPage" class="page hidden">
+  <div class="section">
+    <h2>Commandes</h2>
+    <p>
+      La gestion des commandes et les paiements ne sont pas encore
+      connectés à une base de données. Contactez le vendeur pour
+      confirmer la disponibilité, le prix et les modalités d'achat.
+    </p>
+  </div>
+</section>
 
 <footer>
-  SanotolEuro — RDC · Prix en francs congolais (FC)<br>
-  Les médicaments ne peuvent être vendus que dans le respect des règles applicables.
+  SANOTOLEURO · République démocratique du Congo · CDF
 </footer>
 
+</main>
+
+<nav id="bottomNav" class="hidden">
+  <button data-page="home" onclick="showPage('home')">Accueil</button>
+  <button data-page="shop" onclick="showPage('shop')">Boutique</button>
+  <button data-page="team" onclick="showPage('team')">Mon équipe</button>
+  <button data-page="account" onclick="showPage('account')">Mon compte</button>
+  <button data-page="orders" onclick="showPage('orders')">Commandes</button>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-const defaultProducts = [
-  {name:"Savon solide",icon:"🧼",description:"Savon d'hygiène quotidienne.",price:1500},
-  {name:"Savon liquide",icon:"🧴",description:"Pour le lavage des mains.",price:5000},
-  {name:"Désinfectant",icon:"🧪",description:"Produit d'hygiène à vérifier avant vente.",price:7000},
-  {name:"Blouse médicale",icon:"🥼",description:"Vêtement de protection professionnelle.",price:25000},
-  {name:"Gants médicaux",icon:"🧤",description:"Équipement de protection.",price:8000},
-  {name:"Produits de santé",icon:"➕",description:"Disponibilité et autorisation à confirmer.",price:0}
+"use strict";
+
+/* =========================================
+   CONNEXION AU PROJET SANOTOLEURO
+   ========================================= */
+
+const SUPABASE_URL =
+  "https://mfusevvmaknlvqrlleui.supabase.co";
+
+const SUPABASE_PUBLIC_KEY =
+  "sb_publishable_XGdaDC5JYRlQlabEpjZvCw_DO3Zh_SD";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLIC_KEY
+);
+
+let currentUser = null;
+let currentProfile = null;
+let authMode = "signup";
+let pendingReferral = new URLSearchParams(
+  window.location.search
+).get("ref") || "";
+
+/* =========================================
+   CATALOGUE DE PRÉSENTATION
+   Les prix sont indicatifs.
+   ========================================= */
+
+const catalog = [
+  {
+    icon:"🥼",
+    name:"Blouse médicale",
+    description:"Tenue professionnelle pour personnel de santé.",
+    price:"Prix à confirmer"
+  },
+  {
+    icon:"🧼",
+    name:"Savon d'hygiène",
+    description:"Produit d'hygiène à sélectionner selon disponibilité.",
+    price:"Prix à confirmer"
+  },
+  {
+    icon:"🧴",
+    name:"Désinfectant",
+    description:"Produit à choisir selon son usage et son étiquetage.",
+    price:"Prix à confirmer"
+  },
+  {
+    icon:"🩺",
+    name:"Tensiomètre",
+    description:"Appareil de mesure de la pression artérielle.",
+    price:"Prix à confirmer"
+  },
+  {
+    icon:"🌡️",
+    name:"Thermomètre",
+    description:"Appareil de mesure de la température.",
+    price:"Prix à confirmer"
+  },
+  {
+    icon:"🩹",
+    name:"Fournitures médicales",
+    description:"Consommables à confirmer auprès du vendeur.",
+    price:"Prix à confirmer"
+  }
 ];
 
-function showPage(id){
-  document.querySelectorAll("main section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
 function renderProducts(){
-  document.getElementById("products").innerHTML=defaultProducts.map((p,i)=>`
-    <article class="product">
-      <div class="emoji">${p.icon}</div>
-      <h3>${p.name}</h3>
-      <p>${p.description}</p>
-      <p class="price">${p.price.toLocaleString("fr-FR")} FC</p>
-      <button class="primary full" onclick="orderInfo(${i})">Demander des informations</button>
-    </article>`).join("");
+  document.getElementById("products").innerHTML =
+    catalog.map((p,i)=>`
+      <article class="product">
+        <div class="product-icon">${p.icon}</div>
+        <h3>${p.name}</h3>
+        <p>${p.description}</p>
+        <div class="price">${p.price}</div>
+        <button class="secondary"
+          style="margin-top:12px;width:100%"
+          onclick="productInfo(${i})">
+          Demander des informations
+        </button>
+      </article>
+    `).join("");
 }
-function orderInfo(i){
-  const p=defaultProducts[i];
-  alert("Produit : "+p.name+"\nPrix indicatif : "+p.price.toLocaleString("fr-FR")+" FC\nContactez le service client pour confirmer le prix et la disponibilité.");
+
+function productInfo(i){
+  alert(
+    catalog[i].name +
+    "\\n\\nContactez le vendeur pour confirmer le prix, " +
+    "la disponibilité et les conditions de commande."
+  );
 }
-function readUsers(){
-  try{return JSON.parse(localStorage.getItem("sanotol_demo_users")||"[]")}catch(e){return []}
-}
-document.getElementById("registerForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const name=document.getElementById("regName").value.trim();
-  const phone=document.getElementById("regPhone").value.trim();
-  const email=document.getElementById("regEmail").value.trim();
-  const password=document.getElementById("regPassword").value;
-  const confirm=document.getElementById("regConfirm").value;
-  const msg=document.getElementById("regMessage");
-  if(!/^\+243[0-9]{9}$/.test(phone)){msg.textContent="Entrez un numéro RDC valide : +243 suivi de 9 chiffres.";return}
-  if(password!==confirm){msg.textContent="Les mots de passe ne correspondent pas.";return}
-  const users=readUsers();
-  if(users.some(u=>u.phone===phone)){msg.textContent="Ce numéro est déjà enregistré sur cet appareil.";return}
-  // Démonstration seulement : ne jamais stocker de vrais mots de passe ainsi en production.
-  users.push({name,phone,email,password});
-  try{
-    localStorage.setItem("sanotol_demo_users",JSON.stringify(users));
-    localStorage.setItem("sanotol_current",phone);
-    msg.textContent="Compte de démonstration créé. Connectez-vous pour continuer.";
-    document.getElementById("memberGreeting").textContent="Bienvenue, "+name+".";
-  }catch(err){msg.textContent="Enregistrement impossible sur cet appareil."}
-});
-document.getElementById("loginForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const phone=document.getElementById("loginPhone").value.trim();
-  const password=document.getElementById("loginPassword").value;
-  const user=readUsers().find(u=>u.phone===phone&&u.password===password);
-  const msg=document.getElementById("loginMessage");
-  if(!user){msg.textContent="Compte introuvable ou identifiants incorrects sur cet appareil.";return}
-  localStorage.setItem("sanotol_current",user.phone);
-  document.getElementById("memberGreeting").textContent="Bienvenue, "+user.name+".";
-  msg.textContent="Connexion de démonstration réussie.";
-  showPage("member");
-});
-function logout(){
-  localStorage.removeItem("sanotol_current");
-  document.getElementById("memberGreeting").textContent="Connectez-vous pour consulter votre profil.";
-  showPage("login");
-}
-function saveConfig(){
-  const cfg={
-    name:document.getElementById("cfgName").value.trim(),
-    deposit:Number(document.getElementById("cfgDeposit").value),
-    withdraw:Number(document.getElementById("cfgWithdraw").value),
-    bonus:Number(document.getElementById("cfgBonus").value),
-    fee:Number(document.getElementById("cfgFee").value),
-    ref1:Number(document.getElementById("cfgRef1").value),
-    ref2:Number(document.getElementById("cfgRef2").value),
-    ref3:Number(document.getElementById("cfgRef3").value)
-  };
-  if(!cfg.name||Object.values(cfg).some(v=>typeof v==="number"&&(!Number.isFinite(v)||v<0))){
-    document.getElementById("cfgMessage").textContent="Vérifiez les valeurs saisies.";return;
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+function showPage(name){
+  if(
+    ["account","team","orders"].includes(name) &&
+    !currentUser
+  ){
+    name = "auth";
   }
+
+  document.querySelectorAll(".page").forEach(el=>{
+    el.classList.add("hidden");
+  });
+
+  const page = document.getElementById(name+"Page");
+
+  if(page) page.classList.remove("hidden");
+
+  document.querySelectorAll("nav button").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === name
+    );
+  });
+
+  if(name==="account") loadProfile();
+  if(name==="team") loadTeam();
+}
+
+function setLoggedIn(user){
+  currentUser = user;
+
+  document.getElementById("bottomNav")
+    .classList.toggle("hidden",!user);
+
+  document.getElementById("headerLogin")
+    .classList.toggle("hidden",!!user);
+
+  document.getElementById("headerLogout")
+    .classList.toggle("hidden",!user);
+}
+
+/* =========================================
+   MESSAGES
+   ========================================= */
+
+function showMessage(id,text,isError=false){
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.classList.remove("hidden","error");
+
+  if(isError) el.classList.add("error");
+}
+
+function hideMessage(id){
+  document.getElementById(id).classList.add("hidden");
+}
+
+/* =========================================
+   INSCRIPTION / CONNEXION
+   ========================================= */
+
+function toggleAuth(){
+  authMode = authMode==="signup" ? "login" : "signup";
+
+  document.getElementById("authTitle").textContent =
+    authMode==="signup" ? "Créer un compte" : "Connexion";
+
+  document.getElementById("authSubmit").textContent =
+    authMode==="signup" ? "Créer mon compte" : "Me connecter";
+
+  document.getElementById("nameField")
+    .classList.toggle("hidden",authMode==="login");
+
+  document.getElementById("refField")
+    .classList.toggle("hidden",authMode==="login");
+
+  document.getElementById("password")
+    .autocomplete =
+    authMode==="signup" ? "new-password" : "current-password";
+
+  document.getElementById("authSwitch").textContent =
+    authMode==="signup"
+      ? "Vous avez déjà un compte ?"
+      : "Vous n'avez pas encore de compte ?";
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "secondary";
+  btn.textContent =
+    authMode==="signup" ? "Se connecter" : "Créer un compte";
+  btn.onclick = toggleAuth;
+
+  document.getElementById("authSwitch").appendChild(btn);
+  hideMessage("authMessage");
+}
+
+document.getElementById("authForm")
+.addEventListener("submit",async function(event){
+  event.preventDefault();
+  hideMessage("authMessage");
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const fullName =
+    document.getElementById("fullName").value.trim();
+
+  const referral =
+    document.getElementById("referral").value.trim();
+
+  const submit = document.getElementById("authSubmit");
+  submit.disabled = true;
+
   try{
-    localStorage.setItem("sanotol_demo_config",JSON.stringify(cfg));
-    document.getElementById("cfgMessage").textContent="Paramètres enregistrés sur cet appareil.";
-    document.title=cfg.name+" — Hygiène et santé en RDC";
-  }catch(e){document.getElementById("cfgMessage").textContent="Enregistrement impossible."}
+    if(authMode==="signup"){
+      if(!fullName){
+        throw new Error("Entre ton nom complet.");
+      }
+
+      const {data,error} = await db.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{
+            full_name:fullName,
+            referral_code_used:referral || pendingReferral || null
+          }
+        }
+      });
+
+      if(error) throw error;
+
+      if(data.session){
+        currentUser = data.user;
+        setLoggedIn(currentUser);
+        await processReferral(
+          referral || pendingReferral
+        );
+        await loadProfile();
+        showPage("account");
+      }else{
+        showMessage(
+          "authMessage",
+          "Inscription envoyée. Si Supabase demande une confirmation " +
+          "par e-mail, ouvre le message reçu puis connecte-toi. " +
+          "Le code du parrain sera traité après la connexion."
+        );
+      }
+    }else{
+      const {data,error} = await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if(error) throw error;
+
+      currentUser = data.user;
+      setLoggedIn(currentUser);
+
+      await processReferral(pendingReferral);
+      await loadProfile();
+      showPage("account");
+    }
+  }catch(error){
+    showMessage(
+      "authMessage",
+      error.message || "Une erreur est survenue.",
+      true
+    );
+  }finally{
+    submit.disabled = false;
+  }
+});
+
+/* =========================================
+   ENREGISTREMENT DU PARRAIN
+   La fonction SQL vérifie le code.
+   ========================================= */
+
+async function processReferral(code){
+  if(!currentUser || !code) return;
+
+  const {data,error} = await db.rpc(
+    "sanotoleuro_register_referral",
+    {p_referral_code:code}
+  );
+
+  if(error){
+    console.error("Parrainage:",error.message);
+
+    showMessage(
+      "accountMessage",
+      "Compte connecté. Le parrainage n'a pas pu être confirmé : " +
+      error.message,
+      true
+    );
+    return;
+  }
+
+  if(data && data.success){
+    pendingReferral = "";
+    const url = new URL(window.location.href);
+    url.searchParams.delete("ref");
+    window.history.replaceState({}, "", url.toString());
+  }
 }
-function loadConfig(){
+
+/* =========================================
+   CHARGEMENT DU PROFIL
+   ========================================= */
+
+async function loadProfile(){
+  if(!currentUser) return;
+
+  const {data,error} = await db
+    .from("sanotoleuro_profiles")
+    .select("id,full_name,referral_code,referred_by,created_at")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(error){
+    showMessage(
+      "accountMessage",
+      "Impossible de charger le profil : "+error.message,
+      true
+    );
+    return;
+  }
+
+  if(!data){
+    showMessage(
+      "accountMessage",
+      "Profil introuvable. Vérifie la configuration du déclencheur " +
+      "de création automatique dans Supabase.",
+      true
+    );
+    return;
+  }
+
+  currentProfile = data;
+
+  document.getElementById("accountName").textContent =
+    data.full_name || "Nom non renseigné";
+
+  document.getElementById("accountEmail").textContent =
+    currentUser.email || "—";
+
+  document.getElementById("myCode").textContent =
+    data.referral_code || "Code non disponible";
+
+  const inviteURL = new URL(window.location.href);
+  inviteURL.search = "";
+  inviteURL.hash = "";
+  inviteURL.searchParams.set(
+    "ref",
+    data.referral_code || ""
+  );
+
+  document.getElementById("myLink").value =
+    inviteURL.toString();
+
+  hideMessage("accountMessage");
+}
+
+/* =========================================
+   ÉQUIPE DU PARRAIN
+   ========================================= */
+
+async function loadTeam(){
+  if(!currentUser) return;
+
+  const list = document.getElementById("teamList");
+  list.textContent = "Chargement de l'équipe...";
+  hideMessage("teamMessage");
+
+  const {data,error} = await db.rpc(
+    "sanotoleuro_my_team"
+  );
+
+  if(error){
+    list.textContent = "";
+    showMessage(
+      "teamMessage",
+      "Impossible de charger l'équipe : "+error.message,
+      true
+    );
+    return;
+  }
+
+  if(!data || data.length===0){
+    list.textContent = "";
+    showMessage(
+      "teamMessage",
+      "Aucun membre parrainé directement pour le moment."
+    );
+    return;
+  }
+
+  list.innerHTML = "";
+
+  data.forEach(member=>{
+    const row = document.createElement("div");
+    row.className = "member";
+
+    const name = document.createElement("strong");
+    name.textContent = member.member_name || "Membre";
+
+    const date = document.createElement("div");
+    date.className = "muted";
+
+    date.textContent = member.joined_at
+      ? "Inscription : " +
+        new Date(member.joined_at).toLocaleDateString("fr-FR")
+      : "";
+
+    row.append(name,date);
+    list.appendChild(row);
+  });
+}
+
+/* =========================================
+   COPIER LE CODE ET LE LIEN
+   ========================================= */
+
+async function copyText(value){
   try{
-    const c=JSON.parse(localStorage.getItem("sanotol_demo_config")||"null");
-    if(!c)return;
-    const ids={name:"cfgName",deposit:"cfgDeposit",withdraw:"cfgWithdraw",bonus:"cfgBonus",fee:"cfgFee",ref1:"cfgRef1",ref2:"cfgRef2",ref3:"cfgRef3"};
-    Object.keys(ids).forEach(k=>{if(c[k]!==undefined)document.getElementById(ids[k]).value=c[k]});
-    if(c.name)document.title=c.name+" — Hygiène et santé en RDC";
-  }catch(e){}
+    await navigator.clipboard.writeText(value);
+    alert("Copié avec succès !");
+  }catch{
+    alert("Copie impossible automatiquement. Sélectionne le texte.");
+  }
 }
-function restoreMember(){
-  const phone=localStorage.getItem("sanotol_current");
-  const user=readUsers().find(u=>u.phone===phone);
-  if(user)document.getElementById("memberGreeting").textContent="Bienvenue, "+user.name+".";
+
+function copyCode(){
+  if(currentProfile && currentProfile.referral_code){
+    copyText(currentProfile.referral_code);
+  }
 }
-renderProducts();
-loadConfig();
-restoreMember();
+
+function copyLink(){
+  const value = document.getElementById("myLink").value;
+  if(value) copyText(value);
+}
+
+/* =========================================
+   DÉCONNEXION
+   ========================================= */
+
+async function logout(){
+  const {error} = await db.auth.signOut();
+
+  if(error){
+    alert("Erreur de déconnexion : "+error.message);
+    return;
+  }
+
+  currentUser = null;
+  currentProfile = null;
+  setLoggedIn(null);
+  showPage("home");
+}
+
+/* =========================================
+   INITIALISATION
+   ========================================= */
+
+async function init(){
+  renderProducts();
+
+  if(pendingReferral){
+    document.getElementById("referral").value =
+      pendingReferral;
+
+    authMode = "signup";
+  }
+
+  const {data,error} = await db.auth.getSession();
+
+  if(error){
+    console.error(error.message);
+  }
+
+  currentUser = data.session?.user || null;
+  setLoggedIn(currentUser);
+
+  if(currentUser){
+    await processReferral(pendingReferral);
+    await loadProfile();
+  }
+
+  showPage(currentUser ? "home" : "home");
+
+  db.auth.onAuthStateChange((_event,session)=>{
+    currentUser = session?.user || null;
+    setLoggedIn(currentUser);
+  });
+}
+
+init();
 </script>
+
 </body>
 </html>
