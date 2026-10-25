@@ -10,7 +10,9 @@
 :root{--g:#238b45;--gd:#12652e;--gl:#e8f5e9;--w:#fff;--b:#172019;--gr:#f4f7f4;--bd:#dce7dd;--r:#c62828}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--gr);color:var(--b)}
-button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--bd)}
 .header-inner{max-width:900px;margin:auto;padding:12px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:900;color:var(--gd)}
@@ -18,53 +20,95 @@ header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid 
 .badge{padding:7px 10px;border-radius:20px;background:var(--gl);color:var(--gd);font-size:12px;font-weight:800}
 main{max-width:900px;margin:auto;padding:14px 13px 100px}
 .card{background:white;border:1px solid var(--bd);border-radius:17px;padding:17px;margin-bottom:14px;box-shadow:0 3px 12px #143b1b08}
-h1,h2,h3,p{margin-top:0}h2{font-size:20px;margin-bottom:14px}h3{font-size:16px}
-.muted{color:#657368;font-size:13px;line-height:1.5}.small{font-size:12px}
+h1,h2,h3,p{margin-top:0}
+h2{font-size:20px;margin-bottom:14px}
+h3{font-size:16px}
+.muted{color:#657368;font-size:13px;line-height:1.5}
+.small{font-size:12px}
 label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
 input,select{width:100%;padding:12px;border:1px solid #d5dfd6;border-radius:10px;background:#fff;outline:none;color:var(--b)}
 input:focus,select:focus{border-color:var(--g)}
 .btn{border:0;border-radius:11px;padding:12px 15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none}
-.primary{background:var(--g);color:white}.light{background:var(--gl);color:var(--gd)}.danger{background:#ffebee;color:var(--r)}.full{width:100%;margin-top:12px}
-.smallbtn{padding:8px 10px;font-size:12px}.row{display:flex;gap:8px}.row>*{flex:1;min-width:0}
+.primary{background:var(--g);color:white}
+.light{background:var(--gl);color:var(--gd)}
+.danger{background:#ffebee;color:var(--r)}
+.full{width:100%;margin-top:12px}
+.smallbtn{padding:8px 10px;font-size:12px}
+.row{display:flex;gap:8px}
+.row>*{flex:1;min-width:0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
 .tile{padding:15px 12px;min-height:100px;border:1px solid var(--bd);background:white;border-radius:15px;text-align:left}
-.tile .icon{font-size:25px;margin-bottom:8px}.tile strong{display:block;font-size:14px}.tile span{display:block;color:#657368;font-size:12px;margin-top:5px}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:var(--gl);border-radius:13px;padding:13px}.stat small{display:block;color:#526b56;font-size:12px}.stat strong{display:block;margin-top:6px;font-size:18px;color:var(--gd);overflow-wrap:anywhere}
+.tile .icon{font-size:25px;margin-bottom:8px}
+.tile strong{display:block;font-size:14px}
+.tile span{display:block;color:#657368;font-size:12px;margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:var(--gl);border-radius:13px;padding:13px}
+.stat small{display:block;color:#526b56;font-size:12px}
+.stat strong{display:block;margin-top:6px;font-size:18px;color:var(--gd);overflow-wrap:anywhere}
 .notice{padding:12px;border-radius:11px;background:#f0f7f0;border:1px solid #d9eadb;font-size:13px;line-height:1.6;margin:12px 0}
-.item{border:1px solid var(--bd);border-radius:13px;padding:13px;margin:10px 0;background:#fff}
-.itemtop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.amount{font-weight:900;color:var(--gd)}
+.item{border:1px solid var(--bd);border-radius:13px;padding:13px;margin:10px 0;background:#fff;overflow-wrap:anywhere}
+.itemtop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.amount{font-weight:900;color:var(--gd)}
 .status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800;background:#fff3cd;color:#7a5700}
-.status.success{background:#e0f4e5;color:#17632b}.status.rejected{background:#ffebee;color:#b71c1c}
+.status.success{background:#e0f4e5;color:#17632b}
+.status.rejected{background:#ffebee;color:#b71c1c}
 .empty{text-align:center;padding:22px 10px;color:#68746a;font-size:13px}
 .bottom{position:fixed;z-index:30;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bd);display:flex;justify-content:center}
 .bottominner{width:100%;max-width:900px;display:flex;justify-content:space-around;padding:7px 3px calc(7px + env(safe-area-inset-bottom))}
-.navbtn{border:0;background:transparent;color:#6a766b;min-width:55px;padding:5px 3px;font-size:10px}.navbtn span{display:block;font-size:21px;margin-bottom:3px}.navbtn.active{color:var(--gd);font-weight:900}
-.auth{max-width:480px;margin:15px auto}.authbrand{text-align:center;padding:16px 10px}.authbrand .logo{margin:0 auto 10px;width:65px;height:65px;font-size:32px}.authbrand h1{color:var(--gd);font-size:27px}
-.tabs{display:flex;gap:8px;margin-bottom:15px}.tabs button{flex:1}
-.hero{height:230px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(130deg,#dff4e2,#8acb97);margin-bottom:15px;border:1px solid #d2e6d4}
-.slide{position:absolute;inset:0;display:none}.slide.active{display:block;animation:fade .5s}.slide img{width:100%;height:100%;object-fit:cover}
-.caption{position:absolute;left:0;right:0;bottom:0;padding:30px 15px 13px;color:white;background:linear-gradient(transparent,#000b)}.caption strong{font-size:18px;display:block}.caption span{font-size:12px}
-.fallback{height:100%;padding:25px;display:flex;flex-direction:column;justify-content:center;color:#145b2b;background:linear-gradient(135deg,#f7fff7,#a9dfb1)}.fallback strong{font-size:25px}
-.dots{position:absolute;top:12px;right:12px;display:flex;gap:5px}.dot{width:7px;height:7px;border-radius:50%;background:#ffffff80}.dot.active{background:white;width:18px;border-radius:10px}
-.plancard{border:1px solid var(--bd);border-radius:15px;padding:15px;margin:12px 0;background:white}.planhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.plannumber{background:var(--gl);color:var(--gd);padding:7px 10px;border-radius:9px;font-weight:900}.price{font-size:23px;font-weight:900;color:var(--gd);margin:12px 0}.plandetails{display:grid;grid-template-columns:1fr 1fr;gap:8px}.plandetails div{background:#f5f9f5;padding:10px;border-radius:9px}.plandetails small{display:block;color:#657368;font-size:11px}.plandetails strong{display:block;font-size:13px;margin-top:4px}
-.paybox{border:1px solid #cce4cf;background:#f6fff7;border-radius:12px;padding:12px;margin:9px 0}.payrow{display:flex;align-items:center;justify-content:space-between;gap:8px}.payrow strong{font-size:14px;overflow-wrap:anywhere}.copybtn{border:0;border-radius:9px;background:var(--g);color:white;font-size:12px;font-weight:800;padding:9px 10px;flex-shrink:0}
+.navbtn{border:0;background:transparent;color:#6a766b;min-width:55px;padding:5px 3px;font-size:10px}
+.navbtn span{display:block;font-size:21px;margin-bottom:3px}
+.navbtn.active{color:var(--gd);font-weight:900}
+.auth{max-width:480px;margin:15px auto}
+.authbrand{text-align:center;padding:16px 10px}
+.authbrand .logo{margin:0 auto 10px;width:65px;height:65px;font-size:32px}
+.authbrand h1{color:var(--gd);font-size:27px}
+.tabs{display:flex;gap:8px;margin-bottom:15px}
+.tabs button{flex:1}
+.hero{height:210px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(130deg,#dff4e2,#8acb97);margin-bottom:15px;border:1px solid #d2e6d4}
+.slide{position:absolute;inset:0;display:none}
+.slide.active{display:block;animation:fade .5s}
+.slide img{width:100%;height:100%;object-fit:cover}
+.caption{position:absolute;left:0;right:0;bottom:0;padding:30px 15px 13px;color:white;background:linear-gradient(transparent,#000b)}
+.caption strong{font-size:18px;display:block}
+.caption span{font-size:12px}
+.fallback{height:100%;padding:25px;display:flex;flex-direction:column;justify-content:center;color:#145b2b;background:linear-gradient(135deg,#f7fff7,#a9dfb1)}
+.fallback strong{font-size:25px}
+.plancard{border:1px solid var(--bd);border-radius:15px;padding:15px;margin:12px 0;background:white}
+.planhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.plannumber{background:var(--gl);color:var(--gd);padding:7px 10px;border-radius:9px;font-weight:900}
+.price{font-size:23px;font-weight:900;color:var(--gd);margin:12px 0}
+.plandetails{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.plandetails div{background:#f5f9f5;padding:10px;border-radius:9px}
+.plandetails small{display:block;color:#657368;font-size:11px}
+.plandetails strong{display:block;font-size:13px;margin-top:4px}
+.paybox{border:1px solid #cce4cf;background:#f6fff7;border-radius:12px;padding:12px;margin:9px 0}
+.payrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.payrow strong{font-size:14px;overflow-wrap:anywhere}
+.copybtn{border:0;border-radius:9px;background:var(--g);color:white;font-size:12px;font-weight:800;padding:9px 10px;flex-shrink:0}
 .footer{text-align:center;color:#778278;font-size:11px;line-height:1.5;padding:14px}
+hr{border:0;border-top:1px solid var(--bd);margin:18px 0}
 @keyframes fade{from{opacity:.4}to{opacity:1}}
-@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{height:310px}}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{height:280px}}
 </style>
 </head>
 <body>
-<header><div class="header-inner">
-  <div class="brand"><div class="logo">S</div><div>SANOTOLEURO <span style="color:#647267">RDC</span></div></div>
-  <div class="row" style="align-items:center;flex:0">
-    <span id="headerBalance" class="badge hidden">0 FC</span>
-    <button id="logoutBtn" class="btn light smallbtn hidden" onclick="logout()">Sortir</button>
+<header>
+  <div class="header-inner">
+    <div class="brand"><div class="logo">S</div><div>SANOTOLEURO <span style="color:#647267">RDC</span></div></div>
+    <div class="row" style="align-items:center;flex:0">
+      <span id="headerBalance" class="badge hidden">0 FC</span>
+      <button id="logoutBtn" class="btn light smallbtn hidden" onclick="logout()">Sortir</button>
+    </div>
   </div>
-</div></header>
+</header>
 
 <main>
 <section id="authScreen" class="auth">
-  <div class="authbrand"><div class="logo">S</div><h1>SANOTOLEURO RDC</h1><p class="muted">Bienvenue sur votre espace personnel.</p></div>
+  <div class="authbrand">
+    <div class="logo">S</div>
+    <h1>SANOTOLEURO RDC</h1>
+    <p class="muted">Bienvenue sur votre espace personnel.</p>
+  </div>
   <div class="card">
     <div class="tabs">
       <button class="btn primary" id="loginTab" onclick="showAuthForm('login')">Connexion</button>
@@ -72,18 +116,25 @@ input:focus,select:focus{border-color:var(--g)}
     </div>
     <form id="loginForm" onsubmit="login(event)">
       <h2>Connexion</h2>
-      <label>Adresse e-mail</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="Votre adresse e-mail">
-      <label>Mot de passe</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Votre mot de passe">
+      <label>Adresse e-mail</label>
+      <input id="loginEmail" type="email" autocomplete="email" required placeholder="Votre adresse e-mail">
+      <label>Mot de passe</label>
+      <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Votre mot de passe">
       <button class="btn primary full" type="submit">Se connecter</button>
       <button class="btn light full" type="button" onclick="resetPassword()">Réinitialiser mon mot de passe</button>
     </form>
     <form id="registerForm" class="hidden" onsubmit="register(event)">
       <h2>Créer un compte</h2>
-      <label>Nom complet</label><input id="regName" required maxlength="100" autocomplete="name" placeholder="Votre nom complet">
-      <label>Adresse e-mail</label><input id="regEmail" type="email" required autocomplete="email" placeholder="Votre adresse e-mail">
-      <label>Mot de passe</label><input id="regPassword" type="password" required minlength="8" autocomplete="new-password" placeholder="Au moins 8 caractères">
-      <label>Confirmer le mot de passe</label><input id="regPassword2" type="password" required minlength="8" autocomplete="new-password">
-      <label>Code de parrainage (facultatif)</label><input id="regReferral" maxlength="40" placeholder="Code du parrain">
+      <label>Nom complet</label>
+      <input id="regName" required maxlength="100" autocomplete="name" placeholder="Votre nom complet">
+      <label>Adresse e-mail</label>
+      <input id="regEmail" type="email" required autocomplete="email" placeholder="Votre adresse e-mail">
+      <label>Mot de passe</label>
+      <input id="regPassword" type="password" required minlength="8" autocomplete="new-password" placeholder="Au moins 8 caractères">
+      <label>Confirmer le mot de passe</label>
+      <input id="regPassword2" type="password" required minlength="8" autocomplete="new-password">
+      <label>Code de parrainage (facultatif)</label>
+      <input id="regReferral" maxlength="40" placeholder="Code du parrain">
       <button class="btn primary full" type="submit">Créer mon compte</button>
       <p class="muted small">Vérifiez votre e-mail si une confirmation est demandée.</p>
     </form>
@@ -92,108 +143,146 @@ input:focus,select:focus{border-color:var(--g)}
 
 <section id="appScreen" class="hidden">
   <section id="homePage" class="page">
-    <div class="hero" id="adCarousel"><div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p><span>Chargement des publicités…</span></div></div></div>
+    <div class="hero" id="adCarousel">
+      <div class="slide active">
+        <div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p></div>
+      </div>
+    </div>
+
     <div class="card">
-      <p class="muted" style="margin-bottom:6px">Bienvenue, <strong id="welcomeName">Membre</strong></p>
-      <h2 style="margin-bottom:6px">Votre espace personnel</h2>
-      <p class="muted">Consultez vos plans et suivez vos demandes.</p>
+      <p class="muted">Bienvenue, <strong id="welcomeName">Membre</strong></p>
+      <h2>Votre espace personnel</h2>
       <div class="stats">
         <div class="stat"><small>Solde disponible</small><strong id="homeBalance">0 FC</strong></div>
         <div class="stat"><small>Code de parrainage</small><strong id="homeReferral">—</strong></div>
       </div>
     </div>
-    <div class="grid">
-      <button class="tile" onclick="showPage('plans')"><div class="icon">📊</div><strong>Plans / Recharger</strong><span>Consulter les plans et déposer</span></button>
-      <button class="tile" onclick="showPage('withdraw')"><div class="icon">💸</div><strong>Retrait</strong><span>Demander un retrait</span></button>
-      <button class="tile" onclick="showPage('orders')"><div class="icon">📋</div><strong>Mes demandes</strong><span>Suivre les dépôts et retraits</span></button>
-      <button class="tile" onclick="showPage('team')"><div class="icon">👥</div><strong>Parrainage</strong><span>Partager votre code</span></button>
-      <button class="tile" onclick="showPage('account')"><div class="icon">👤</div><strong>Mon compte</strong><span>Informations et numéro de retrait</span></button>
-      <button class="tile hidden" id="adminTile" onclick="showPage('admin')"><div class="icon">🛡️</div><strong>Administration</strong><span>Gérer les demandes</span></button>
+
+    <div class="card">
+      <div class="itemtop"><h2>Mes plans VIP actifs</h2><button class="btn light smallbtn" onclick="loadMyVIP()">Actualiser</button></div>
+      <div id="myVipList"><div class="empty">Chargement…</div></div>
     </div>
+
+    <div class="grid">
+      <button class="tile" onclick="showPage('plans')"><div class="icon">📊</div><strong>Plans / Recharger</strong><span>Consulter les plans</span></button>
+      <button class="tile" onclick="showPage('withdraw')"><div class="icon">💸</div><strong>Retrait</strong><span>Demander un retrait</span></button>
+      <button class="tile" onclick="showPage('orders')"><div class="icon">📋</div><strong>Mes demandes</strong><span>Suivre les demandes</span></button>
+      <button class="tile" onclick="showPage('team')"><div class="icon">👥</div><strong>Parrainage</strong><span>Partager votre code</span></button>
+      <button class="tile" onclick="showPage('account')"><div class="icon">👤</div><strong>Mon compte</strong><span>Informations personnelles</span></button>
+      <button class="tile hidden" id="adminTile" onclick="showPage('admin')"><div class="icon">🛡️</div><strong>Administration</strong><span>Gérer la plateforme</span></button>
+    </div>
+
     <div class="card" style="margin-top:14px">
-      <h3>Besoin d’assistance ?</h3><p class="muted">Contactez le service client en cas de problème.</p>
+      <h3>Besoin d’assistance ?</h3>
       <a class="btn primary full" href="https://t.me/Drcprom" target="_blank" rel="noopener">Service client Telegram</a>
       <a class="btn light full" href="https://t.me/+dbpiuZGoZUE4MDhk" target="_blank" rel="noopener">Rejoindre le groupe Telegram</a>
     </div>
   </section>
 
-  <section id="plansPage" class="page hidden"><div class="card"><h2>Plans / Recharger</h2><div id="plansList"></div></div></section>
+  <section id="plansPage" class="page hidden">
+    <div class="card"><h2>Plans disponibles</h2><div id="plansList"></div></div>
+  </section>
 
-  <section id="depositPage" class="page hidden"><div class="card">
-    <h2>Demande de dépôt</h2><p class="muted">Effectuez votre transfert, puis saisissez la référence pour vérification.</p>
-    <div class="notice"><strong>Numéros de paiement — touchez Copier</strong>
-      <div class="paybox"><div class="payrow"><div><strong>Airtel Money</strong><br><span>YVETTE</span><br><strong id="airtelDisplay">0979928885</strong></div><button class="copybtn" onclick="copyText('0979928885')">Copier</button></div></div>
-      <div class="paybox"><div class="payrow"><div><strong>Orange Money</strong><br><span>JACQUELINE</span><br><strong id="orangeDisplay">0899532643</strong></div><button class="copybtn" onclick="copyText('0899532643')">Copier</button></div></div>
-      <div class="paybox"><div class="payrow"><div><strong>M-Pesa</strong><br><span>REGINA</span><br><strong id="mpesaDisplay">0861823718</strong></div><button class="copybtn" onclick="copyText('0861823718')">Copier</button></div></div>
+  <section id="depositPage" class="page hidden">
+    <div class="card">
+      <h2>Demande de dépôt</h2>
+      <p class="muted">Effectuez le transfert, puis saisissez sa référence pour vérification.</p>
+      <div class="notice"><strong>Numéros de paiement</strong>
+        <div class="paybox"><div class="payrow"><div><strong>Airtel Money</strong><br>YVETTE<br><strong id="airtelDisplay">0979928885</strong></div><button class="copybtn" onclick="copyText('0979928885')">Copier</button></div></div>
+        <div class="paybox"><div class="payrow"><div><strong>Orange Money</strong><br>JACQUELINE<br><strong id="orangeDisplay">0899532643</strong></div><button class="copybtn" onclick="copyText('0899532643')">Copier</button></div></div>
+        <div class="paybox"><div class="payrow"><div><strong>M-Pesa</strong><br>REGINA<br><strong id="mpesaDisplay">0861823718</strong></div><button class="copybtn" onclick="copyText('0861823718')">Copier</button></div></div>
+      </div>
+      <form id="depositForm" onsubmit="submitDeposit(event)">
+        <label>Plan choisi</label><input id="depositPlanName" readonly required placeholder="Choisissez d'abord un plan">
+        <label>Montant (FC)</label><input id="depositAmount" type="number" min="15000" step="1" required>
+        <label>Opérateur</label>
+        <select id="depositMethod" required><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
+        <label>Référence du transfert</label><input id="depositReference" required maxlength="120" placeholder="Référence de transaction">
+        <button class="btn primary full" type="submit">Envoyer la demande</button>
+        <button class="btn light full" type="button" onclick="showPage('plans')">Retour aux plans</button>
+      </form>
     </div>
-    <form id="depositForm" onsubmit="submitDeposit(event)">
-      <label>Montant (FC)</label><input id="depositAmount" type="number" min="15000" step="1" required placeholder="Minimum 15 000 FC">
-      <label>Opérateur</label><select id="depositMethod" required><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
-      <label>Référence du transfert</label><input id="depositReference" required maxlength="120" placeholder="Référence de transaction">
-      <button class="btn primary full" type="submit">Envoyer la demande</button><button class="btn light full" type="button" onclick="showPage('plans')">Retour aux plans</button>
-    </form>
-  </div></section>
+  </section>
 
-  <section id="withdrawPage" class="page hidden"><div class="card">
-    <h2>Demande de retrait</h2><div class="stat"><small>Solde disponible</small><strong id="withdrawBalance">0 FC</strong></div>
-    <div class="notice">Minimum : <strong>3 000 FC</strong><br>Frais : <strong>10 %</strong><br>Traitement indicatif : <strong>2 à 48 heures</strong>.</div>
-    <form id="withdrawForm" onsubmit="submitWithdrawal(event)">
-      <label>Montant à retirer (FC)</label><input id="withdrawAmount" type="number" min="3000" step="1" required placeholder="Minimum 3 000 FC" oninput="calculateWithdrawal()">
-      <div class="stats" style="margin-top:10px"><div class="stat"><small>Frais estimés</small><strong id="withdrawFee">0 FC</strong></div><div class="stat"><small>Net estimé</small><strong id="withdrawNet">0 FC</strong></div></div>
-      <label>Opérateur de réception</label><select id="withdrawMethod" required><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
-      <label>Votre numéro de retrait</label><input id="withdrawPhone" type="tel" maxlength="30" required placeholder="Votre numéro Mobile Money">
-      <button class="btn light full" type="button" onclick="saveWithdrawalPhone()">Enregistrer mon numéro</button>
-      <p class="muted small">Votre numéro enregistré sera proposé lors de vos prochaines demandes sur cet appareil et votre compte.</p>
-      <button class="btn primary full" type="submit">Envoyer la demande</button>
-    </form>
-  </div></section>
+  <section id="withdrawPage" class="page hidden">
+    <div class="card">
+      <h2>Demande de retrait</h2>
+      <div class="stat"><small>Solde disponible</small><strong id="withdrawBalance">0 FC</strong></div>
+      <div class="notice">Minimum : <strong>3 000 FC</strong><br>Frais : <strong>10 %</strong><br>Le traitement nécessite une vérification.</div>
+      <form id="withdrawForm" onsubmit="submitWithdrawal(event)">
+        <label>Montant à retirer (FC)</label><input id="withdrawAmount" type="number" min="3000" step="1" required oninput="calculateWithdrawal()">
+        <div class="stats" style="margin-top:10px">
+          <div class="stat"><small>Frais estimés</small><strong id="withdrawFee">0 FC</strong></div>
+          <div class="stat"><small>Net estimé</small><strong id="withdrawNet">0 FC</strong></div>
+        </div>
+        <label>Opérateur de réception</label>
+        <select id="withdrawMethod" required><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
+        <label>Votre numéro de retrait</label><input id="withdrawPhone" type="tel" maxlength="30" required>
+        <button class="btn light full" type="button" onclick="saveWithdrawalPhone()">Enregistrer mon numéro</button>
+        <button class="btn primary full" type="submit">Envoyer la demande</button>
+      </form>
+    </div>
+  </section>
 
-  <section id="ordersPage" class="page hidden"><div class="card"><div class="itemtop"><h2>Mes demandes</h2><button class="btn light smallbtn" onclick="loadHistory()">Actualiser</button></div><div id="historyList"><div class="empty">Chargement…</div></div></div></section>
+  <section id="ordersPage" class="page hidden">
+    <div class="card"><div class="itemtop"><h2>Mes demandes</h2><button class="btn light smallbtn" onclick="loadHistory()">Actualiser</button></div><div id="historyList"></div></div>
+  </section>
 
-  <section id="teamPage" class="page hidden"><div class="card">
-    <h2>Mon parrainage</h2><p class="muted">Partagez votre code d’invitation.</p>
-    <label>Votre code</label><div class="row"><input id="teamReferralCode" readonly><button class="btn primary" onclick="copyReferralCode()">Copier</button></div>
-    <label>Lien d’invitation</label><div class="row"><input id="teamReferralLink" readonly><button class="btn primary" onclick="copyReferralLink()">Copier</button></div>
-    <button class="btn light full" onclick="shareReferral()">Partager mon invitation</button><hr>
-    <h3>Mon équipe</h3><div id="teamList"><div class="empty">Chargement…</div></div>
-  </div></section>
+  <section id="teamPage" class="page hidden">
+    <div class="card">
+      <h2>Mon parrainage</h2>
+      <label>Votre code</label><div class="row"><input id="teamReferralCode" readonly><button class="btn primary" onclick="copyReferralCode()">Copier</button></div>
+      <label>Lien d'invitation</label><div class="row"><input id="teamReferralLink" readonly><button class="btn primary" onclick="copyReferralLink()">Copier</button></div>
+      <button class="btn light full" onclick="shareReferral()">Partager mon invitation</button>
+      <hr><h3>Mon équipe</h3><div id="teamList"></div>
+    </div>
+  </section>
 
-  <section id="accountPage" class="page hidden"><div class="card">
-    <h2>Mon compte</h2>
-    <div class="item"><div class="muted">Nom complet</div><strong id="accountName">—</strong></div>
-    <div class="item"><div class="muted">Adresse e-mail</div><strong id="accountEmail">—</strong></div>
-    <div class="item"><div class="muted">Code de parrainage</div><strong id="accountReferral">—</strong></div>
-    <div class="item"><div class="muted">Solde disponible</div><strong class="amount" id="accountBalance">0 FC</strong></div>
-    <h3>Mon numéro de retrait</h3>
-    <label>Opérateur</label><select id="savedPhoneMethod"><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
-    <label>Numéro Mobile Money</label><input id="savedPhone" type="tel" maxlength="30" placeholder="Ex. 09XXXXXXXX">
-    <button class="btn primary full" onclick="saveAccountPhone()">Enregistrer mon numéro</button>
-    <p class="muted small">Le numéro sera enregistré dans votre profil si les colonnes correspondantes existent.</p>
-    <button class="btn light full" onclick="resetPassword()">Réinitialiser le mot de passe par e-mail</button>
-    <button class="btn danger full" onclick="logout()">Se déconnecter</button>
-  </div></section>
+  <section id="accountPage" class="page hidden">
+    <div class="card">
+      <h2>Mon compte</h2>
+      <div class="item"><div class="muted">Nom complet</div><strong id="accountName">—</strong></div>
+      <div class="item"><div class="muted">E-mail</div><strong id="accountEmail">—</strong></div>
+      <div class="item"><div class="muted">Code de parrainage</div><strong id="accountReferral">—</strong></div>
+      <div class="item"><div class="muted">Solde disponible</div><strong class="amount" id="accountBalance">0 FC</strong></div>
+      <h3>Mon numéro de retrait</h3>
+      <label>Opérateur</label><select id="savedPhoneMethod"><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
+      <label>Numéro Mobile Money</label><input id="savedPhone" type="tel" maxlength="30">
+      <button class="btn primary full" onclick="saveAccountPhone()">Enregistrer mon numéro</button>
+      <button class="btn light full" onclick="resetPassword()">Réinitialiser le mot de passe par e-mail</button>
+      <button class="btn danger full" onclick="logout()">Se déconnecter</button>
+    </div>
+  </section>
 
   <section id="adminPage" class="page hidden">
-    <div class="card"><div class="itemtop"><h2>Administration</h2><button class="btn light smallbtn" onclick="loadAdmin()">Actualiser</button></div><p class="muted">Vérifiez chaque transaction avant de modifier son statut.</p></div>
-    <div class="card"><h2>Demandes de dépôt</h2><div id="adminDeposits"></div></div>
-    <div class="card"><h2>Demandes de retrait</h2><div id="adminWithdrawals"></div></div>
+    <div class="card">
+      <div class="itemtop"><h2>Administration</h2><button class="btn light smallbtn" onclick="loadAdmin()">Actualiser</button></div>
+      <p class="muted">Vérifiez le paiement réel avant de valider un dépôt.</p>
+    </div>
+    <div class="card"><h2>Dépôts</h2><div id="adminDeposits"></div></div>
+    <div class="card"><h2>Retraits</h2><div id="adminWithdrawals"></div></div>
+    <div class="card"><h2>Abonnements VIP</h2><div id="adminVIP"></div></div>
     <div class="card"><h2>Membres</h2><div id="adminMembers"></div></div>
-    <div class="card"><h2>Ajustement de solde</h2>
+    <div class="card">
+      <h2>Ajustement de solde</h2>
       <form id="adjustBalanceForm" onsubmit="adjustBalance(event)">
         <label>ID utilisateur</label><input id="adjustUserId" required>
         <label>Montant FC (négatif pour débit)</label><input id="adjustAmount" type="number" step=".01" required>
         <label>Motif</label><input id="adjustReason" maxlength="200" required>
-        <button class="btn primary full" type="submit">Enregistrer l’ajustement</button>
+        <button class="btn primary full" type="submit">Enregistrer l'ajustement</button>
       </form>
     </div>
-    <div class="card"><h2>Coordonnées de paiement</h2><form id="settingsForm" onsubmit="saveSettings(event)">
-      <label>Numéro Airtel</label><input id="settingAirtel">
-      <label>Numéro Orange</label><input id="settingOrange">
-      <label>Numéro M-Pesa</label><input id="settingMpesa">
-      <label>Telegram service client</label><input id="settingTelegram">
-      <label>WhatsApp service client</label><input id="settingWhatsapp">
-      <button class="btn primary full" type="submit">Enregistrer</button>
-    </form></div>
+    <div class="card">
+      <h2>Coordonnées de paiement</h2>
+      <form id="settingsForm" onsubmit="saveSettings(event)">
+        <label>Numéro Airtel</label><input id="settingAirtel">
+        <label>Numéro Orange</label><input id="settingOrange">
+        <label>Numéro M-Pesa</label><input id="settingMpesa">
+        <label>Telegram service client</label><input id="settingTelegram">
+        <label>WhatsApp service client</label><input id="settingWhatsapp">
+        <button class="btn primary full" type="submit">Enregistrer</button>
+      </form>
+    </div>
   </section>
 </section>
 </main>
@@ -211,7 +300,10 @@ const SUPABASE_URL='https://mfusevvmaknlvqrlleui.supabase.co';
 const SUPABASE_KEY='sb_publishable_XGdaDC5JYRlQlabEpjZvCw_DO3Zh_SD';
 const ADMIN_EMAIL='angenabukuze@gmail.com';
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 let currentUser=null,currentProfile=null,isAdmin=false,carouselTimer=null,carouselIndex=0,carouselImages=[];
+let selectedPlan=null;
+
 const defaultPlans=[
 {plan_number:1,amount_cdf:25000,illustrative_daily_amount_cdf:1000,duration_days:51},
 {plan_number:2,amount_cdf:40000,illustrative_daily_amount_cdf:1700,duration_days:62},
@@ -223,60 +315,647 @@ const defaultPlans=[
 {plan_number:8,amount_cdf:1200000,illustrative_daily_amount_cdf:51000,duration_days:200},
 {plan_number:9,amount_cdf:2500000,illustrative_daily_amount_cdf:115000,duration_days:250}
 ];
+
 function $(id){return document.getElementById(id)}
 function formatFC(v){return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}).format(Number(v||0))+' FC'}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function safeURL(v){try{let u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:''}catch(e){return ''}}
 function busy(btn,on,label){if(!btn)return;if(on){btn.dataset.old=btn.textContent;btn.disabled=true;btn.textContent=label||'Patientez…'}else{btn.disabled=false;btn.textContent=btn.dataset.old||'Envoyer'}}
-function statusLabel(s){s=String(s||'pending').toLowerCase();if(['success','approved','validated','completed'].includes(s))return '<span class="status success">Validée</span>';if(['rejected','refused','cancelled'].includes(s))return '<span class="status rejected">Rejetée</span>';return '<span class="status">En attente</span>'}
-function showAuthForm(which){$('loginForm').classList.toggle('hidden',which!=='login');$('registerForm').classList.toggle('hidden',which!=='register');$('loginTab').className=which==='login'?'btn primary':'btn light';$('registerTab').className=which==='register'?'btn primary':'btn light'}
-function showAuth(){$('authScreen').classList.remove('hidden');$('appScreen').classList.add('hidden');$('bottomNav').classList.add('hidden');$('logoutBtn').classList.add('hidden');$('headerBalance').classList.add('hidden')}
-function showApp(){$('authScreen').classList.add('hidden');$('appScreen').classList.remove('hidden');$('bottomNav').classList.remove('hidden');$('logoutBtn').classList.remove('hidden');$('headerBalance').classList.remove('hidden')}
-function showPage(name){if(!currentUser){showAuth();return}if(name==='admin'&&!isAdmin)name='home';document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const el=$(name+'Page');if(el)el.classList.remove('hidden');document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));if(name==='plans')loadPlans();if(name==='orders')loadHistory();if(name==='team')loadTeam();if(name==='account')renderAccount();if(name==='admin')loadAdmin();window.scrollTo({top:0,behavior:'smooth'})}
-async function register(e){e.preventDefault();let btn=e.submitter,name=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),password=$('regPassword').value,pass2=$('regPassword2').value,ref=$('regReferral').value.trim();if(password!==pass2){alert('Les mots de passe ne correspondent pas.');return}busy(btn,true,'Création…');try{let {data,error}=await db.auth.signUp({email,password,options:{data:{full_name:name,referral_code_used:ref}}});if(error)throw error;if(data.user&&data.session){currentUser=data.user;await ensureProfile(name);if(ref)await registerReferral(ref);await afterLogin();alert('Compte créé.')}else{alert('Compte créé. Vérifiez votre e-mail si une confirmation est demandée.');showAuthForm('login');$('loginEmail').value=email}}catch(err){console.error(err);alert('Impossible de créer le compte. Vérifiez les informations et réessayez.')}finally{busy(btn,false)}}
-async function login(e){e.preventDefault();let btn=e.submitter;busy(btn,true,'Connexion…');try{let {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim().toLowerCase(),password:$('loginPassword').value});if(error)throw error;currentUser=data.user;await afterLogin()}catch(err){console.error(err);alert('Connexion impossible. Vérifiez votre e-mail et votre mot de passe.')}finally{busy(btn,false)}}
-async function resetPassword(){let email=(currentUser?.email||$('loginEmail').value||$('regEmail').value).trim();if(!email){alert('Saisissez votre adresse e-mail.');return}try{let {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin});if(error)throw error;alert('Si cette adresse est enregistrée, un e-mail sera envoyé.')}catch(e){alert('Réinitialisation indisponible pour le moment.')}}
-async function logout(){await db.auth.signOut();currentUser=null;currentProfile=null;isAdmin=false;if(carouselTimer)clearInterval(carouselTimer);showAuth()}
-async function afterLogin(){if(!currentUser)return;isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();showApp();$('adminTile').classList.toggle('hidden',!isAdmin);await ensureProfile();await loadProfile();await loadAds();await loadPlans();await loadSavedPhone();showPage('home')}
-async function ensureProfile(name=''){if(!currentUser)return;try{let {data,error}=await db.from('sanotoleuro_profiles').select('id').eq('id',currentUser.id).maybeSingle();if(error)throw error;if(!data){let code='SANO'+currentUser.id.replace(/-/g,'').slice(0,8).toUpperCase();let result=await db.from('sanotoleuro_profiles').insert({id:currentUser.id,full_name:name||currentUser.user_metadata?.full_name||'Membre',referral_code:code,balance_cdf:0});if(result.error)console.warn(result.error.message)}}catch(e){console.warn('Profil indisponible')}}
-async function loadProfile(){if(!currentUser)return;try{let {data,error}=await db.from('sanotoleuro_profiles').select('*').eq('id',currentUser.id).maybeSingle();if(error)throw error;currentProfile=data||{}}catch(e){currentProfile=currentProfile||{}}renderProfileSummary()}
-function renderProfileSummary(){let name=currentProfile?.full_name||currentUser?.user_metadata?.full_name||'Membre',balance=Number(currentProfile?.balance_cdf||0),code=currentProfile?.referral_code||'—';$('welcomeName').textContent=name;$('homeBalance').textContent=formatFC(balance);$('headerBalance').textContent=formatFC(balance);$('homeReferral').textContent=code;$('withdrawBalance').textContent=formatFC(balance);$('teamReferralCode').value=code==='—'?'':code;$('teamReferralLink').value=code==='—'?'':`${location.origin}${location.pathname}?ref=${encodeURIComponent(code)}`}
-function renderAccount(){if(!currentUser)return;$('accountName').textContent=currentProfile?.full_name||currentUser.user_metadata?.full_name||'—';$('accountEmail').textContent=currentUser.email||'—';$('accountReferral').textContent=currentProfile?.referral_code||'—';$('accountBalance').textContent=formatFC(currentProfile?.balance_cdf||0);$('savedPhone').value=currentProfile?.withdrawal_phone||localStorage.getItem('withdrawal_phone_'+currentUser.id)||'';$('savedPhoneMethod').value=currentProfile?.withdrawal_method||localStorage.getItem('withdrawal_method_'+currentUser.id)||''}
-async function registerReferral(code){try{let {error}=await db.rpc('sanotoleuro_register_referral',{p_referral_code:code});if(error)console.warn('Parrainage indisponible')}catch(e){}}
+function statusLabel(s){
+ s=String(s||'pending').toLowerCase();
+ if(['success','approved','validated','completed'].includes(s))return '<span class="status success">Validée</span>';
+ if(['rejected','refused','cancelled'].includes(s))return '<span class="status rejected">Rejetée</span>';
+ return '<span class="status">En attente</span>';
+}
+function showAuthForm(which){
+ $('loginForm').classList.toggle('hidden',which!=='login');
+ $('registerForm').classList.toggle('hidden',which!=='register');
+ $('loginTab').className=which==='login'?'btn primary':'btn light';
+ $('registerTab').className=which==='register'?'btn primary':'btn light';
+}
+function showAuth(){
+ $('authScreen').classList.remove('hidden');
+ $('appScreen').classList.add('hidden');
+ $('bottomNav').classList.add('hidden');
+ $('logoutBtn').classList.add('hidden');
+ $('headerBalance').classList.add('hidden');
+}
+function showApp(){
+ $('authScreen').classList.add('hidden');
+ $('appScreen').classList.remove('hidden');
+ $('bottomNav').classList.remove('hidden');
+ $('logoutBtn').classList.remove('hidden');
+ $('headerBalance').classList.remove('hidden');
+}
+function showPage(name){
+ if(!currentUser){showAuth();return}
+ if(name==='admin'&&!isAdmin)name='home';
+ document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+ const el=$(name+'Page');
+ if(el)el.classList.remove('hidden');
+ document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ if(name==='plans')loadPlans();
+ if(name==='orders')loadHistory();
+ if(name==='team')loadTeam();
+ if(name==='account')renderAccount();
+ if(name==='admin')loadAdmin();
+ if(name==='home')loadMyVIP();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
 
-async function loadAds(){try{let {data,error}=await db.from('sanotoleuro_products').select('name,image_url,description,created_at').eq('active',true).not('image_url','is',null).order('created_at',{ascending:false}).limit(7);if(error)throw error;carouselImages=(data||[]).filter(x=>safeURL(x.image_url))}catch(e){carouselImages=[]}renderCarousel()}
-function renderCarousel(){let box=$('adCarousel');if(carouselTimer)clearInterval(carouselTimer);if(!carouselImages.length){box.innerHTML='<div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p><span>Découvrez les plans et suivez vos demandes.</span></div></div>';return}carouselIndex=0;box.innerHTML=carouselImages.map((x,i)=>`<div class="slide ${i===0?'active':''}"><img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'Publicité SANOTOLEURO')}" onerror="this.style.display='none'"><div class="caption"><strong>${esc(x.name||'SANOTOLEURO RDC')}</strong><span>${esc(x.description||'Découvrez SANOTOLEURO RDC')}</span></div></div>`).join('')+`<div class="dots">${carouselImages.map((_,i)=>`<span class="dot ${i===0?'active':''}"></span>`).join('')}</div>`;if(carouselImages.length>1)carouselTimer=setInterval(()=>{let slides=box.querySelectorAll('.slide'),dots=box.querySelectorAll('.dot');slides.forEach(s=>s.classList.remove('active'));dots.forEach(d=>d.classList.remove('active'));carouselIndex=(carouselIndex+1)%slides.length;slides[carouselIndex].classList.add('active');if(dots[carouselIndex])dots[carouselIndex].classList.add('active')},4000)}
+async function register(e){
+ e.preventDefault();
+ let btn=e.submitter,name=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase();
+ let password=$('regPassword').value,pass2=$('regPassword2').value,ref=$('regReferral').value.trim();
+ if(password!==pass2){alert('Les mots de passe ne correspondent pas.');return}
+ busy(btn,true,'Création…');
+ try{
+  let {data,error}=await db.auth.signUp({email,password,options:{data:{full_name:name,referral_code_used:ref}}});
+  if(error)throw error;
+  if(data.user&&data.session){
+   currentUser=data.user;
+   await ensureProfile(name);
+   if(ref)await registerReferral(ref);
+   await afterLogin();
+   alert('Compte créé.');
+  }else{
+   alert('Compte créé. Vérifiez votre e-mail si une confirmation est demandée.');
+   showAuthForm('login');
+   $('loginEmail').value=email;
+  }
+ }catch(err){console.error(err);alert('Impossible de créer le compte. Vérifiez les informations et réessayez.')}
+ finally{busy(btn,false)}
+}
 
-async function loadPlans(){let box=$('plansList');if(!box)return;box.innerHTML='<div class="empty">Chargement…</div>';let plans=[];try{let {data,error}=await db.from('sanotoleuro_plans').select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active').eq('active',true).order('plan_number');if(error)throw error;plans=data||[]}catch(e){}if(!plans.length)plans=defaultPlans;box.innerHTML=plans.map(p=>{let amount=Number(p.amount_cdf||0),daily=Number(p.illustrative_daily_amount_cdf||0),days=Number(p.duration_days||0),total=daily*days;return `<div class="plancard"><div class="planhead"><span class="plannumber">PLAN ${esc(p.plan_number)}</span><span class="muted">${days} jours</span></div><div class="price">${formatFC(amount)}</div><div class="plandetails"><div><small>Estimation quotidienne</small><strong>${formatFC(daily)}</strong></div><div><small>Total du cycle</small><strong>${formatFC(total)}</strong></div><div><small>Durée</small><strong>${days} jours</strong></div><div><small>Capital du plan</small><strong>${formatFC(amount)}</strong></div></div><button class="btn primary full" onclick="selectPlan(${amount},${Number(p.plan_number)||0})">Choisir ce plan / Recharger</button></div>`}).join('')}
-function selectPlan(amount,number){$('depositAmount').value=amount;$('depositAmount').dataset.planNumber=String(number||'');showPage('deposit')}
+async function login(e){
+ e.preventDefault();let btn=e.submitter;busy(btn,true,'Connexion…');
+ try{
+  let {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim().toLowerCase(),password:$('loginPassword').value});
+  if(error)throw error;
+  currentUser=data.user;
+  await afterLogin();
+ }catch(err){console.error(err);alert('Connexion impossible. Vérifiez votre e-mail et votre mot de passe.')}
+ finally{busy(btn,false)}
+}
 
-async function submitDeposit(e){e.preventDefault();if(!currentUser){showAuth();return}let btn=e.submitter,amount=Number($('depositAmount').value),method=$('depositMethod').value,ref=$('depositReference').value.trim(),plan=Number($('depositAmount').dataset.planNumber||0)||null;if(amount<15000||!Number.isFinite(amount)){alert('Le dépôt minimum est de 15 000 FC.');return}if(!method||!ref){alert('Complétez les informations demandées.');return}busy(btn,true,'Envoi…');try{let row={user_id:currentUser.id,amount_cdf:amount,payment_method:method,payment_reference:ref,status:'pending'};if(plan)row.plan_number=plan;let {error}=await db.from('sanotoleuro_deposit_requests').insert(row);if(error)throw error;$('depositForm').reset();alert('Demande de dépôt envoyée pour vérification.');await loadHistory();showPage('orders')}catch(err){console.error(err);alert('Demande non envoyée. Vérifiez les informations et réessayez.')}finally{busy(btn,false)}}
+async function resetPassword(){
+ let email=(currentUser?.email||$('loginEmail').value||$('regEmail').value).trim();
+ if(!email){alert('Saisissez votre adresse e-mail.');return}
+ try{
+  let {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin});
+  if(error)throw error;
+  alert('Si cette adresse est enregistrée, un e-mail sera envoyé.');
+ }catch(e){console.error(e);alert('Réinitialisation indisponible pour le moment.')}
+}
 
-async function saveAccountPhone(){let phone=$('savedPhone').value.trim(),method=$('savedPhoneMethod').value;if(!phone||!method){alert('Saisissez le numéro et l’opérateur.');return}localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);localStorage.setItem('withdrawal_method_'+currentUser.id,method);try{let {error}=await db.from('sanotoleuro_profiles').update({withdrawal_phone:phone,withdrawal_method:method}).eq('id',currentUser.id);if(error)console.warn('Numéro conservé sur cet appareil; profil non mis à jour')}catch(e){}$('withdrawPhone').value=phone;$('withdrawMethod').value=method;alert('Numéro enregistré sur cet appareil.')}
-async function saveWithdrawalPhone(){let phone=$('withdrawPhone').value.trim(),method=$('withdrawMethod').value;if(!phone||!method){alert('Saisissez le numéro et choisissez l’opérateur.');return}localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);localStorage.setItem('withdrawal_method_'+currentUser.id,method);try{let {error}=await db.from('sanotoleuro_profiles').update({withdrawal_phone:phone,withdrawal_method:method}).eq('id',currentUser.id);if(error)console.warn('Le numéro reste sauvegardé sur cet appareil')}catch(e){}alert('Numéro sauvegardé.')}
-async function loadSavedPhone(){if(!currentUser)return;let phone=currentProfile?.withdrawal_phone||localStorage.getItem('withdrawal_phone_'+currentUser.id)||'',method=currentProfile?.withdrawal_method||localStorage.getItem('withdrawal_method_'+currentUser.id)||'';$('withdrawPhone').value=phone;$('withdrawMethod').value=method;$('savedPhone').value=phone;$('savedPhoneMethod').value=method}
+async function logout(){
+ await db.auth.signOut();
+ currentUser=null;currentProfile=null;isAdmin=false;
+ if(carouselTimer)clearInterval(carouselTimer);
+ showAuth();
+}
 
-function calculateWithdrawal(){let amount=Math.max(0,Number($('withdrawAmount').value)||0);$('withdrawFee').textContent=formatFC(amount*.1);$('withdrawNet').textContent=formatFC(amount*.9)}
-async function submitWithdrawal(e){e.preventDefault();if(!currentUser){showAuth();return}let btn=e.submitter,amount=Number($('withdrawAmount').value),method=$('withdrawMethod').value,phone=$('withdrawPhone').value.trim(),balance=Number(currentProfile?.balance_cdf||0);if(!Number.isFinite(amount)||amount<3000){alert('Le retrait minimum est de 3 000 FC.');return}if(amount>balance){alert('Le montant dépasse votre solde disponible.');return}if(!method||!phone){alert('Complétez les informations demandées.');return}busy(btn,true,'Envoi…');try{let since=new Date();since.setHours(0,0,0,0);let {count,error:ce}=await db.from('sanotoleuro_withdrawal_requests').select('id',{count:'exact',head:true}).eq('user_id',currentUser.id).gte('created_at',since.toISOString());if(ce)throw ce;if((count||0)>=2){alert('Deux demandes de retrait maximum par jour.');return}let fee=Number((amount*.1).toFixed(2)),net=Number((amount-fee).toFixed(2));let {error}=await db.from('sanotoleuro_withdrawal_requests').insert({user_id:currentUser.id,amount_cdf:amount,payment_method:method,phone,fee_cdf:fee,net_amount_cdf:net,status:'pending'});if(error)throw error;localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);localStorage.setItem('withdrawal_method_'+currentUser.id,method);try{await db.from('sanotoleuro_profiles').update({withdrawal_phone:phone,withdrawal_method:method}).eq('id',currentUser.id)}catch(x){}$('withdrawForm').reset();await loadSavedPhone();calculateWithdrawal();alert('Demande de retrait envoyée pour vérification.');await loadHistory();showPage('orders')}catch(err){console.error(err);alert('Demande non envoyée. Réessayez plus tard.')}finally{busy(btn,false)}}
+async function afterLogin(){
+ if(!currentUser)return;
+ isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
+ showApp();
+ $('adminTile').classList.toggle('hidden',!isAdmin);
+ await ensureProfile();
+ await loadProfile();
+ await loadAds();
+ await loadPlans();
+ await loadSavedPhone();
+ await loadMyVIP();
+ showPage('home');
+}
 
-async function loadHistory(){let box=$('historyList');if(!box||!currentUser)return;box.innerHTML='<div class="empty">Chargement…</div>';try{let results=await Promise.all([db.from('sanotoleuro_deposit_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50),db.from('sanotoleuro_withdrawal_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50),db.from('sanotoleuro_orders').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50)]),items=[];if(!results[0].error)(results[0].data||[]).forEach(r=>items.push({type:'Dépôt',amount:r.amount_cdf,status:r.status,date:r.created_at,extra:r.payment_method}));if(!results[1].error)(results[1].data||[]).forEach(r=>items.push({type:'Retrait',amount:r.amount_cdf,status:r.status,date:r.created_at,extra:r.payment_method}));if(!results[2].error)(results[2].data||[]).forEach(r=>items.push({type:'Commande',amount:r.total_price_cdf,status:r.status,date:r.created_at,extra:r.product_name}));items.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));if(!items.length){box.innerHTML='<div class="empty">Aucune demande pour le moment.</div>';return}box.innerHTML=items.map(x=>`<div class="item"><div class="itemtop"><div><strong>${esc(x.type)}</strong><div class="muted small">${esc(x.extra||'')}</div></div>${statusLabel(x.status)}</div><p class="amount" style="margin:10px 0 5px">${formatFC(x.amount)}</p><div class="muted small">${x.date?new Date(x.date).toLocaleString('fr-FR'):'Date non disponible'}</div></div>`).join('')}catch(e){box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>'}}
-async function loadTeam(){if(!currentUser)return;renderProfileSummary();let box=$('teamList');box.innerHTML='<div class="empty">Chargement…</div>';try{let {data,error}=await db.rpc('sanotoleuro_my_team');if(error)throw error;let members=Array.isArray(data)?data:[];if(!members.length){box.innerHTML='<div class="empty">Aucun membre dans votre équipe.</div>';return}box.innerHTML=members.map(m=>`<div class="item"><strong>${esc(m.full_name||m.name||'Membre')}</strong><div class="muted small">${esc(m.created_at?new Date(m.created_at).toLocaleDateString('fr-FR'):'')}</div></div>`).join('')}catch(e){box.innerHTML='<div class="empty">Les informations de l’équipe ne sont pas disponibles.</div>'}}
-async function copyText(v){try{await navigator.clipboard.writeText(v);alert('Copié.')}catch(e){let t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Copié.')}}
+async function ensureProfile(name=''){
+ if(!currentUser)return;
+ try{
+  let {data,error}=await db.from('sanotoleuro_profiles').select('id').eq('id',currentUser.id).maybeSingle();
+  if(error)throw error;
+  if(!data){
+   let code='SANO'+currentUser.id.replace(/-/g,'').slice(0,8).toUpperCase();
+   let result=await db.from('sanotoleuro_profiles').insert({
+    id:currentUser.id,
+    full_name:name||currentUser.user_metadata?.full_name||'Membre',
+    referral_code:code,
+    balance_cdf:0
+   });
+   if(result.error)console.warn(result.error.message);
+  }
+ }catch(e){console.warn('Profil indisponible',e)}
+}
+
+async function loadProfile(){
+ if(!currentUser)return;
+ try{
+  let {data,error}=await db.from('sanotoleuro_profiles').select('*').eq('id',currentUser.id).maybeSingle();
+  if(error)throw error;
+  currentProfile=data||{};
+ }catch(e){console.error(e);currentProfile=currentProfile||{}}
+ renderProfileSummary();
+ renderAccount();
+}
+
+function renderProfileSummary(){
+ let name=currentProfile?.full_name||currentUser?.user_metadata?.full_name||'Membre';
+ let balance=Number(currentProfile?.balance_cdf||0),code=currentProfile?.referral_code||'—';
+ $('welcomeName').textContent=name;
+ $('homeBalance').textContent=formatFC(balance);
+ $('headerBalance').textContent=formatFC(balance);
+ $('homeReferral').textContent=code;
+ $('withdrawBalance').textContent=formatFC(balance);
+ $('teamReferralCode').value=code==='—'?'':code;
+ $('teamReferralLink').value=code==='—'?'':`${location.origin}${location.pathname}?ref=${encodeURIComponent(code)}`;
+}
+
+function renderAccount(){
+ if(!currentUser)return;
+ $('accountName').textContent=currentProfile?.full_name||currentUser.user_metadata?.full_name||'—';
+ $('accountEmail').textContent=currentUser.email||'—';
+ $('accountReferral').textContent=currentProfile?.referral_code||'—';
+ $('accountBalance').textContent=formatFC(currentProfile?.balance_cdf||0);
+ $('savedPhone').value=currentProfile?.withdrawal_phone||localStorage.getItem('withdrawal_phone_'+currentUser.id)||'';
+ $('savedPhoneMethod').value=currentProfile?.withdrawal_method||localStorage.getItem('withdrawal_method_'+currentUser.id)||'';
+}
+
+async function registerReferral(code){
+ try{
+  let {error}=await db.rpc('sanotoleuro_register_referral',{p_referral_code:code});
+  if(error)console.warn('Parrainage indisponible',error);
+ }catch(e){}
+}
+
+async function loadAds(){
+ try{
+  let {data,error}=await db.from('sanotoleuro_products').select('name,image_url,description,created_at').eq('active',true).not('image_url','is',null).order('created_at',{ascending:false}).limit(7);
+  if(error)throw error;
+  carouselImages=(data||[]).filter(x=>safeURL(x.image_url));
+ }catch(e){carouselImages=[]}
+ renderCarousel();
+}
+
+function renderCarousel(){
+ let box=$('adCarousel');
+ if(carouselTimer)clearInterval(carouselTimer);
+ if(!carouselImages.length){
+  box.innerHTML='<div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p><span>Consultez les plans et suivez vos demandes.</span></div></div>';
+  return;
+ }
+ carouselIndex=0;
+ box.innerHTML=carouselImages.map((x,i)=>`<div class="slide ${i===0?'active':''}"><img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'SANOTOLEURO')}" onerror="this.style.display='none'"><div class="caption"><strong>${esc(x.name||'SANOTOLEURO RDC')}</strong><span>${esc(x.description||'Découvrez SANOTOLEURO RDC')}</span></div></div>`).join('')+
+ `<div class="dots">${carouselImages.map((_,i)=>`<span class="dot ${i===0?'active':''}"></span>`).join('')}</div>`;
+ if(carouselImages.length>1){
+  carouselTimer=setInterval(()=>{
+   let slides=box.querySelectorAll('.slide'),dots=box.querySelectorAll('.dot');
+   slides.forEach(s=>s.classList.remove('active'));
+   dots.forEach(d=>d.classList.remove('active'));
+   carouselIndex=(carouselIndex+1)%slides.length;
+   slides[carouselIndex].classList.add('active');
+   if(dots[carouselIndex])dots[carouselIndex].classList.add('active');
+  },4000);
+ }
+}
+
+async function loadPlans(){
+ let box=$('plansList');if(!box)return;
+ box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let {data,error}=await db.from('sanotoleuro_plans')
+   .select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active')
+   .eq('active',true).order('plan_number');
+  if(error)throw error;
+  if(!data?.length)throw new Error('Aucun plan actif');
+  renderPlans(data);
+ }catch(e){
+  console.error('Plans Supabase indisponibles',e);
+  box.innerHTML='<div class="notice">Les plans ne sont pas disponibles dans la base. Vérifiez les plans actifs dans Supabase avant d’envoyer un dépôt.</div>';
+ }
+}
+
+function renderPlans(plans){
+ $('plansList').innerHTML=plans.map(p=>{
+  let amount=Number(p.amount_cdf||0),daily=Number(p.illustrative_daily_amount_cdf||0),days=Number(p.duration_days||0);
+  return `<div class="plancard">
+   <div class="planhead"><span class="plannumber">PLAN ${esc(p.plan_number)}</span><span class="muted">${days} jours</span></div>
+   <div class="price">${formatFC(amount)}</div>
+   <div class="plandetails">
+    <div><small>Montant quotidien indicatif</small><strong>${formatFC(daily)}</strong></div>
+    <div><small>Durée du plan</small><strong>${days} jours</strong></div>
+    <div><small>Capital du plan</small><strong>${formatFC(amount)}</strong></div>
+    <div><small>État</small><strong>Disponible</strong></div>
+   </div>
+   <p class="muted small">Les estimations ne constituent pas une promesse de rendement.</p>
+   <button class="btn primary full" onclick="selectPlan(${Number(p.amount_cdf)},${Number(p.plan_number)})">Choisir ce plan</button>
+  </div>`;
+ }).join('');
+}
+
+function selectPlan(amount,number){
+ selectedPlan={amount:Number(amount),number:Number(number)};
+ $('depositPlanName').value='PLAN '+number;
+ $('depositAmount').value=amount;
+ showPage('deposit');
+}
+
+async function submitDeposit(e){
+ e.preventDefault();
+ if(!currentUser){showAuth();return}
+ let btn=e.submitter,amount=Number($('depositAmount').value),method=$('depositMethod').value,ref=$('depositReference').value.trim();
+ if(!selectedPlan){alert('Retournez aux plans et choisissez un plan avant de continuer.');return}
+ if(amount!==selectedPlan.amount){alert('Le montant ne correspond pas au plan choisi.');return}
+ if(!Number.isFinite(amount)||amount<15000){alert('Le dépôt minimum est de 15 000 FC.');return}
+ if(!method||!ref){alert('Complétez les informations demandées.');return}
+ busy(btn,true,'Envoi…');
+ try{
+  let row={
+   user_id:currentUser.id,
+   plan_number:selectedPlan.number,
+   amount_cdf:amount,
+   payment_method:method,
+   payment_reference:ref,
+   status:'pending'
+  };
+  let {error}=await db.from('sanotoleuro_deposit_requests').insert(row);
+  if(error)throw error;
+  $('depositForm').reset();
+  selectedPlan=null;
+  alert('Demande envoyée. Le VIP sera activé par l’administration après vérification du paiement.');
+  await loadHistory();
+  showPage('orders');
+ }catch(err){
+  console.error(err);
+  alert('Demande non envoyée. Vérifiez les règles d’accès et les colonnes de la table Supabase.');
+ }finally{busy(btn,false)}
+}
+
+async function saveAccountPhone(){
+ let phone=$('savedPhone').value.trim(),method=$('savedPhoneMethod').value;
+ if(!phone||!method){alert('Saisissez le numéro et l’opérateur.');return}
+ localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);
+ localStorage.setItem('withdrawal_method_'+currentUser.id,method);
+ try{
+  let {error}=await db.from('sanotoleuro_profiles').update({withdrawal_phone:phone,withdrawal_method:method}).eq('id',currentUser.id);
+  if(error)console.warn(error);
+ }catch(e){}
+ $('withdrawPhone').value=phone;
+ $('withdrawMethod').value=method;
+ alert('Numéro enregistré sur cet appareil.');
+}
+
+async function saveWithdrawalPhone(){
+ let phone=$('withdrawPhone').value.trim(),method=$('withdrawMethod').value;
+ if(!phone||!method){alert('Saisissez le numéro et choisissez l’opérateur.');return}
+ localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);
+ localStorage.setItem('withdrawal_method_'+currentUser.id,method);
+ try{
+  let {error}=await db.from('sanotoleuro_profiles').update({withdrawal_phone:phone,withdrawal_method:method}).eq('id',currentUser.id);
+  if(error)console.warn(error);
+ }catch(e){}
+ alert('Numéro sauvegardé.');
+}
+
+async function loadSavedPhone(){
+ if(!currentUser)return;
+ let phone=currentProfile?.withdrawal_phone||localStorage.getItem('withdrawal_phone_'+currentUser.id)||'';
+ let method=currentProfile?.withdrawal_method||localStorage.getItem('withdrawal_method_'+currentUser.id)||'';
+ $('withdrawPhone').value=phone;
+ $('withdrawMethod').value=method;
+ $('savedPhone').value=phone;
+ $('savedPhoneMethod').value=method;
+}
+
+function calculateWithdrawal(){
+ let amount=Math.max(0,Number($('withdrawAmount').value)||0);
+ $('withdrawFee').textContent=formatFC(amount*.1);
+ $('withdrawNet').textContent=formatFC(amount*.9);
+}
+
+async function submitWithdrawal(e){
+ e.preventDefault();
+ if(!currentUser){showAuth();return}
+ let btn=e.submitter,amount=Number($('withdrawAmount').value),method=$('withdrawMethod').value,phone=$('withdrawPhone').value.trim();
+ let balance=Number(currentProfile?.balance_cdf||0);
+ if(!Number.isFinite(amount)||amount<3000){alert('Le retrait minimum est de 3 000 FC.');return}
+ if(amount>balance){alert('Le montant dépasse votre solde disponible.');return}
+ if(!method||!phone){alert('Complétez les informations demandées.');return}
+ busy(btn,true,'Envoi…');
+ try{
+  let since=new Date();since.setHours(0,0,0,0);
+  let {count,error:ce}=await db.from('sanotoleuro_withdrawal_requests').select('id',{count:'exact',head:true}).eq('user_id',currentUser.id).gte('created_at',since.toISOString());
+  if(ce)throw ce;
+  if((count||0)>=2){alert('Deux demandes de retrait maximum par jour.');return}
+  let fee=Number((amount*.1).toFixed(2)),net=Number((amount-fee).toFixed(2));
+  let {error}=await db.from('sanotoleuro_withdrawal_requests').insert({
+   user_id:currentUser.id,amount_cdf:amount,payment_method:method,phone,fee_cdf:fee,net_amount_cdf:net,status:'pending'
+  });
+  if(error)throw error;
+  localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);
+  localStorage.setItem('withdrawal_method_'+currentUser.id,method);
+  $('withdrawForm').reset();
+  await loadSavedPhone();
+  calculateWithdrawal();
+  alert('Demande de retrait envoyée pour vérification.');
+  await loadHistory();
+  showPage('orders');
+ }catch(err){console.error(err);alert('Demande non envoyée. Vérifiez les règles Supabase.')}
+ finally{busy(btn,false)}
+}
+
+async function loadHistory(){
+ let box=$('historyList');if(!box||!currentUser)return;
+ box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let results=await Promise.all([
+   db.from('sanotoleuro_deposit_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50),
+   db.from('sanotoleuro_withdrawal_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50),
+   db.from('sanotoleuro_orders').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50)
+  ]);
+  let items=[];
+  if(!results[0].error)(results[0].data||[]).forEach(r=>items.push({type:'Dépôt',amount:r.amount_cdf,status:r.status,date:r.created_at,extra:(r.payment_method||'')+' · Plan '+(r.plan_number||'—')}));
+  if(!results[1].error)(results[1].data||[]).forEach(r=>items.push({type:'Retrait',amount:r.amount_cdf,status:r.status,date:r.created_at,extra:r.payment_method||''}));
+  if(!results[2].error)(results[2].data||[]).forEach(r=>items.push({type:'Commande',amount:r.total_price_cdf,status:r.status,date:r.created_at,extra:r.product_name||''}));
+  items.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+  if(!items.length){box.innerHTML='<div class="empty">Aucune demande pour le moment.</div>';return}
+  box.innerHTML=items.map(x=>`<div class="item">
+   <div class="itemtop"><div><strong>${esc(x.type)}</strong><div class="muted small">${esc(x.extra||'')}</div></div>${statusLabel(x.status)}</div>
+   <p class="amount" style="margin:10px 0 5px">${formatFC(x.amount)}</p>
+   <div class="muted small">${x.date?new Date(x.date).toLocaleString('fr-FR'):'Date indisponible'}</div>
+  </div>`).join('');
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>'}
+}
+
+async function loadMyVIP(){
+ let box=$('myVipList');if(!box||!currentUser)return;
+ box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+   .select('id,plan_number,capital_cdf,daily_amount_cdf,duration_days,activated_at,ends_at,status')
+   .eq('user_id',currentUser.id).order('activated_at',{ascending:false}).limit(30);
+  if(error)throw error;
+  if(!data?.length){box.innerHTML='<div class="empty">Aucun plan VIP activé pour le moment.</div>';return}
+  box.innerHTML=data.map(v=>`<div class="item">
+   <div class="itemtop"><strong>PLAN VIP ${esc(v.plan_number)}</strong>${statusLabel(v.status==='active'?'success':v.status)}</div>
+   <p class="amount">${formatFC(v.capital_cdf)}</p>
+   <div class="muted small">Activé : ${new Date(v.activated_at).toLocaleString('fr-FR')}</div>
+   <div class="muted small">Fin prévue : ${new Date(v.ends_at).toLocaleDateString('fr-FR')}</div>
+   <div class="muted small">Montant quotidien indicatif : ${formatFC(v.daily_amount_cdf)}</div>
+  </div>`).join('');
+ }catch(e){
+  console.error('Chargement VIP',e);
+  box.innerHTML='<div class="empty">Impossible de charger les VIP. Vérifiez la table des abonnements dans Supabase.</div>';
+ }
+}
+
+async function loadTeam(){
+ if(!currentUser)return;
+ renderProfileSummary();
+ let box=$('teamList');box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let {data,error}=await db.rpc('sanotoleuro_my_team');
+  if(error)throw error;
+  let members=Array.isArray(data)?data:[];
+  if(!members.length){box.innerHTML='<div class="empty">Aucun membre dans votre équipe.</div>';return}
+  box.innerHTML=members.map(m=>`<div class="item"><strong>${esc(m.full_name||m.name||'Membre')}</strong><div class="muted small">${esc(m.created_at?new Date(m.created_at).toLocaleDateString('fr-FR'):'')}</div></div>`).join('');
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Les informations de l’équipe ne sont pas disponibles.</div>'}
+}
+
+async function copyText(v){
+ try{await navigator.clipboard.writeText(v);alert('Copié.')}
+ catch(e){
+  let t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Copié.');
+ }
+}
 async function copyReferralCode(){if($('teamReferralCode').value)await copyText($('teamReferralCode').value);else alert('Code indisponible.')}
 async function copyReferralLink(){if($('teamReferralLink').value)await copyText($('teamReferralLink').value);else alert('Lien indisponible.')}
-async function shareReferral(){let url=$('teamReferralLink').value;if(!url){alert('Lien indisponible.');return}if(navigator.share){try{await navigator.share({title:'SANOTOLEURO RDC',text:'Voici mon lien d’invitation :',url})}catch(e){}}else await copyText(url)}
+async function shareReferral(){
+ let url=$('teamReferralLink').value;
+ if(!url){alert('Lien indisponible.');return}
+ if(navigator.share){try{await navigator.share({title:'SANOTOLEURO RDC',text:'Voici mon lien d’invitation :',url})}catch(e){}}
+ else await copyText(url);
+}
 
-async function verifyAdmin(){if(!currentUser||!isAdmin)return false;try{let {data,error}=await db.rpc('sanotoleuro_is_admin');if(error)throw error;return data===true}catch(e){return (currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase()}}
-async function loadAdmin(){if(!isAdmin||!currentUser)return;if(!(await verifyAdmin())){alert('Accès administrateur refusé.');showPage('home');return}await Promise.all([loadAdminRequests('deposit'),loadAdminRequests('withdrawal'),loadAdminMembers(),loadSettings()])}
-async function loadAdminRequests(type){let dep=type==='deposit',box=$(dep?'adminDeposits':'adminWithdrawals'),table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';box.innerHTML='<div class="empty">Chargement…</div>';try{let {data,error}=await db.from(table).select('*').order('created_at',{ascending:false}).limit(100);if(error)throw error;if(!data?.length){box.innerHTML='<div class="empty">Aucune demande enregistrée.</div>';return}box.innerHTML=data.map(r=>{let detail=dep?`${esc(r.payment_method||'')} · Réf. ${esc(r.payment_reference||'')}`:`${esc(r.payment_method||'')} · ${esc(r.phone||'')} · Net ${formatFC(r.net_amount_cdf)}`,pending=String(r.status||'pending').toLowerCase()==='pending';return `<div class="item"><div class="itemtop"><div><strong>${dep?'Dépôt':'Retrait'} · ${formatFC(r.amount_cdf)}</strong><div class="muted small">${detail}</div><div class="muted small">Membre : ${esc(r.user_id)}</div><div class="muted small">${r.created_at?new Date(r.created_at).toLocaleString('fr-FR'):''}</div></div>${statusLabel(r.status)}</div>${r.admin_note?`<p class="muted small">Note : ${esc(r.admin_note)}</p>`:''}${pending?`<label>Note administrative</label><input id="note-${dep?'d':'w'}-${r.id}" maxlength="200" placeholder="Motif ou référence"><div class="row" style="margin-top:10px"><button class="btn primary smallbtn" onclick="updateRequest('${type}','${r.id}','success')">Valider</button><button class="btn danger smallbtn" onclick="updateRequest('${type}','${r.id}','rejected')">Rejeter</button></div>`:''}</div>`}).join('')}catch(e){console.error(e);box.innerHTML='<div class="empty">Demandes indisponibles. Vérifiez les autorisations Supabase.</div>'}}
-async function updateRequest(type,id,status){if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}let dep=type==='deposit',table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests',note=($(`note-${dep?'d':'w'}-${id}`)?.value||'').trim();if(!confirm(status==='success'?'Confirmer la validation après vérification ?':'Confirmer le rejet ?'))return;try{let {error}=await db.from(table).update({status,admin_note:note,updated_at:new Date().toISOString()}).eq('id',id).eq('status','pending');if(error)throw error;alert('Statut mis à jour.');await loadAdminRequests(type);await loadHistory()}catch(e){console.error(e);alert('Mise à jour impossible. Vérifiez les règles Supabase.')}}
-async function loadAdminMembers(){let box=$('adminMembers');box.innerHTML='<div class="empty">Chargement…</div>';try{let {data,error}=await db.from('sanotoleuro_profiles').select('id,full_name,referral_code,balance_cdf,created_at').order('created_at',{ascending:false}).limit(100);if(error)throw error;if(!data?.length){box.innerHTML='<div class="empty">Aucun membre.</div>';return}box.innerHTML=data.map(m=>`<div class="item"><strong>${esc(m.full_name||'Membre')}</strong><div class="muted small">ID : ${esc(m.id)}</div><div class="muted small">Code : ${esc(m.referral_code||'—')}</div><div class="amount">${formatFC(m.balance_cdf)}</div><button class="btn light smallbtn" style="margin-top:8px" onclick="useMemberId('${esc(m.id)}')">Choisir</button></div>`).join('')}catch(e){box.innerHTML='<div class="empty">Liste des membres indisponible. Vérifiez les règles d’accès.</div>'}}
-function useMemberId(id){$('adjustUserId').value=id;$('adjustUserId').scrollIntoView({behavior:'smooth',block:'center'})}
-async function adjustBalance(e){e.preventDefault();if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}let btn=e.submitter,id=$('adjustUserId').value.trim(),amount=Number($('adjustAmount').value),reason=$('adjustReason').value.trim();if(!id||!Number.isFinite(amount)||amount===0||!reason){alert('Vérifiez le membre, le montant et le motif.');return}if(!confirm('Confirmer cet ajustement de solde ?'))return;busy(btn,true,'Enregistrement…');try{let {error}=await db.rpc('sanotoleuro_admin_adjust_balance',{p_user_id:id,p_amount_cdf:amount,p_reason:reason});if(error)throw error;$('adjustBalanceForm').reset();alert('Ajustement enregistré.');await loadAdminMembers();await loadProfile()}catch(e){console.error(e);alert('Ajustement impossible. Vérifiez la fonction Supabase et l’ID du membre.')}finally{busy(btn,false)}}
-async function loadSettings(){if(!isAdmin)return;try{let {data,error}=await db.from('sanotoleuro_settings').select('setting_key,setting_value');if(error)throw error;let s={};(data||[]).forEach(r=>s[r.setting_key]=r.setting_value);$('settingAirtel').value=s.payment_airtel?.number||'0979928885';$('settingOrange').value=s.payment_orange?.number||'0899532643';$('settingMpesa').value=s.payment_mpesa?.number||'0861823718';$('settingTelegram').value=s.customer_telegram||'https://t.me/Drcprom';$('settingWhatsapp').value=s.customer_whatsapp||''}catch(e){}}
-async function saveSettings(e){e.preventDefault();if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}let btn=e.submitter,rows=[{setting_key:'payment_airtel',setting_value:{number:$('settingAirtel').value.trim()}},{setting_key:'payment_orange',setting_value:{number:$('settingOrange').value.trim()}},{setting_key:'payment_mpesa',setting_value:{number:$('settingMpesa').value.trim()}},{setting_key:'customer_telegram',setting_value:$('settingTelegram').value.trim()},{setting_key:'customer_whatsapp',setting_value:$('settingWhatsapp').value.trim()}];busy(btn,true,'Enregistrement…');try{for(let r of rows){let {error}=await db.from('sanotoleuro_settings').upsert(r,{onConflict:'setting_key'});if(error)throw error}alert('Coordonnées enregistrées.')}catch(e){console.error(e);alert('Enregistrement impossible. Vérifiez les règles Supabase.')}finally{busy(btn,false)}}
+async function verifyAdmin(){
+ if(!currentUser||!isAdmin)return false;
+ try{
+  let {data,error}=await db.rpc('sanotoleuro_is_admin');
+  if(error)throw error;
+  return data===true;
+ }catch(e){
+  console.error('Vérification administrateur',e);
+  return false;
+ }
+}
 
-async function initApp(){let ref=new URLSearchParams(location.search).get('ref');if(ref)$('regReferral').value=ref;db.auth.onAuthStateChange((event,session)=>{setTimeout(async()=>{if(session?.user){currentUser=session.user;isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();if($('appScreen').classList.contains('hidden'))await afterLogin()}else{currentUser=null;currentProfile=null;isAdmin=false;showAuth()}},0)});try{let {data,error}=await db.auth.getSession();if(error)throw error;if(data.session?.user){currentUser=data.session.user;await afterLogin()}else showAuth()}catch(e){showAuth()}}
+async function loadAdmin(){
+ if(!isAdmin||!currentUser){alert('Accès administrateur refusé.');return}
+ if(!(await verifyAdmin())){alert('Accès administrateur refusé. Vérifiez votre session.');return}
+ await Promise.all([
+  loadAdminRequests('deposit'),
+  loadAdminRequests('withdrawal'),
+  loadAdminMembers(),
+  loadSettings(),
+  loadAdminVIP()
+ ]);
+}
+
+async function loadAdminRequests(type){
+ let dep=type==='deposit';
+ let box=$(dep?'adminDeposits':'adminWithdrawals');
+ let table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';
+ box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let {data,error}=await db.from(table).select('*').order('created_at',{ascending:false}).limit(100);
+  if(error)throw error;
+  if(!data?.length){box.innerHTML='<div class="empty">Aucune demande enregistrée.</div>';return}
+  box.innerHTML=data.map(r=>{
+   let detail=dep
+    ?`${esc(r.payment_method||'')} · Réf. ${esc(r.payment_reference||'')} · Plan ${esc(r.plan_number||'—')}`
+    :`${esc(r.payment_method||'')} · ${esc(r.phone||'')} · Net ${formatFC(r.net_amount_cdf)}`;
+   let pending=String(r.status||'pending').toLowerCase()==='pending';
+   return `<div class="item">
+    <div class="itemtop"><div>
+     <strong>${dep?'Dépôt':'Retrait'} · ${formatFC(r.amount_cdf)}</strong>
+     <div class="muted small">${detail}</div>
+     <div class="muted small">Membre : ${esc(r.user_id)}</div>
+     <div class="muted small">${r.created_at?new Date(r.created_at).toLocaleString('fr-FR'):''}</div>
+    </div>${statusLabel(r.status)}</div>
+    ${r.admin_note?`<p class="muted small">Note : ${esc(r.admin_note)}</p>`:''}
+    ${pending?`<label>Note administrative</label><input id="note-${dep?'d':'w'}-${r.id}" maxlength="200" placeholder="Note ou motif">
+    <div class="row" style="margin-top:10px">
+     <button class="btn primary smallbtn" onclick="updateRequest('${type}','${r.id}','success')">Valider</button>
+     <button class="btn danger smallbtn" onclick="updateRequest('${type}','${r.id}','rejected')">Rejeter</button>
+    </div>`:''}
+   </div>`;
+  }).join('');
+ }catch(e){
+  console.error(e);
+  box.innerHTML='<div class="empty">Demandes indisponibles. Vérifiez les autorisations Supabase.</div>';
+ }
+}
+
+/*
+ * CORRECTION PRINCIPALE :
+ * Un dépôt validé appelle la fonction SQL sécurisée.
+ * Cette fonction valide le dépôt ET crée l'abonnement VIP
+ * dans une transaction, sans double activation.
+ */
+async function updateRequest(type,id,status){
+ if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}
+ let dep=type==='deposit';
+ let note=($(`note-${dep?'d':'w'}-${id}`)?.value||'').trim();
+ if(!confirm(status==='success'?'Confirmer après avoir vérifié le paiement réel ?':'Confirmer le rejet ?'))return;
+ try{
+  if(dep){
+   let functionName=status==='success'
+    ?'sanotoleuro_admin_approve_deposit'
+    :'sanotoleuro_admin_reject_deposit';
+   let {data,error}=await db.rpc(functionName,{
+    p_deposit_id:id,
+    p_admin_note:note||null
+   });
+   if(error)throw error;
+   if(!data?.success)throw new Error(data?.message||'La fonction Supabase n’a pas confirmé la validation.');
+   alert(data.message||'Opération terminée.');
+   await Promise.all([loadAdminRequests('deposit'),loadAdminVIP(),loadMyVIP(),loadHistory()]);
+  }else{
+   let {data,error}=await db.from('sanotoleuro_withdrawal_requests')
+    .update({status,admin_note:note,updated_at:new Date().toISOString()})
+    .eq('id',id).eq('status','pending').select('id');
+   if(error)throw error;
+   if(!data?.length)throw new Error('Retrait introuvable ou déjà traité.');
+   alert(status==='success'?'Retrait marqué comme traité. Vérifiez que le paiement a réellement été envoyé.':'Retrait rejeté.');
+   await loadAdminRequests('withdrawal');
+   await loadHistory();
+  }
+ }catch(e){
+  console.error('Erreur administration',e);
+  alert('Échec : '+(e.message||'Vérifiez les fonctions et les données dans Supabase.'));
+ }
+}
+
+async function loadAdminVIP(){
+ let box=$('adminVIP');if(!box||!isAdmin)return;
+ box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+   .select('id,user_id,plan_number,capital_cdf,daily_amount_cdf,activated_at,ends_at,status')
+   .order('activated_at',{ascending:false}).limit(100);
+  if(error)throw error;
+  if(!data?.length){box.innerHTML='<div class="empty">Aucun abonnement VIP activé.</div>';return}
+  box.innerHTML=data.map(v=>`<div class="item">
+   <strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong>
+   <div class="muted small">Membre : ${esc(v.user_id)}</div>
+   <div class="muted small">Activation : ${new Date(v.activated_at).toLocaleString('fr-FR')}</div>
+   <div class="muted small">Fin : ${new Date(v.ends_at).toLocaleDateString('fr-FR')}</div>
+   ${statusLabel(v.status==='active'?'success':v.status)}
+  </div>`).join('');
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Liste VIP indisponible. Vérifiez les autorisations Supabase.</div>'}
+}
+
+async function loadAdminMembers(){
+ let box=$('adminMembers');box.innerHTML='<div class="empty">Chargement…</div>';
+ try{
+  let {data,error}=await db.from('sanotoleuro_profiles')
+   .select('id,full_name,referral_code,balance_cdf,created_at')
+   .order('created_at',{ascending:false}).limit(100);
+  if(error)throw error;
+  if(!data?.length){box.innerHTML='<div class="empty">Aucun membre.</div>';return}
+  box.innerHTML=data.map(m=>`<div class="item">
+   <strong>${esc(m.full_name||'Membre')}</strong>
+   <div class="muted small">ID : ${esc(m.id)}</div>
+   <div class="muted small">Code : ${esc(m.referral_code||'—')}</div>
+   <div class="amount">${formatFC(m.balance_cdf)}</div>
+   <button class="btn light smallbtn" style="margin-top:8px" onclick="useMemberId('${esc(m.id)}')">Choisir</button>
+  </div>`).join('');
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Liste des membres indisponible. Vérifiez les règles d’accès.</div>'}
+}
+
+function useMemberId(id){
+ $('adjustUserId').value=id;
+ $('adjustUserId').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+async function adjustBalance(e){
+ e.preventDefault();
+ if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}
+ let btn=e.submitter,id=$('adjustUserId').value.trim(),amount=Number($('adjustAmount').value),reason=$('adjustReason').value.trim();
+ if(!id||!Number.isFinite(amount)||amount===0||!reason){alert('Vérifiez le membre, le montant et le motif.');return}
+ if(!confirm('Confirmer cet ajustement de solde ?'))return;
+ busy(btn,true,'Enregistrement…');
+ try{
+  let {error}=await db.rpc('sanotoleuro_admin_adjust_balance',{p_user_id:id,p_amount_cdf:amount,p_reason:reason});
+  if(error)throw error;
+  $('adjustBalanceForm').reset();
+  alert('Ajustement enregistré.');
+  await loadAdminMembers();
+  await loadProfile();
+ }catch(e){console.error(e);alert('Ajustement impossible : '+(e.message||'vérifiez la fonction et l’ID du membre.'))}
+ finally{busy(btn,false)}
+}
+
+async function loadSettings(){
+ if(!isAdmin)return;
+ try{
+  let {data,error}=await db.from('sanotoleuro_settings').select('setting_key,setting_value');
+  if(error)throw error;
+  let s={};(data||[]).forEach(r=>s[r.setting_key]=r.setting_value);
+  $('settingAirtel').value=s.payment_airtel?.number||'0979928885';
+  $('settingOrange').value=s.payment_orange?.number||'0899532643';
+  $('settingMpesa').value=s.payment_mpesa?.number||'0861823718';
+  $('settingTelegram').value=s.customer_telegram||'https://t.me/Drcprom';
+  $('settingWhatsapp').value=s.customer_whatsapp||'';
+ }catch(e){console.error(e)}
+}
+
+async function saveSettings(e){
+ e.preventDefault();
+ if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}
+ let btn=e.submitter;
+ let rows=[
+  {setting_key:'payment_airtel',setting_value:{number:$('settingAirtel').value.trim()}},
+  {setting_key:'payment_orange',setting_value:{number:$('settingOrange').value.trim()}},
+  {setting_key:'payment_mpesa',setting_value:{number:$('settingMpesa').value.trim()}},
+  {setting_key:'customer_telegram',setting_value:$('settingTelegram').value.trim()},
+  {setting_key:'customer_whatsapp',setting_value:$('settingWhatsapp').value.trim()}
+ ];
+ busy(btn,true,'Enregistrement…');
+ try{
+  for(let r of rows){
+   let {error}=await db.from('sanotoleuro_settings').upsert(r,{onConflict:'setting_key'});
+   if(error)throw error;
+  }
+  alert('Coordonnées enregistrées.');
+ }catch(e){console.error(e);alert('Enregistrement impossible. Vérifiez les règles Supabase.')}
+ finally{busy(btn,false)}
+}
+
+async function initApp(){
+ let ref=new URLSearchParams(location.search).get('ref');
+ if(ref)$('regReferral').value=ref;
+
+ db.auth.onAuthStateChange((event,session)=>{
+  setTimeout(async()=>{
+   if(session?.user){
+    currentUser=session.user;
+    isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
+    if($('appScreen').classList.contains('hidden'))await afterLogin();
+   }else{
+    currentUser=null;currentProfile=null;isAdmin=false;showAuth();
+   }
+  },0);
+ });
+
+ try{
+  let {data,error}=await db.auth.getSession();
+  if(error)throw error;
+  if(data.session?.user){
+   currentUser=data.session.user;
+   await afterLogin();
+  }else showAuth();
+ }catch(e){console.error(e);showAuth()}
+}
 initApp();
 </script>
 </body>
