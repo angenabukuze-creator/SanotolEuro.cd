@@ -2,1177 +2,554 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#174b32">
-<title>SANOTOLEURO | Matériel médical</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#174d35">
+<title>SANOTOLEURO</title>
 <style>
-:root{
-  --forest:#174b32;
-  --forest2:#236b45;
-  --light:#edf5ef;
-  --white:#fff;
-  --text:#1c2c22;
-  --muted:#6b7a70;
-  --border:#dce7de;
-  --danger:#b42318;
-  --gold:#e5b94b;
-}
+:root{--g:#174d35;--g2:#0d3826;--p:#eaf4ed;--bg:#f6faf7;--line:#dce6de;--muted:#68776e;--white:#fff}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:#f4f8f4;
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
+body{margin:0;background:var(--bg);color:#17231c;font-family:Arial,sans-serif}
 button,input,select{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
-header{
-  background:var(--forest);
-  color:white;
-  padding:15px;
-  position:sticky;
-  top:0;
-  z-index:20;
-  box-shadow:0 3px 12px #0002;
-}
-.header-inner{
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:bold;
-  font-size:19px;
-}
-.logo{
-  width:43px;height:43px;
-  display:grid;place-items:center;
-  background:white;color:var(--forest);
-  border-radius:12px;
-  font-size:23px;
-}
-.header-btn{
-  border:1px solid #ffffff66;
-  background:#ffffff12;
-  color:white;
-  border-radius:9px;
-  padding:10px 13px;
-}
-main{
-  max-width:1100px;
-  margin:auto;
-  padding:18px 14px 100px;
-}
-.hero{
-  position:relative;
-  overflow:hidden;
-  min-height:250px;
-  border-radius:20px;
-  background:var(--forest);
-  color:white;
-  display:flex;
-  align-items:center;
-  margin-bottom:22px;
-}
-.hero-slide{
-  position:absolute;inset:0;
-  opacity:0;
-  transition:opacity .7s;
-}
-.hero-slide.active{opacity:1}
-.hero-slide img{
-  width:100%;height:100%;
-  object-fit:cover;
-}
-.hero-shade{
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,#0d3024e8,#174b3280,#0002);
-}
-.hero-content{
-  position:relative;
-  z-index:2;
-  padding:27px;
-  max-width:600px;
-}
-.hero h1{
-  font-size:clamp(27px,5vw,43px);
-  margin:0 0 12px;
-}
-.hero p{line-height:1.6;margin:0 0 18px}
-.dots{
-  position:absolute;
-  bottom:12px;right:15px;
-  z-index:3;display:flex;gap:7px;
-}
-.dot{
-  width:9px;height:9px;border-radius:50%;
-  background:#ffffff80;border:0;padding:0;
-}
-.dot.active{background:white}
-.btn{
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  gap:7px;
-  border:0;
-  padding:12px 16px;
-  border-radius:10px;
-  font-weight:bold;
-  text-decoration:none;
-}
-.btn-primary{background:var(--forest);color:white}
-.btn-white{background:white;color:var(--forest)}
-.btn-light{background:var(--light);color:var(--forest)}
-.btn-outline{border:1px solid var(--border);background:white;color:var(--forest)}
-.btn-danger{background:#fff0ef;color:var(--danger)}
-.full{width:100%}
-.section{margin-top:25px}
-.section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:14px;
-}
-h2{font-size:21px;margin:0;color:var(--forest)}
-h3{margin:0 0 8px}
+button{cursor:pointer;border:0}
+.header{background:white;border-bottom:1px solid var(--line);padding:12px;position:sticky;top:0;z-index:10}
+.head{max-width:1000px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:9px;color:var(--g);font-weight:900;font-size:19px}
+.logo{background:var(--g);color:white;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:23px}
+.wrap{max-width:1000px;margin:auto;padding:16px 14px 100px}
+.hero{background:linear-gradient(120deg,#0d3826,#347653);color:white;padding:25px;border-radius:18px;margin-bottom:16px}
+.hero h1{font-size:30px;margin:8px 0}
+.hero p{line-height:1.5}
+.btn{padding:11px 14px;border-radius:10px;font-weight:700}
+.primary{background:var(--g);color:white}
+.light{background:var(--p);color:var(--g)}
+.white{background:white;color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.quick{background:white;border:1px solid var(--line);border-radius:13px;padding:16px 8px;color:var(--g);font-weight:800}
+.quick span{display:block;font-size:24px;margin-bottom:6px}
+.panel,.card{background:white;border:1px solid var(--line);border-radius:14px;padding:15px;margin:12px 0}
+h2,h3{color:var(--g)}
+h2{font-size:22px}
+h3{margin:0 0 9px}
 .muted{color:var(--muted);font-size:13px;line-height:1.5}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:14px;
-}
-.product{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 3px 12px #173c2410;
-}
-.product img{
-  width:100%;height:155px;
-  object-fit:cover;
-  background:var(--light);
-}
-.product-body{padding:13px}
-.product h3{font-size:15px;line-height:1.4}
-.price{font-size:17px;font-weight:bold;color:var(--forest);margin:9px 0}
-.tag{
-  display:inline-block;
-  font-size:11px;
-  background:var(--light);
-  color:var(--forest);
-  padding:5px 8px;
-  border-radius:20px;
-}
-.actions{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-}
-.action-card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:17px;
-  text-align:left;
-}
-.action-card .icon{font-size:25px;display:block;margin-bottom:9px}
-.action-card strong{color:var(--forest);display:block;margin-bottom:5px}
-.panel{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:15px;
-}
-label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin:13px 0 6px;
-}
-input,select{
-  width:100%;
-  padding:12px;
-  border:1px solid #cbd9ce;
-  border-radius:9px;
-  background:white;
-  outline:none;
-}
-input:focus,select:focus{border-color:var(--forest)}
-.notice{
-  padding:12px;
-  border-radius:10px;
-  background:var(--light);
-  color:var(--forest);
-  font-size:13px;
-  line-height:1.6;
-  margin:12px 0;
-}
-.status{
-  display:inline-block;
-  border-radius:20px;
-  padding:5px 9px;
-  font-size:11px;
-  background:#fff4d6;
-  color:#775600;
-}
-.row{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:12px;
-}
-.list-item{
-  border-bottom:1px solid var(--border);
-  padding:14px 0;
-}
-.list-item:last-child{border-bottom:0}
-.empty{
-  background:white;border:1px dashed #b9cbbd;
-  padding:25px;text-align:center;border-radius:13px;
-  color:var(--muted);line-height:1.6;
-}
-footer{
-  text-align:center;
-  padding:22px 12px 95px;
-  color:var(--muted);
-  font-size:12px;
-}
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  z-index:30;background:white;
-  border-top:1px solid var(--border);
-  display:flex;justify-content:center;
-  box-shadow:0 -3px 15px #00000008;
-}
-.nav-inner{
-  max-width:650px;width:100%;
-  display:flex;justify-content:space-around;
-  padding:8px 2px calc(8px + env(safe-area-inset-bottom));
-}
-.nav-item{
-  border:0;background:transparent;color:var(--muted);
-  font-size:11px;padding:5px 8px;
-}
-.nav-item span{display:block;font-size:20px;margin-bottom:4px}
-.nav-item.active{color:var(--forest);font-weight:bold}
+.price{font-size:21px;font-weight:900;color:var(--g);margin:8px 0}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.product img{width:100%;height:125px;object-fit:cover;border-radius:9px}
+.product button,.card button{width:100%;margin-top:8px}
+.field{display:block;margin:12px 0}
+.field label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:white}
+.notice{padding:12px;background:var(--p);border-radius:10px;line-height:1.6;font-size:13px;margin:12px 0}
 .hidden{display:none!important}
-.modal{
-  position:fixed;inset:0;z-index:50;
-  background:#0009;display:flex;
-  align-items:center;justify-content:center;
-  padding:15px;
-}
-.modal-card{
-  background:white;width:100%;max-width:450px;
-  max-height:90vh;overflow:auto;
-  border-radius:17px;padding:20px;
-}
-.modal-head{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:12px;
-}
-.close{
-  background:var(--light);border:0;
-  width:36px;height:36px;border-radius:9px;
-  color:var(--forest);font-size:20px;
-}
-hr{border:0;border-top:1px solid var(--border);margin:16px 0}
-.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.contact-link{
-  text-decoration:none;text-align:center;
-  padding:14px 6px;border-radius:12px;
-  background:white;border:1px solid var(--border);
-  color:var(--forest);font-weight:bold;font-size:12px;
-}
-.contact-link span{display:block;font-size:24px;margin-bottom:7px}
-@media(max-width:800px){
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .product img{height:140px}
-}
-@media(max-width:380px){
-  .brand{font-size:15px}
-  .hero-content{padding:19px}
-  .contact-grid{grid-template-columns:1fr}
-}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:20;background:white;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px 2px calc(6px + env(safe-area-inset-bottom))}
+.bottom button{background:white;color:var(--g);font-size:10px;font-weight:700;padding:5px 3px}
+.bottom span{display:block;font-size:19px;margin-bottom:3px}
+.modal-bg{position:fixed;inset:0;background:#0009;z-index:50;display:grid;place-items:center;padding:12px}
+.modal{background:white;border-radius:15px;padding:18px;width:min(100%,450px);max-height:90vh;overflow:auto}
+.modal h2{margin-top:0}
+.status{padding:10px;border-radius:8px;background:var(--p);font-size:13px;margin:8px 0;line-height:1.5}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(3,minmax(0,1fr))}.product img{height:155px}}
 </style>
 </head>
-
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <div class="logo">✚</div>
-      <div>
-        SANOTOLEURO
-        <div style="font-size:10px;font-weight:normal;opacity:.8">
-          MATÉRIEL MÉDICAL
-        </div>
-      </div>
-    </div>
-    <button class="header-btn" id="accountHeader" onclick="openAccount()">
-      Se connecter
-    </button>
-  </div>
+<header class="header">
+ <div class="head">
+  <div class="brand"><div class="logo">✚</div><div>SANOTOLEURO<div class="muted">Votre santé, notre priorité</div></div></div>
+  <button class="btn light" id="authBtn" onclick="openAuth()">Connexion</button>
+ </div>
 </header>
 
-<main>
+<main class="wrap">
 
-<section id="homePage">
-  <div class="hero" id="hero">
-    <div class="hero-slide active">
-      <img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1200&q=80" alt="Équipements médicaux" onerror="this.style.display='none'">
-    </div>
-    <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80" alt="Matériel de santé" onerror="this.style.display='none'">
-    </div>
-    <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1200&q=80" alt="Professionnels de santé" onerror="this.style.display='none'">
-    </div>
-    <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=1200&q=80" alt="Produits de santé" onerror="this.style.display='none'">
-    </div>
-    <div class="hero-shade"></div>
-    <div class="hero-content">
-      <span class="tag" style="background:#ffffff20;color:white">BIENVENUE CHEZ NOUS</span>
-      <h1>La santé, notre priorité.</h1>
-      <p>
-        Découvrez notre sélection de matériel médical et de produits de santé.
-        Consultez les produits et passez vos commandes en quelques étapes.
-      </p>
-      <button class="btn btn-white" onclick="showPage('shop')">Découvrir les produits →</button>
-    </div>
-    <div class="dots" id="heroDots"></div>
-  </div>
+<section id="page-home">
+ <div class="hero">
+  <div>MATÉRIEL MÉDICAL · RDC</div>
+  <h1>Bienvenue chez SANOTOLEURO</h1>
+  <p>Découvrez nos produits, consultez les formules et contactez notre service client.</p>
+  <button class="btn white" onclick="showPage('shop')">Voir la boutique</button>
+ </div>
 
-  <div class="section">
-    <div class="section-head">
-      <h2>Que souhaitez-vous faire ?</h2>
-    </div>
-    <div class="actions">
-      <button class="action-card" onclick="showPage('shop')">
-        <span class="icon">🩺</span>
-        <strong>Nos produits</strong>
-        <span class="muted">Consulter le catalogue médical</span>
-      </button>
-      <button class="action-card" onclick="openAccount()">
-        <span class="icon">🛒</span>
-        <strong>Commander</strong>
-        <span class="muted">Choisir un produit et son paiement</span>
-      </button>
-      <button class="action-card" onclick="showPage('orders')">
-        <span class="icon">📋</span>
-        <strong>Mes commandes</strong>
-        <span class="muted">Consulter le suivi des commandes</span>
-      </button>
-      <button class="action-card" onclick="showPage('team')">
-        <span class="icon">👥</span>
-        <strong>Mon équipe</strong>
-        <span class="muted">Voir les personnes parrainées</span>
-      </button>
-    </div>
-  </div>
+ <div class="grid">
+  <button class="quick" onclick="showPage('shop')"><span>🩺</span>Produits médicaux</button>
+  <button class="quick" onclick="showPage('plans')"><span>💳</span>Produits / Rechargé</button>
+  <button class="quick" onclick="showPage('withdraw')"><span>↗️</span>Retrait</button>
+  <button class="quick" onclick="showPage('orders')"><span>📋</span>Mes commandes</button>
+  <button class="quick" onclick="showPage('team')"><span>👥</span>Mon équipe</button>
+  <button class="quick" onclick="showPage('account')"><span>👤</span>Mon compte</button>
+ </div>
 
-  <div class="section">
-    <div class="section-head">
-      <h2>Produits à découvrir</h2>
-      <button class="btn btn-light" onclick="showPage('shop')">Tout voir</button>
-    </div>
-    <div id="homeProducts" class="grid"></div>
-  </div>
-
-  <div class="section panel">
-    <h2>Pourquoi SANOTOLEURO ?</h2>
-    <p class="muted">
-      Une boutique dédiée au matériel médical, avec un catalogue de produits,
-      des commandes suivies et une assistance client.
-    </p>
-    <div class="notice">
-      Les prix et la disponibilité doivent être confirmés sur la fiche de chaque produit.
-      Une commande reste en attente tant que le paiement n'a pas été vérifié.
-    </div>
-  </div>
+ <div class="panel">
+  <h2>Service client</h2>
+  <p class="muted">Pour toute question ou demande de vérification de paiement, contactez le service client.</p>
+  <a class="btn primary" href="https://t.me/Drcprom" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Contacter sur Telegram</a>
+  <p><a href="https://t.me/+dbpiuZGoZUE4MDhk" target="_blank" rel="noopener">Rejoindre le groupe Telegram</a></p>
+ </div>
 </section>
 
-<section id="shopPage" class="hidden">
-  <div class="section-head">
-    <h2>🩺 Boutique médicale</h2>
-    <button class="btn btn-light" onclick="loadProducts()">Actualiser</button>
-  </div>
-  <p class="muted">Choisissez un produit pour consulter sa disponibilité et passer commande.</p>
-  <div id="productsGrid" class="grid"></div>
+<section id="page-shop" class="hidden">
+ <h2>Boutique médicale</h2>
+ <p class="muted">Les prix et disponibilités doivent être confirmés par la boutique.</p>
+ <div id="products" class="cards">Chargement des produits…</div>
 </section>
 
-<section id="ordersPage" class="hidden">
-  <div class="section-head"><h2>📋 Mes commandes</h2></div>
-  <div class="panel">
-    <div class="muted">Connectez-vous pour voir vos commandes et leur état de traitement.</div>
-  </div>
-  <div id="ordersList"></div>
+<section id="page-plans" class="hidden">
+ <h2>Produits / Rechargé</h2>
+ <div class="notice">
+  Choisissez une formule pour consulter les coordonnées de paiement.<br>
+  Les montants journaliers et totaux du cycle sont des estimations indicatives, non garanties. Aucun versement automatique n’est effectué. L’administration doit vérifier chaque paiement.
+ </div>
+ <div id="plans" class="cards">Chargement des formules…</div>
 </section>
 
-<section id="teamPage" class="hidden">
-  <div class="section-head"><h2>👥 Mon équipe</h2></div>
-  <div class="panel">
-    <label>Mon code de parrainage</label>
-    <div class="row">
-      <input id="myReferralCode" readonly placeholder="Connectez-vous">
-      <button class="btn btn-primary" onclick="copyReferral()">Copier</button>
-    </div>
-    <label>Mon lien de parrainage</label>
-    <input id="myReferralLink" readonly>
-    <button class="btn btn-light full" style="margin-top:10px" onclick="shareReferral()">Partager mon lien</button>
-  </div>
-  <div class="panel">
-    <h3>Personnes parrainées</h3>
-    <div id="teamList" class="muted">Connectez-vous pour consulter votre équipe.</div>
-  </div>
+<section id="page-withdraw" class="hidden">
+ <h2>Retrait</h2>
+ <div class="panel">
+  <p>Montant minimum de demande : <strong>3 000 FC</strong></p>
+  <p>Frais indicatifs : <strong>10 %</strong></p>
+  <form onsubmit="submitWithdrawal(event)">
+   <label class="field"><label>Montant demandé (FC)</label>
+    <input id="withdrawAmount" name="amount" type="number" min="3000" step="1" required placeholder="Ex. 3000">
+   </label>
+   <label class="field"><label>Mode de réception</label>
+    <select name="method" required>
+     <option>Airtel Money</option>
+     <option>Orange Money</option>
+     <option>M-Pesa</option>
+    </select>
+   </label>
+   <label class="field"><label>Numéro de réception</label>
+    <input name="phone" required inputmode="tel" maxlength="30" placeholder="Votre numéro Mobile Money">
+   </label>
+   <div id="withdrawCalc" class="notice">Frais estimés : 0 FC · Net estimé : 0 FC</div>
+   <button class="btn primary" type="submit">Envoyer la demande</button>
+  </form>
+  <p class="muted">La demande sera transmise au service client pour examen. Ce formulaire ne confirme pas un solde ni un paiement.</p>
+ </div>
 </section>
 
-<section id="accountPage" class="hidden">
-  <div class="section-head"><h2>👤 Mon compte</h2></div>
-  <div id="accountInfo" class="panel"></div>
-  <div id="authBox" class="panel">
-    <h3>Connexion</h3>
-    <p class="muted">Connectez-vous ou créez votre compte avec votre adresse e-mail.</p>
-
-    <div class="row" style="margin:14px 0">
-      <button class="btn btn-primary" style="flex:1" onclick="setAuthMode('login')">Connexion</button>
-      <button class="btn btn-light" style="flex:1" onclick="setAuthMode('signup')">Inscription</button>
-    </div>
-
-    <form id="authForm">
-      <div id="nameField" class="hidden">
-        <label>Nom complet</label>
-        <input id="fullName" autocomplete="name" placeholder="Votre nom complet">
-      </div>
-
-      <label>Adresse e-mail</label>
-      <input id="email" type="email" required autocomplete="email" placeholder="vous@exemple.com">
-
-      <label>Mot de passe</label>
-      <input id="password" type="password" required minlength="8" autocomplete="current-password" placeholder="Au moins 8 caractères">
-
-      <div id="refField" class="hidden">
-        <label>Code de parrainage (facultatif)</label>
-        <input id="refCode" placeholder="Code de votre parrain">
-      </div>
-
-      <button id="authSubmit" class="btn btn-primary full" style="margin-top:17px" type="submit">Se connecter</button>
-    </form>
-    <button class="btn btn-outline full" style="margin-top:10px" onclick="resetPassword()">Réinitialiser mon mot de passe</button>
-    <div id="authMessage" class="notice hidden"></div>
-  </div>
-
-  <div id="loggedBox" class="panel hidden">
-    <h3>Votre compte est connecté</h3>
-    <p class="muted">Vous pouvez consulter vos commandes et votre équipe.</p>
-    <button class="btn btn-light full" onclick="showPage('orders')">Mes commandes</button>
-    <button class="btn btn-outline full" style="margin-top:9px" onclick="showPage('team')">Mon équipe</button>
-    <button class="btn btn-danger full" style="margin-top:9px" onclick="logout()">Se déconnecter</button>
-  </div>
+<section id="page-orders" class="hidden">
+ <h2>Mes commandes</h2>
+ <div id="orders">Connectez-vous pour consulter vos commandes.</div>
 </section>
 
-<section id="contactsPage" class="hidden">
-  <div class="section-head"><h2>📞 Nous contacter</h2></div>
-  <div class="panel">
-    <p class="muted">Contactez notre équipe pour vos questions sur les produits et les commandes.</p>
-    <div class="contact-grid">
-      <a class="contact-link" href="https://t.me/Drcprom" target="_blank" rel="noopener">
-        <span>✈️</span>Service Telegram
-      </a>
-      <a class="contact-link" href="https://t.me/+dbpiuZGoZUE4MDhk" target="_blank" rel="noopener">
-        <span>👥</span>Groupe Telegram
-      </a>
-      <button class="contact-link" onclick="showWhatsApp()">
-        <span>💬</span>WhatsApp
-      </button>
-    </div>
-    <div class="notice">Le numéro WhatsApp du service client pourra être ajouté lorsque vous nous le communiquerez.</div>
-  </div>
+<section id="page-team" class="hidden">
+ <h2>Mon équipe</h2>
+ <div class="panel">
+  <p>Mon code de parrainage :</p>
+  <input id="myReferral" readonly style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px" value="Connectez-vous">
+  <button class="btn primary" onclick="copyReferral()">Copier mon code</button>
+  <p id="teamInfo" class="muted">Connectez-vous pour consulter votre équipe.</p>
+  <div id="teamList"></div>
+ </div>
 </section>
 
+<section id="page-account" class="hidden">
+ <h2>Mon compte</h2>
+ <div id="accountInfo" class="panel">Connectez-vous pour afficher votre compte.</div>
+ <button class="btn primary" onclick="openAuth()">Connexion / inscription</button>
+ <button class="btn light" onclick="signOut()">Déconnexion</button>
+</section>
+
+<footer class="muted" style="text-align:center;padding:20px 0">
+ © <span id="year"></span> SANOTOLEURO · République démocratique du Congo
+</footer>
 </main>
 
-<footer>
-  <strong>SANOTOLEURO</strong><br>
-  Matériel médical · République démocratique du Congo<br>
-  © <span id="year"></span> SANOTOLEURO
-</footer>
-
-<nav class="bottom-nav">
-  <div class="nav-inner">
-    <button class="nav-item active" data-page="home" onclick="showPage('home')"><span>🏠</span>Accueil</button>
-    <button class="nav-item" data-page="shop" onclick="showPage('shop')"><span>🩺</span>Boutique</button>
-    <button class="nav-item" data-page="orders" onclick="showPage('orders')"><span>📋</span>Commandes</button>
-    <button class="nav-item" data-page="team" onclick="showPage('team')"><span>👥</span>Équipe</button>
-    <button class="nav-item" data-page="account" onclick="showPage('account')"><span>👤</span>Compte</button>
-  </div>
+<nav class="bottom">
+ <button onclick="showPage('home')"><span>⌂</span>Accueil</button>
+ <button onclick="showPage('shop')"><span>🩺</span>Produits</button>
+ <button onclick="showPage('plans')"><span>💳</span>Rechargé</button>
+ <button onclick="showPage('withdraw')"><span>↗</span>Retrait</button>
+ <button onclick="showPage('orders')"><span>📋</span>Commandes</button>
+ <button onclick="showPage('account')"><span>●</span>Compte</button>
 </nav>
 
-<div id="productModal" class="modal hidden">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h2 id="modalProductName">Commander</h2>
-      <button class="close" onclick="closeModal()">×</button>
-    </div>
-    <div id="modalProductInfo" class="muted" style="margin-top:10px"></div>
-    <form id="orderForm">
-      <input id="orderProductId" type="hidden">
-      <label>Quantité</label>
-      <input id="orderQuantity" type="number" min="1" max="100" value="1" required>
-      <label>Moyen de paiement</label>
-      <select id="paymentMethod" required>
-        <option value="Airtel Money">Airtel Money</option>
-        <option value="Orange Money">Orange Money</option>
-        <option value="M-Pesa">M-Pesa</option>
-      </select>
-      <div id="paymentInstructions" class="notice"></div>
-      <label>Référence de transaction (si vous avez déjà payé)</label>
-      <input id="paymentReference" maxlength="200" placeholder="Référence du transfert">
-      <div class="notice">
-        Vérifiez le nom du bénéficiaire et le montant avant d'envoyer de l'argent.
-        La commande ne confirme pas automatiquement le paiement.
-      </div>
-      <button id="submitOrder" type="submit" class="btn btn-primary full">Enregistrer la commande</button>
-    </form>
-    <div id="orderMessage" class="notice hidden"></div>
-  </div>
-</div>
-
-<div id="toast" class="notice hidden" style="position:fixed;bottom:90px;left:15px;right:15px;z-index:80;box-shadow:0 5px 20px #0002"></div>
+<div id="modalRoot"></div>
+<div id="toast" class="status hidden" style="position:fixed;top:75px;left:12px;right:12px;z-index:80"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-"use strict";
+const SUPABASE_URL='https://mfusevvmaknlvqrlleui.supabase.co';
+const SUPABASE_KEY='sb_publishable_XGdaDC5JYRlQlabEpjZvCw_DO3Zh_SD';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-/* CONFIGURATION SUPABASE */
-const SUPABASE_URL = "https://mfusevvmaknlvqrlleui.supabase.co";
-const SUPABASE_KEY = "sb_publishable_XGdaDC5JYRlQlabEpjZvCw_DO3Zh_SD";
-
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-/* COORDONNÉES DE PAIEMENT FOURNIES */
-const PAYMENT_DETAILS = {
-  "Airtel Money": {number:"0979928885", name:"YVETTE"},
-  "Orange Money": {number:"0899532643", name:"JACQUELINE"},
-  "M-Pesa": {number:"0861823718", name:"REGINA"}
+const PAYMENT={
+ 'Airtel Money':'0979928885 — YVETTE',
+ 'Orange Money':'0899532643 — JACQUELINE',
+ 'M-Pesa':'0861823718 — REGINA'
 };
 
-/* CATALOGUE D'AFFICHAGE SI AUCUN PRODUIT N'EST ENCORE ENREGISTRÉ */
-const sampleProducts = [
-  {
-    name:"Tensiomètre électronique",
-    description:"Appareil de mesure de la tension artérielle.",
-    image:"https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Thermomètre médical",
-    description:"Thermomètre pour la mesure de la température corporelle.",
-    image:"https://images.unsplash.com/photo-1584362917165-526a968579e8?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Gants médicaux",
-    description:"Gants à usage médical. Choisissez la taille adaptée.",
-    image:"https://images.unsplash.com/photo-1584744982491-665216d95f8b?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Masques chirurgicaux",
-    description:"Masques de protection à usage médical.",
-    image:"https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Stéthoscope",
-    description:"Instrument d'auscultation médicale.",
-    image:"https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Trousse de premiers secours",
-    description:"Accessoires de premiers soins.",
-    image:"https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Fauteuil roulant",
-    description:"Équipement de mobilité. Disponibilité à confirmer.",
-    image:"https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Lit médicalisé",
-    description:"Équipement hospitalier, selon disponibilité.",
-    image:"https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Désinfectant médical",
-    description:"Produit d'hygiène et de désinfection.",
-    image:"https://images.unsplash.com/photo-1584483766114-2cea6facdf57?auto=format&fit=crop&w=700&q=80"
-  },
-  {
-    name:"Béquilles médicales",
-    description:"Aide à la mobilité, modèle à confirmer.",
-    image:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=700&q=80"
-  }
+const fallbackImages=[
+ 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=700&q=80',
+ 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=700&q=80',
+ 'https://images.unsplash.com/photo-1584744982491-665216d95f8b?auto=format&fit=crop&w=700&q=80'
 ];
 
-let currentUser = null;
-let currentProfile = null;
-let products = [];
-let authMode = "login";
-let heroIndex = 0;
+const fallbackProducts=[
+ {name:'Tensiomètre électronique',description:'Appareil de mesure de la pression artérielle.',image_url:fallbackImages[0]},
+ {name:'Thermomètre médical',description:'Contrôle de la température corporelle.',image_url:fallbackImages[1]},
+ {name:'Gants médicaux',description:'Gants de protection pour les soins.',image_url:fallbackImages[2]}
+];
 
-function escapeHtml(value){
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+const dailyAmounts={1:1000,2:1700,3:3400,4:5100,5:7800,6:15000,7:28000,8:51000,9:115000};
+
+let products=[];
+let user=null;
+let profile=null;
+
+const money=n=>new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(Number(n)||0)+' FC';
+
+function esc(s){
+ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-function money(value){
-  const n = Number(value);
-  if (!Number.isFinite(n)) return "Prix à confirmer";
-  return n.toLocaleString("fr-FR") + " FC";
+function notice(message){
+ const el=document.getElementById('toast');
+ el.textContent=message;
+ el.classList.remove('hidden');
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>el.classList.add('hidden'),5000);
 }
 
-function toast(message){
-  const el = document.getElementById("toast");
-  el.textContent = message;
-  el.classList.remove("hidden");
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(()=>el.classList.add("hidden"),4000);
+function showPage(name){
+ ['home','shop','plans','withdraw','orders','team','account'].forEach(p=>{
+  document.getElementById('page-'+p).classList.toggle('hidden',p!==name);
+ });
+ if(name==='plans')loadPlans();
+ if(name==='shop')loadProducts();
+ if(name==='orders')loadOrders();
+ if(name==='team')loadTeam();
+ if(name==='account')renderAccount();
+ window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function showPage(page){
-  const pages = ["home","shop","orders","team","account","contacts"];
-  pages.forEach(p=>{
-    document.getElementById(p+"Page").classList.toggle("hidden",p!==page);
+function modal(html){
+ document.getElementById('modalRoot').innerHTML=
+ `<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`;
+}
+
+function closeModal(){document.getElementById('modalRoot').innerHTML='';}
+
+async function loadProducts(){
+ const el=document.getElementById('products');
+ const {data,error}=await db.from('sanotoleuro_products')
+  .select('id,name,description,price_cdf,image_url,active')
+  .eq('active',true).order('name');
+
+ products=(!error&&data&&data.length)?data:
+  fallbackProducts.map(p=>({...p,id:null,price_cdf:0,active:true}));
+
+ el.innerHTML=products.map((p,i)=>`
+  <article class="card product">
+   <img src="${esc(p.image_url||fallbackImages[0])}" alt="${esc(p.name)}">
+   <h3>${esc(p.name)}</h3>
+   <p class="muted">${esc(p.description||'Disponibilité à confirmer.')}</p>
+   <div class="price">${Number(p.price_cdf)>0?money(p.price_cdf):'Prix à confirmer'}</div>
+   <button class="btn primary" ${!p.id||Number(p.price_cdf)<=0?'disabled':''} onclick="openOrder('${p.id}')">Commander</button>
+  </article>`).join('');
+}
+
+async function loadPlans(){
+ const el=document.getElementById('plans');
+ el.innerHTML='Chargement des formules…';
+
+ const {data,error}=await db.from('sanotoleuro_plans')
+  .select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active')
+  .eq('active',true).order('plan_number');
+
+ if(error||!data||!data.length){
+  el.innerHTML='<div class="panel">Les formules ne sont pas disponibles pour le moment. Réessayez plus tard.</div>';
+  return;
+ }
+
+ el.innerHTML=data.map(p=>{
+  const n=Number(p.plan_number);
+  const amount=Number(p.amount_cdf);
+  const days=Number(p.duration_days);
+  const daily=Number(p.illustrative_daily_amount_cdf||dailyAmounts[n]||0);
+  const total=daily*days;
+
+  return `<article class="card">
+   <h3>Produit ${n}</h3>
+   <div class="price">${money(amount)}</div>
+   <p class="muted">Durée du cycle : <strong>${days} jours</strong></p>
+   <div class="notice">Montant journalier indicatif :<br><strong>${money(daily)}</strong></div>
+   <p>Total indicatif du cycle :<br><strong>${money(total)}</strong></p>
+   <p class="muted">Estimation non garantie. Aucun versement automatique.</p>
+   <button class="btn primary" onclick="openPlanPayment(${n},${amount})">Choisir / Recharger</button>
+  </article>`;
+ }).join('');
+}
+
+function openPlanPayment(number,amount){
+ modal(`<h2>Recharger — Produit ${number}</h2>
+ <p>Montant à transférer : <strong>${money(amount)}</strong></p>
+ <div class="notice">
+  <strong>Airtel Money</strong><br>0979928885 — YVETTE<br><br>
+  <strong>Orange Money</strong><br>0899532643 — JACQUELINE<br><br>
+  <strong>M-Pesa</strong><br>0861823718 — REGINA
+ </div>
+ <p class="muted">Vérifiez le nom du destinataire avant le transfert. Ne communiquez jamais votre code secret.</p>
+ <form onsubmit="sendPlanRequest(event,${number},${amount})">
+  <label class="field"><label>Votre nom complet</label><input name="name" required maxlength="100"></label>
+  <label class="field"><label>Adresse e-mail</label><input name="email" type="email" value="${esc(user?.email||'')}" required></label>
+  <label class="field"><label>Mode de paiement</label>
+   <select name="method" required>
+    <option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option>
+   </select>
+  </label>
+  <label class="field"><label>Référence du transfert</label><input name="reference" required maxlength="200"></label>
+  <button class="btn primary" type="submit">Transmettre au service client</button>
+ </form>
+ <p class="muted">La demande doit être vérifiée par l’administration avant toute confirmation.</p>
+ <button class="btn light" onclick="closeModal()">Fermer</button>`);
+}
+
+function sendPlanRequest(event,number,amount){
+ event.preventDefault();
+ const f=new FormData(event.target);
+ const text=`Demande de vérification SANOTOLEURO
+Produit : ${number}
+Montant : ${amount} FC
+Nom : ${f.get('name')}
+E-mail : ${f.get('email')}
+Mode de paiement : ${f.get('method')}
+Référence : ${f.get('reference')}`;
+
+ window.open('https://t.me/Drcprom?text='+encodeURIComponent(text),'_blank');
+ closeModal();
+ notice('Ouvrez Telegram et envoyez le message préparé au service client.');
+}
+
+function updateWithdrawal(){
+ const input=document.getElementById('withdrawAmount');
+ const output=document.getElementById('withdrawCalc');
+ if(!input||!output)return;
+ const amount=Math.max(0,Number(input.value)||0);
+ const fee=Math.round(amount*.10);
+ output.textContent='Frais estimés (10 %) : '+money(fee)+' · Net estimé : '+money(amount-fee);
+}
+
+document.addEventListener('input',e=>{
+ if(e.target&&e.target.id==='withdrawAmount')updateWithdrawal();
+});
+
+function submitWithdrawal(event){
+ event.preventDefault();
+ const f=new FormData(event.target);
+ const amount=Number(f.get('amount'));
+ if(amount<3000){notice('Le montant minimum est de 3 000 FC.');return;}
+
+ const fee=Math.round(amount*.10);
+ const net=amount-fee;
+ const text=`Demande de retrait SANOTOLEURO
+Montant demandé : ${amount} FC
+Frais estimés : ${fee} FC
+Montant net estimé : ${net} FC
+Mode : ${f.get('method')}
+Numéro : ${f.get('phone')}
+Compte : ${user?.email||'Non connecté'}`;
+
+ window.open('https://t.me/Drcprom?text='+encodeURIComponent(text),'_blank');
+ notice('Ouvrez Telegram et envoyez la demande au service client pour examen.');
+}
+
+function openAuth(){
+ modal(`<h2>Bienvenue chez SANOTOLEURO</h2>
+ <p>Connectez-vous ou créez votre compte.</p>
+ <button class="btn primary" onclick="authForm('login')">Connexion</button>
+ <button class="btn light" onclick="authForm('signup')">Créer un compte</button>
+ <p><button class="btn light" onclick="closeModal()">Fermer</button></p>`);
+}
+
+function authForm(type){
+ modal(`<h2>${type==='login'?'Connexion':'Créer un compte'}</h2>
+ <form onsubmit="submitAuth(event,'${type}')">
+ ${type==='signup'?'<label class="field"><label>Nom complet</label><input name="name" required maxlength="100"></label>':''}
+ <label class="field"><label>Adresse e-mail</label><input name="email" type="email" required></label>
+ <label class="field"><label>Mot de passe</label><input name="password" type="password" minlength="6" required></label>
+ ${type==='signup'?'<label class="field"><label>Code de parrainage (facultatif)</label><input name="referral" maxlength="60"></label>':''}
+ <button class="btn primary" type="submit">${type==='login'?'Se connecter':'Créer mon compte'}</button>
+ </form>
+ <div id="authMessage" class="muted"></div>
+ <button class="btn light" onclick="openAuth()">Retour</button>`);
+}
+
+async function submitAuth(event,type){
+ event.preventDefault();
+ const f=new FormData(event.target);
+ const email=String(f.get('email')).trim();
+ const password=String(f.get('password'));
+ const msg=document.getElementById('authMessage');
+ msg.textContent='Patientez…';
+
+ let result;
+
+ if(type==='signup'){
+  result=await db.auth.signUp({
+   email,password,
+   options:{data:{full_name:String(f.get('name')).trim()}}
   });
-  document.querySelectorAll(".nav-item").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset.page===page);
-  });
-  window.scrollTo({top:0,behavior:"smooth"});
 
-  if(page==="shop") loadProducts();
-  if(page==="orders") loadOrders();
-  if(page==="team") loadTeam();
-  if(page==="account") renderAccount();
-}
-
-function openAccount(){
-  showPage("account");
-}
-
-function setAuthMode(mode){
-  authMode = mode;
-  document.getElementById("nameField").classList.toggle("hidden",mode!=="signup");
-  document.getElementById("refField").classList.toggle("hidden",mode!=="signup");
-  document.getElementById("authSubmit").textContent =
-    mode==="signup" ? "Créer mon compte" : "Se connecter";
-  document.getElementById("authMessage").classList.add("hidden");
-}
-
-function showAuthMessage(message){
-  const box = document.getElementById("authMessage");
-  box.textContent = message;
-  box.classList.remove("hidden");
-}
-
-async function renderAccount(){
-  const authBox = document.getElementById("authBox");
-  const loggedBox = document.getElementById("loggedBox");
-  const info = document.getElementById("accountInfo");
-  const head = document.getElementById("accountHeader");
-
-  if(!currentUser){
-    authBox.classList.remove("hidden");
-    loggedBox.classList.add("hidden");
-    info.innerHTML="<h3>Bienvenue</h3><p class='muted'>Connectez-vous ou créez un compte pour passer vos commandes.</p>";
-    head.textContent="Se connecter";
-    return;
+  if(result.error){
+   msg.textContent='Création impossible. Vérifiez les informations et réessayez.';
+   return;
   }
 
-  authBox.classList.add("hidden");
-  loggedBox.classList.remove("hidden");
-  head.textContent="Mon compte";
+  const referral=String(f.get('referral')||'').trim();
+  if(referral&&result.data.session){
+   await db.rpc('sanotoleuro_register_referral',{p_referral_code:referral});
+  }
 
-  const name = currentProfile?.full_name || currentUser.user_metadata?.full_name || "Client";
-  const email = currentUser.email || "";
-  const code = currentProfile?.referral_code || "En préparation";
+  if(!result.data.session){
+   msg.textContent='Compte créé. Vérifiez votre e-mail si une confirmation est demandée.';
+   return;
+  }
+ }else{
+  result=await db.auth.signInWithPassword({email,password});
+  if(result.error){
+   msg.textContent='Connexion impossible. Vérifiez votre e-mail et votre mot de passe.';
+   return;
+  }
+ }
 
-  info.innerHTML=`
-    <h3>Bonjour ${escapeHtml(name)}</h3>
-    <div class="list-item"><span class="muted">Nom</span><br><strong>${escapeHtml(name)}</strong></div>
-    <div class="list-item"><span class="muted">E-mail</span><br><strong>${escapeHtml(email)}</strong></div>
-    <div class="list-item"><span class="muted">Code de parrainage</span><br><strong>${escapeHtml(code)}</strong></div>
-  `;
-
-  document.getElementById("myReferralCode").value=code==="En préparation"?"":code;
-  document.getElementById("myReferralLink").value=code==="En préparation"?"":location.origin+"/?ref="+encodeURIComponent(code);
+ await refreshSession();
+ closeModal();
+ notice('Connexion réussie.');
 }
 
 async function refreshSession(){
-  const {data,error}=await db.auth.getSession();
-  if(error) console.error(error);
-  currentUser=data.session?.user || null;
-  currentProfile=null;
+ const {data}=await db.auth.getSession();
+ user=data.session?.user||null;
+ profile=null;
 
-  if(currentUser){
-    const {data:profile,error:profileError}=await db
-      .from("sanotoleuro_profiles")
-      .select("*")
-      .eq("id",currentUser.id)
-      .maybeSingle();
+ if(user){
+  const {data:p}=await db.from('sanotoleuro_profiles')
+   .select('*').eq('id',user.id).maybeSingle();
+  profile=p||null;
+ }
 
-    if(!profileError) currentProfile=profile;
-    await processReferral();
-  }
-
-  renderAccount();
+ document.getElementById('authBtn').textContent=user?'Mon compte':'Connexion';
+ renderAccount();
 }
 
-document.getElementById("authForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-
-  const submit=document.getElementById("authSubmit");
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-  const name=document.getElementById("fullName").value.trim();
-  const referral=document.getElementById("refCode").value.trim() ||
-    new URLSearchParams(location.search).get("ref") || "";
-
-  submit.disabled=true;
-  submit.textContent="Patientez…";
-
-  try{
-    if(authMode==="signup"){
-      if(!name){
-        showAuthMessage("Entrez votre nom complet.");
-        return;
-      }
-
-      const {data,error}=await db.auth.signUp({
-        email,
-        password,
-        options:{data:{full_name:name}}
-      });
-
-      if(error) throw error;
-
-      if(data.session){
-        currentUser=data.user;
-        await processReferral(referral);
-        await refreshSession();
-        showAuthMessage("Compte créé avec succès.");
-      }else{
-        showAuthMessage("Inscription enregistrée. Vérifiez votre e-mail si une confirmation est demandée, puis connectez-vous.");
-      }
-    }else{
-      const {data,error}=await db.auth.signInWithPassword({email,password});
-      if(error) throw error;
-
-      currentUser=data.user;
-      await refreshSession();
-      showAuthMessage("Connexion réussie.");
-      showPage("home");
-      toast("Bienvenue chez SANOTOLEURO.");
-    }
-  }catch(error){
-    showAuthMessage(error.message || "Impossible de terminer l'opération.");
-  }finally{
-    submit.disabled=false;
-    submit.textContent=authMode==="signup"?"Créer mon compte":"Se connecter";
-  }
-});
-
-async function resetPassword(){
-  const email=document.getElementById("email").value.trim();
-  if(!email){
-    showAuthMessage("Entrez votre adresse e-mail d'abord.");
-    return;
-  }
-
-  try{
-    const {error}=await db.auth.resetPasswordForEmail(email,{
-      redirectTo:location.origin
-    });
-    if(error) throw error;
-    showAuthMessage("Si l'adresse est valide, un e-mail de réinitialisation sera envoyé.");
-  }catch(error){
-    showAuthMessage(error.message || "La demande n'a pas pu être envoyée.");
-  }
+async function signOut(){
+ await db.auth.signOut();
+ user=null;profile=null;
+ await refreshSession();
+ notice('Vous êtes déconnecté.');
+ showPage('home');
 }
 
-async function logout(){
-  const {error}=await db.auth.signOut();
-  if(error){toast(error.message);return;}
-  currentUser=null;
-  currentProfile=null;
-  renderAccount();
-  showPage("home");
-  toast("Vous êtes déconnecté.");
+function renderAccount(){
+ const el=document.getElementById('accountInfo');
+ if(!user){
+  el.innerHTML='Vous n’êtes pas connecté. <button class="btn primary" onclick="openAuth()">Connexion</button>';
+  return;
+ }
+ el.innerHTML=`<p><strong>Nom :</strong> ${esc(profile?.full_name||user.user_metadata?.full_name||'Client')}</p>
+ <p><strong>E-mail :</strong> ${esc(user.email||'')}</p>
+ <p><strong>Code de parrainage :</strong> ${esc(profile?.referral_code||'En chargement')}</p>`;
 }
 
-async function processReferral(codeOverride){
-  if(!currentUser) return;
+function openOrder(id){
+ if(!user){openAuth();return;}
+ const p=products.find(x=>x.id===id);
+ if(!p||Number(p.price_cdf)<=0){notice('Le prix de ce produit doit être configuré avant la commande.');return;}
 
-  const params=new URLSearchParams(location.search);
-  const code=(codeOverride || params.get("ref") || "").trim();
-  if(!code) return;
-
-  try{
-    const {error}=await db.rpc("sanotoleuro_register_referral",{
-      p_referral_code:code
-    });
-    if(error) console.warn("Parrainage:",error.message);
-  }catch(error){
-    console.warn(error);
-  }
+ modal(`<h2>Commander</h2>
+ <p><strong>${esc(p.name)}</strong><br>Prix unitaire : ${money(p.price_cdf)}</p>
+ <form onsubmit="submitOrder(event,'${p.id}')">
+  <label class="field"><label>Quantité</label><input name="quantity" type="number" min="1" max="100" value="1" required></label>
+  <label class="field"><label>Mode de paiement</label><select name="method"><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select></label>
+  <div class="notice">Airtel Money : 0979928885 — YVETTE<br>Orange Money : 0899532643 — JACQUELINE<br>M-Pesa : 0861823718 — REGINA</div>
+  <label class="field"><label>Référence du transfert (si disponible)</label><input name="reference" maxlength="200"></label>
+  <button class="btn primary" type="submit">Enregistrer la commande</button>
+ </form>
+ <p class="muted">La commande reste en attente jusqu’à vérification du paiement.</p>`);
 }
 
-function productImage(product){
-  return product.image_url || product.image || sampleProducts.find(
-    p=>p.name.toLowerCase()===String(product.name||"").toLowerCase()
-  )?.image || "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=700&q=80";
-}
+async function submitOrder(event,id){
+ event.preventDefault();
+ if(!user){notice('Connectez-vous pour commander.');return;}
 
-function productCard(product){
-  const price=Number(product.price_cdf||0);
-  const available=Boolean(product.id) && price>0;
-  const description=product.description||"Produit médical";
-  return `
-    <article class="product">
-      <img src="${escapeHtml(productImage(product))}"
-           alt="${escapeHtml(product.name)}"
-           loading="lazy"
-           onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=700&q=80'">
-      <div class="product-body">
-        <span class="tag">Matériel médical</span>
-        <h3>${escapeHtml(product.name)}</h3>
-        <p class="muted">${escapeHtml(description)}</p>
-        <div class="price">${price>0?money(price):"Prix à confirmer"}</div>
-        <button class="btn ${available?"btn-primary":"btn-light"} full"
-          ${available?"":"disabled"}
-          onclick="openOrder('${escapeHtml(product.id)}')">
-          ${available?"Commander":"Bientôt disponible"}
-        </button>
-      </div>
-    </article>`;
-}
+ const f=new FormData(event.target);
+ const {error}=await db.rpc('sanotoleuro_create_order',{
+  p_product_id:id,
+  p_quantity:Number(f.get('quantity')),
+  p_payment_method:String(f.get('method')),
+  p_payment_reference:String(f.get('reference')||'').trim()||null
+ });
 
-async function loadProducts(){
-  const grid=document.getElementById("productsGrid");
-  const home=document.getElementById("homeProducts");
-  grid.innerHTML="<div class='empty'>Chargement du catalogue…</div>";
+ if(error){
+  notice('La commande n’a pas pu être enregistrée. Vérifiez la connexion et réessayez.');
+  return;
+ }
 
-  try{
-    const {data,error}=await db
-      .from("sanotoleuro_products")
-      .select("id,name,description,price_cdf,image_url,active")
-      .eq("active",true)
-      .order("name");
-
-    if(error) throw error;
-
-    if(data && data.length){
-      products=data;
-    }else{
-      products=sampleProducts.map((p,i)=>({
-        id:null,
-        name:p.name,
-        description:p.description,
-        price_cdf:0,
-        image_url:p.image,
-        active:true
-      }));
-    }
-  }catch(error){
-    console.warn("Catalogue:",error.message);
-    products=sampleProducts.map(p=>({
-      id:null,name:p.name,description:p.description,
-      price_cdf:0,image_url:p.image,active:true
-    }));
-  }
-
-  grid.innerHTML=products.map(productCard).join("");
-  home.innerHTML=products.slice(0,4).map(productCard).join("");
-}
-
-function openOrder(productId){
-  const product=products.find(p=>p.id===productId);
-  if(!product) return;
-
-  if(!currentUser){
-    toast("Connectez-vous pour passer une commande.");
-    showPage("account");
-    return;
-  }
-
-  if(Number(product.price_cdf)<=0){
-    toast("Le prix de ce produit n'est pas encore configuré.");
-    return;
-  }
-
-  document.getElementById("orderProductId").value=product.id;
-  document.getElementById("modalProductName").textContent=product.name;
-  document.getElementById("modalProductInfo").textContent=
-    product.description+" Prix unitaire : "+money(product.price_cdf);
-  document.getElementById("orderQuantity").value="1";
-  document.getElementById("paymentReference").value="";
-  document.getElementById("orderMessage").classList.add("hidden");
-  updatePaymentInstructions();
-  document.getElementById("productModal").classList.remove("hidden");
-}
-
-function closeModal(){
-  document.getElementById("productModal").classList.add("hidden");
-}
-
-function updatePaymentInstructions(){
-  const method=document.getElementById("paymentMethod").value;
-  const details=PAYMENT_DETAILS[method];
-  document.getElementById("paymentInstructions").textContent=
-    "Mode choisi : "+method+". Bénéficiaire indiqué : "+details.name+
-    ". Numéro : "+details.number+
-    ". Vérifiez ces informations avant tout transfert.";
-}
-document.getElementById("paymentMethod").addEventListener("change",updatePaymentInstructions);
-
-document.getElementById("orderForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-
-  if(!currentUser){
-    toast("Connectez-vous pour commander.");
-    closeModal();
-    showPage("account");
-    return;
-  }
-
-  const button=document.getElementById("submitOrder");
-  button.disabled=true;
-  button.textContent="Enregistrement…";
-
-  try{
-    const productId=document.getElementById("orderProductId").value;
-    const quantity=Number(document.getElementById("orderQuantity").value);
-    const paymentMethod=document.getElementById("paymentMethod").value;
-    const reference=document.getElementById("paymentReference").value.trim();
-
-    if(!Number.isInteger(quantity)||quantity<1||quantity>100){
-      throw new Error("Choisissez une quantité comprise entre 1 et 100.");
-    }
-
-    const {data,error}=await db.rpc("sanotoleuro_create_order",{
-      p_product_id:productId,
-      p_quantity:quantity,
-      p_payment_method:paymentMethod,
-      p_payment_reference:reference||null
-    });
-
-    if(error) throw error;
-
-    document.getElementById("orderMessage").textContent=
-      data?.message || "Commande enregistrée. Le paiement reste à vérifier.";
-    document.getElementById("orderMessage").classList.remove("hidden");
-    toast("Commande enregistrée.");
-
-    setTimeout(()=>{
-      closeModal();
-      showPage("orders");
-    },1200);
-
-  }catch(error){
-    const message=document.getElementById("orderMessage");
-    message.textContent=error.message || "Impossible d'enregistrer la commande.";
-    message.classList.remove("hidden");
-  }finally{
-    button.disabled=false;
-    button.textContent="Enregistrer la commande";
-  }
-});
-
-function statusLabel(status){
-  const labels={
-    pending:"En attente",
-    payment_review:"Paiement à vérifier",
-    confirmed:"Confirmée",
-    preparing:"En préparation",
-    shipped:"Expédiée",
-    delivered:"Livrée",
-    rejected:"Refusée",
-    cancelled:"Annulée"
-  };
-  return labels[status]||status||"En attente";
+ closeModal();
+ notice('Commande enregistrée, paiement à vérifier.');
+ showPage('orders');
 }
 
 async function loadOrders(){
-  const box=document.getElementById("ordersList");
+ const el=document.getElementById('orders');
+ if(!user){
+  el.innerHTML='Connectez-vous pour consulter vos commandes. <button class="btn primary" onclick="openAuth()">Connexion</button>';
+  return;
+ }
 
-  if(!currentUser){
-    box.innerHTML="<div class='empty'>Connectez-vous pour consulter vos commandes.</div>";
-    return;
-  }
+ const {data,error}=await db.from('sanotoleuro_orders')
+  .select('id,product_name,quantity,unit_price_cdf,total_price_cdf,payment_method,payment_reference,status,created_at')
+  .eq('user_id',user.id).order('created_at',{ascending:false});
 
-  box.innerHTML="<div class='empty'>Chargement des commandes…</div>";
+ if(error){el.textContent='Les commandes ne peuvent pas être chargées pour le moment.';return;}
+ if(!data||!data.length){el.innerHTML='<div class="panel">Vous n’avez pas encore de commande.</div>';return;}
 
-  try{
-    const {data,error}=await db
-      .from("sanotoleuro_orders")
-      .select("id,product_name,quantity,unit_price_cdf,total_price_cdf,payment_method,payment_reference,status,created_at")
-      .eq("user_id",currentUser.id)
-      .order("created_at",{ascending:false});
-
-    if(error) throw error;
-
-    if(!data || !data.length){
-      box.innerHTML="<div class='empty'>Vous n'avez pas encore de commande.</div>";
-      return;
-    }
-
-    box.innerHTML=data.map(order=>`
-      <div class="panel">
-        <div class="row">
-          <strong>${escapeHtml(order.product_name)}</strong>
-          <span class="status">${escapeHtml(statusLabel(order.status))}</span>
-        </div>
-        <p class="muted">Quantité : ${Number(order.quantity)}</p>
-        <p class="muted">Paiement : ${escapeHtml(order.payment_method)}</p>
-        <p class="muted">Référence : ${escapeHtml(order.payment_reference||"Non renseignée")}</p>
-        <div class="row">
-          <span class="muted">${new Date(order.created_at).toLocaleDateString("fr-FR")}</span>
-          <strong>${money(order.total_price_cdf)}</strong>
-        </div>
-      </div>`).join("");
-
-  }catch(error){
-    box.innerHTML="<div class='empty'>Impossible de charger les commandes. Vérifiez la configuration Supabase.</div>";
-    console.error(error);
-  }
+ el.innerHTML=data.map(o=>`<div class="panel">
+ <strong>${esc(o.product_name)}</strong>
+ <p>${Number(o.quantity)} × ${money(o.unit_price_cdf)} = ${money(o.total_price_cdf)}</p>
+ <p class="muted">Paiement : ${esc(o.payment_method)}</p>
+ <p class="muted">Référence : ${esc(o.payment_reference||'Non renseignée')}</p>
+ <strong>Statut : ${esc(o.status)}</strong>
+ </div>`).join('');
 }
 
 async function loadTeam(){
-  const box=document.getElementById("teamList");
+ const info=document.getElementById('teamInfo');
+ const list=document.getElementById('teamList');
+ const code=document.getElementById('myReferral');
 
-  if(!currentUser){
-    box.textContent="Connectez-vous pour consulter votre équipe.";
-    return;
-  }
+ if(!user){
+  code.value='Connectez-vous';
+  info.textContent='Connectez-vous pour consulter votre équipe.';
+  list.innerHTML='';
+  return;
+ }
 
-  box.textContent="Chargement…";
+ code.value=profile?.referral_code||'';
+ const {data,error}=await db.rpc('sanotoleuro_my_team');
 
-  try{
-    const {data:profile}=await db.from("sanotoleuro_profiles")
-      .select("referral_code").eq("id",currentUser.id).maybeSingle();
-
-    currentProfile={...(currentProfile||{}),...(profile||{})};
-    await renderAccount();
-
-    const {data,error}=await db.rpc("sanotoleuro_my_team");
-    if(error) throw error;
-
-    if(!data || !data.length){
-      box.textContent="Aucun membre parrainé pour le moment.";
-      return;
-    }
-
-    box.innerHTML=data.map(member=>`
-      <div class="list-item">
-        <strong>${escapeHtml(member.member_name||"Membre")}</strong>
-        <div class="muted">Code : ${escapeHtml(member.member_referral_code||"—")}</div>
-        <div class="muted">Inscription : ${member.joined_at?new Date(member.joined_at).toLocaleDateString("fr-FR"):"—"}</div>
-      </div>`).join("");
-
-  }catch(error){
-    box.textContent="Impossible de charger l'équipe. Vérifiez la fonction de parrainage Supabase.";
-    console.error(error);
-  }
+ if(error){info.textContent='L’équipe ne peut pas être chargée pour le moment.';return;}
+ info.textContent='Membres directement parrainés : '+(data?.length||0);
+ list.innerHTML=(data||[]).map(m=>`<div class="panel">${esc(m.member_name||'Membre')}</div>`).join('');
 }
 
 async function copyReferral(){
-  const code=document.getElementById("myReferralCode").value;
-  if(!code){toast("Connectez-vous pour obtenir votre code.");return;}
-  try{
-    await navigator.clipboard.writeText(code);
-    toast("Code copié.");
-  }catch{
-    document.getElementById("myReferralCode").select();
-    toast("Sélectionnez et copiez le code.");
-  }
+ const code=document.getElementById('myReferral').value;
+ if(!code||code==='Connectez-vous'){notice('Connectez-vous pour voir votre code.');return;}
+ try{
+  await navigator.clipboard.writeText(code);
+  notice('Code de parrainage copié.');
+ }catch(e){notice('Votre code : '+code);}
 }
 
-async function shareReferral(){
-  const link=document.getElementById("myReferralLink").value;
-  if(!link){toast("Connectez-vous pour obtenir votre lien.");return;}
-  if(navigator.share){
-    try{await navigator.share({title:"SANOTOLEURO",text:"Découvrez SANOTOLEURO.",url:link});}
-    catch(error){}
-  }else{
-    try{
-      await navigator.clipboard.writeText(link);
-      toast("Lien de parrainage copié.");
-    }catch{
-      toast(link);
-    }
-  }
-}
-
-function showWhatsApp(){
-  toast("Le numéro WhatsApp du service client reste à ajouter.");
-}
-
-/* CARROUSEL D'ACCUEIL */
-function setupCarousel(){
-  const slides=[...document.querySelectorAll(".hero-slide")];
-  const dots=document.getElementById("heroDots");
-  dots.innerHTML=slides.map((_,i)=>
-    `<button class="dot ${i===0?"active":""}" aria-label="Diapositive ${i+1}" onclick="goSlide(${i})"></button>`
-  ).join("");
-}
-
-function goSlide(index){
-  const slides=[...document.querySelectorAll(".hero-slide")];
-  const dots=[...document.querySelectorAll(".dot")];
-  if(!slides.length) return;
-  heroIndex=(index+slides.length)%slides.length;
-  slides.forEach((slide,i)=>slide.classList.toggle("active",i===heroIndex));
-  dots.forEach((dot,i)=>dot.classList.toggle("active",i===heroIndex));
-}
-
-function startCarousel(){
-  setInterval(()=>goSlide(heroIndex+1),4500);
-}
-
-/* INITIALISATION */
-document.getElementById("year").textContent=new Date().getFullYear();
-
-db.auth.onAuthStateChange((event,session)=>{
-  currentUser=session?.user||null;
-  if(event==="SIGNED_IN"){
-    setTimeout(()=>refreshSession(),0);
-  }else if(event==="SIGNED_OUT"){
-    currentProfile=null;
-    renderAccount();
-  }
-});
-
-(async function init(){
-  setupCarousel();
-  startCarousel();
-  setAuthMode("login");
-  await refreshSession();
-  await loadProducts();
-
-  const referral=new URLSearchParams(location.search).get("ref");
-  if(referral){
-    document.getElementById("refCode").value=referral;
-  }
-})();
+document.getElementById('year').textContent=new Date().getFullYear();
+document.getElementById('withdrawAmount').value='';
+loadProducts();
+loadPlans();
+refreshSession();
+updateWithdrawal();
+db.auth.onAuthStateChange(()=>setTimeout(refreshSession,0));
 </script>
-
 </body>
 </html>
