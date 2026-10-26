@@ -91,6 +91,7 @@ input:focus,select:focus{border-color:var(--g)}
 .claimbutton:disabled{opacity:.55;cursor:not-allowed}
 .claimtimer{font-size:12px;color:#526b56;margin-top:8px;line-height:1.5}
 .footer{text-align:center;color:#778278;font-size:11px;line-height:1.5;padding:14px}
+.level-title{margin:18px 0 8px;padding:11px;background:var(--gl);border-radius:10px;color:var(--gd);font-weight:900}
 @keyframes fade{from{opacity:.4}to{opacity:1}}
 @media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{height:280px}}
 </style>
@@ -202,10 +203,21 @@ input:focus,select:focus{border-color:var(--g)}
  <section id="ordersPage" class="page hidden"><div class="card"><div class="itemtop"><h2>Mes demandes</h2><button class="btn light smallbtn" onclick="loadHistory()">Actualiser</button></div><div id="historyList"></div></div></section>
 
  <section id="teamPage" class="page hidden">
-  <div class="card"><h2>Mon parrainage</h2>
+  <div class="card">
+   <h2>Mon parrainage</h2>
    <label>Votre code</label><div class="row"><input id="teamReferralCode" readonly><button class="btn primary" onclick="copyReferralCode()">Copier</button></div>
    <label>Lien d'invitation</label><div class="row"><input id="teamReferralLink" readonly><button class="btn primary" onclick="copyReferralLink()">Copier</button></div>
-   <button class="btn light full" onclick="shareReferral()">Partager mon invitation</button><hr><h3>Mon équipe</h3><div id="teamList"></div>
+   <button class="btn light full" onclick="shareReferral()">Partager mon invitation</button>
+   <div class="notice"><strong>Commissions de parrainage</strong><br>Niveau 1 : 12 %<br>Niveau 2 : 3 %<br>Niveau 3 : 1 %<br><span class="muted">Les commissions doivent être calculées et créditées par les fonctions sécurisées Supabase après validation d'un dépôt.</span></div>
+   <div class="stats">
+    <div class="stat"><small>Membres inscrits</small><strong id="teamTotal">0</strong></div>
+    <div class="stat"><small>Membres avec dépôt validé</small><strong id="teamDepositors">0</strong></div>
+    <div class="stat"><small>Dépôts validés de l'équipe</small><strong id="teamDepositTotal">0 FC</strong></div>
+    <div class="stat"><small>Mes commissions enregistrées</small><strong id="teamCommissionTotal">0 FC</strong></div>
+   </div>
+   <hr>
+   <div class="itemtop"><h3>Mon équipe par niveau</h3><button class="btn light smallbtn" onclick="loadTeam()">Actualiser</button></div>
+   <div id="teamList"><div class="empty">Chargement…</div></div>
   </div>
  </section>
 
@@ -281,6 +293,7 @@ function statusLabel(s){
  if(['rejected','refused','cancelled'].includes(s))return '<span class="status rejected">Rejetée</span>';
  return '<span class="status">En attente</span>';
 }
+function isDepositValidated(s){return ['success','approved','validated','completed'].includes(String(s||'').toLowerCase())}
 function showAuthForm(which){
  $('loginForm').classList.toggle('hidden',which!=='login');
  $('registerForm').classList.toggle('hidden',which!=='register');
@@ -385,7 +398,10 @@ function renderAccount(){
  $('savedPhone').value=currentProfile?.withdrawal_phone||localStorage.getItem('withdrawal_phone_'+currentUser.id)||'';
  $('savedPhoneMethod').value=currentProfile?.withdrawal_method||localStorage.getItem('withdrawal_method_'+currentUser.id)||'';
 }
-async function registerReferral(code){try{const {error}=await db.rpc('sanotoleuro_register_referral',{p_referral_code:code});if(error)console.warn('Parrainage indisponible',error)}catch(e){}}
+async function registerReferral(code){
+ try{const {error}=await db.rpc('sanotoleuro_register_referral',{p_referral_code:code});if(error)console.warn('Parrainage indisponible',error)}
+ catch(e){console.warn(e)}
+}
 
 async function loadAds(){
  try{
@@ -398,7 +414,7 @@ function renderCarousel(){
  const box=$('adCarousel');if(carouselTimer)clearInterval(carouselTimer);
  if(!carouselImages.length){box.innerHTML='<div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p><span>Consultez les plans et suivez vos demandes.</span></div></div>';return}
  carouselIndex=0;
- box.innerHTML=carouselImages.map((x,i)=>`<div class="slide ${i===0?'active':''}"><img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'SANOTOLEURO')}" onerror="this.style.display='none'"><div class="caption"><strong>${esc(x.name||'SANOTOLEURO RDC')}</strong><span>${esc(x.description||'Découvrez SANOTOLEURO RDC')}</span></div></div>`).join('')+`<div class="dots">${carouselImages.map((_,i)=>`<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#ffffff80;margin:3px"></span>`).join('')}</div>`;
+ box.innerHTML=carouselImages.map((x,i)=>`<div class="slide ${i===0?'active':''}"><img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'SANOTOLEURO')}" onerror="this.style.display='none'"><div class="caption"><strong>${esc(x.name||'SANOTOLEURO RDC')}</strong><span>${esc(x.description||'Découvrez SANOTOLEURO RDC')}</span></div></div>`).join('');
  if(carouselImages.length>1)carouselTimer=setInterval(()=>{
   const slides=box.querySelectorAll('.slide');slides.forEach(s=>s.classList.remove('active'));
   carouselIndex=(carouselIndex+1)%slides.length;slides[carouselIndex].classList.add('active');
@@ -507,15 +523,6 @@ async function loadHistory(){
  }catch(e){console.error(e);box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>'}
 }
 
-/*
- * CORRECTION VIP :
- * 1. La colonne SQL attendue est daily_estimate_cdf.
- * 2. On ne demande plus daily_amount_cdf, car une colonne inexistante
- *    dans SELECT provoque l'échec de toute la requête.
- * 3. Si la sélection complète échoue, on essaie une sélection minimale.
- * 4. La fonction RPC côté serveur reste responsable de l'autorisation
- *    et du délai réel de 24 heures.
- */
 async function loadMyVIP(){
  const box=$('myVipList');if(!box||!currentUser)return;
  box.innerHTML='<div class="empty">Chargement des abonnements VIP…</div>';
@@ -528,61 +535,30 @@ async function loadMyVIP(){
  let lastError=null;
  for(const columns of selections){
   try{
-   const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
-    .select(columns).eq('user_id',currentUser.id)
-    .order('activated_at',{ascending:false}).limit(50);
+   const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select(columns).eq('user_id',currentUser.id).order('activated_at',{ascending:false}).limit(50);
    if(error)throw error;
-   mySubscriptions=data||[];
-   renderMyVIP(mySubscriptions);
-   return;
-  }catch(err){
-   lastError=err;
-   console.warn('Essai de lecture VIP échoué:',columns,err.message);
-  }
+   mySubscriptions=data||[];renderMyVIP(mySubscriptions);return;
+  }catch(err){lastError=err;console.warn('Lecture VIP échouée:',err.message)}
  }
  console.error('Chargement VIP impossible:',lastError);
- box.innerHTML='<div class="notice"><strong>Les abonnements VIP ne peuvent pas être chargés.</strong><br>Vérifiez dans Supabase que la table <code>sanotoleuro_vip_subscriptions</code> existe et que les règles SELECT autorisent chaque membre à lire ses propres abonnements. Si le message continue, la cause est côté Supabase, pas dans l’affichage.</div><button class="btn light full" onclick="loadMyVIP()">Réessayer</button>';
+ box.innerHTML='<div class="notice">Les abonnements VIP ne peuvent pas être chargés. Vérifiez les autorisations Supabase.</div><button class="btn light full" onclick="loadMyVIP()">Réessayer</button>';
 }
-
 function renderMyVIP(data){
  const box=$('myVipList');
  if(!data||!data.length){box.innerHTML='<div class="empty">Aucun plan VIP activé pour le moment.</div>';return}
  box.innerHTML=data.map(v=>{
-  const daily=Number(v.daily_estimate_cdf||0);
-  const active=String(v.status||'').toLowerCase()==='active';
-  const activated=v.activated_at?new Date(v.activated_at):null;
-  const ends=v.ends_at?new Date(v.ends_at):null;
-  const now=new Date();
-  const expired=!!(ends&&now>=ends);
+  const daily=Number(v.daily_estimate_cdf||0),active=String(v.status||'').toLowerCase()==='active';
+  const activated=v.activated_at?new Date(v.activated_at):null,ends=v.ends_at?new Date(v.ends_at):null,now=new Date(),expired=!!(ends&&now>=ends);
   let claimHTML='';
   if(active&&!expired){
-   const last=v.last_claim_at?new Date(v.last_claim_at):null;
-   const start=last||activated;
-   const next=start?new Date(start.getTime()+86400000):new Date(now.getTime()+86400000);
-   const ready=now>=next;
-   claimHTML=`<div class="claimbox">
-    <div class="muted">Montant indicatif par récolte</div>
-    <div class="claimamount">${formatFC(daily)}</div>
-    <button class="claimbutton" id="claim-${esc(v.id)}" onclick="claimVIP('${esc(v.id)}')" ${(daily<=0||!ready)?'disabled':''}>${ready&&daily>0?'🟢 RÉCOLTER MES REVENUS':'🔒 RÉCOLTE APRÈS 24 H'}</button>
-    <div class="claimtimer" id="claimtimer-${esc(v.id)}">${ready?'Vous pouvez demander une récolte.':`Prochaine récolte possible : ${next.toLocaleString('fr-FR')}`}</div>
-    <div class="muted small">Une récolte au maximum toutes les 24 heures. Le serveur vérifie l'éligibilité.</div>
-   </div>`;
-  }else if(expired){
-   claimHTML='<div class="notice">La période de cet abonnement est terminée.</div>';
-  }
-  return `<div class="item">
-   <div class="itemtop"><strong>PLAN VIP ${esc(v.plan_number||'—')}</strong>${active&&!expired?'<span class="status success">Actif</span>':statusLabel(expired?'completed':v.status)}</div>
-   <p class="amount">${formatFC(v.capital_cdf)}</p>
-   <div class="muted small">Activé : ${activated?activated.toLocaleString('fr-FR'):'—'}</div>
-   <div class="muted small">Fin prévue : ${ends?ends.toLocaleDateString('fr-FR'):'—'}</div>
-   <div class="muted small">Montant quotidien indicatif : ${formatFC(daily)}</div>
-   ${v.last_claim_at?`<div class="muted small">Dernière récolte : ${new Date(v.last_claim_at).toLocaleString('fr-FR')}</div>`:''}
-   ${claimHTML}
-  </div>`;
+   const last=v.last_claim_at?new Date(v.last_claim_at):null,start=last||activated;
+   const next=start?new Date(start.getTime()+86400000):new Date(now.getTime()+86400000),ready=now>=next;
+   claimHTML=`<div class="claimbox"><div class="muted">Montant indicatif par récolte</div><div class="claimamount">${formatFC(daily)}</div><button class="claimbutton" id="claim-${esc(v.id)}" onclick="claimVIP('${esc(v.id)}')" ${(daily<=0||!ready)?'disabled':''}>${ready&&daily>0?'🟢 RÉCOLTER MES REVENUS':'🔒 RÉCOLTE APRÈS 24 H'}</button><div class="claimtimer" id="claimtimer-${esc(v.id)}">${ready?'Vous pouvez demander une récolte.':`Prochaine récolte possible : ${next.toLocaleString('fr-FR')}`}</div><div class="muted small">Une récolte au maximum toutes les 24 heures. Le serveur vérifie l'éligibilité.</div></div>`;
+  }else if(expired){claimHTML='<div class="notice">La période de cet abonnement est terminée.</div>'}
+  return `<div class="item"><div class="itemtop"><strong>PLAN VIP ${esc(v.plan_number||'—')}</strong>${active&&!expired?'<span class="status success">Actif</span>':statusLabel(expired?'completed':v.status)}</div><p class="amount">${formatFC(v.capital_cdf)}</p><div class="muted small">Activé : ${activated?activated.toLocaleString('fr-FR'):'—'}</div><div class="muted small">Fin prévue : ${ends?ends.toLocaleDateString('fr-FR'):'—'}</div><div class="muted small">Montant quotidien indicatif : ${formatFC(daily)}</div>${v.last_claim_at?`<div class="muted small">Dernière récolte : ${new Date(v.last_claim_at).toLocaleString('fr-FR')}</div>`:''}${claimHTML}</div>`;
  }).join('');
  startVIPCountdown();
 }
-
 function startVIPCountdown(){
  if(vipCountdownTimer)clearInterval(vipCountdownTimer);
  vipCountdownTimer=setInterval(()=>{
@@ -590,64 +566,185 @@ function startVIPCountdown(){
   const now=new Date();
   mySubscriptions.forEach(v=>{
    if(String(v.status||'').toLowerCase()!=='active')return;
-   const btn=$('claim-'+v.id),timer=$('claimtimer-'+v.id);
-   if(!btn||!timer)return;
-   const last=v.last_claim_at?new Date(v.last_claim_at):null;
-   const activated=v.activated_at?new Date(v.activated_at):null;
-   const start=last||activated;
-   if(!start){btn.disabled=true;btn.textContent='Date d’activation indisponible';timer.textContent='Contactez le service client si ce problème persiste.';return}
+   const btn=$('claim-'+v.id),timer=$('claimtimer-'+v.id);if(!btn||!timer)return;
+   const last=v.last_claim_at?new Date(v.last_claim_at):null,activated=v.activated_at?new Date(v.activated_at):null,start=last||activated;
+   if(!start){btn.disabled=true;btn.textContent='Date d’activation indisponible';timer.textContent='Contactez le service client.';return}
    const next=new Date(start.getTime()+86400000);
-   if(v.ends_at&&now>=new Date(v.ends_at)){
-    btn.disabled=true;btn.textContent='Abonnement terminé';timer.textContent='La période de cet abonnement est terminée.';return;
-   }
+   if(v.ends_at&&now>=new Date(v.ends_at)){btn.disabled=true;btn.textContent='Abonnement terminé';timer.textContent='La période est terminée.';return}
    const daily=Number(v.daily_estimate_cdf||0);
-   if(now>=next){
-    btn.disabled=daily<=0;btn.textContent=daily>0?'🟢 RÉCOLTER MES REVENUS':'Montant indisponible';
-    timer.textContent=daily>0?'Vous pouvez demander une récolte.':'Le montant quotidien n’est pas renseigné dans la base de données.';
-   }else{
-    btn.disabled=true;btn.textContent='🔒 RÉCOLTE APRÈS 24 H';
-    const diff=Math.max(0,next-now);
-    const hours=Math.floor(diff/3600000),mins=Math.floor((diff%3600000)/60000),secs=Math.floor((diff%60000)/1000);
-    timer.textContent=`Prochaine récolte possible dans ${hours} h ${mins} min ${secs} s.`;
-   }
+   if(now>=next){btn.disabled=daily<=0;btn.textContent=daily>0?'🟢 RÉCOLTER MES REVENUS':'Montant indisponible';timer.textContent=daily>0?'Vous pouvez demander une récolte.':'Montant quotidien non renseigné.'}
+   else{btn.disabled=true;btn.textContent='🔒 RÉCOLTE APRÈS 24 H';const diff=Math.max(0,next-now),hours=Math.floor(diff/3600000),mins=Math.floor((diff%3600000)/60000),secs=Math.floor((diff%60000)/1000);timer.textContent=`Prochaine récolte possible dans ${hours} h ${mins} min ${secs} s.`}
   });
  },1000);
 }
-
 async function claimVIP(subscriptionId){
  if(!currentUser){showAuth();return}
- const btn=$('claim-'+subscriptionId);
- if(btn&&btn.disabled)return;
+ const btn=$('claim-'+subscriptionId);if(btn&&btn.disabled)return;
  if(!confirm('Demander la récolte quotidienne de ce VIP ? Le montant est indicatif et Supabase vérifiera les conditions.'))return;
  busy(btn,true,'Vérification…');
  try{
   const {data,error}=await db.rpc('sanotoleuro_claim_vip',{p_subscription_id:subscriptionId});
-  if(error)throw error;
-  if(!data||data.success!==true)throw new Error(data?.message||'La récolte n’a pas été confirmée par Supabase.');
-  alert('Récolte confirmée : '+formatFC(data.amount_cdf)+'.');
-  await loadProfile();await loadMyVIP();
- }catch(e){
-  console.error('Récolte VIP',e);
-  alert(e.message||'Récolte impossible. Vérifiez que le VIP est actif et réessayez plus tard.');
-  await loadProfile();await loadMyVIP();
- }finally{
-  if(btn&&document.body.contains(btn)){
-   btn.disabled=false;btn.textContent='🟢 RÉCOLTER MES REVENUS';
-  }
- }
+  if(error)throw error;if(!data||data.success!==true)throw new Error(data?.message||'La récolte n’a pas été confirmée par Supabase.');
+  alert('Récolte confirmée : '+formatFC(data.amount_cdf)+'.');await loadProfile();await loadMyVIP();
+ }catch(e){console.error('Récolte VIP',e);alert(e.message||'Récolte impossible.');await loadProfile();await loadMyVIP()}
+ finally{if(btn&&document.body.contains(btn)){btn.disabled=false;btn.textContent='🟢 RÉCOLTER MES REVENUS'}}
 }
 async function refreshVIP(){await loadMyVIP();await loadProfile()}
 
-async function loadTeam(){
- if(!currentUser)return;renderProfileSummary();
- const box=$('teamList');box.innerHTML='<div class="empty">Chargement…</div>';
- try{
-  const {data,error}=await db.rpc('sanotoleuro_my_team');if(error)throw error;
-  const members=Array.isArray(data)?data:[];
-  if(!members.length){box.innerHTML='<div class="empty">Aucun membre dans votre équipe.</div>';return}
-  box.innerHTML=members.map(m=>`<div class="item"><strong>${esc(m.full_name||m.name||'Membre')}</strong><div class="muted small">${esc(m.created_at?new Date(m.created_at).toLocaleDateString('fr-FR'):'')}</div></div>`).join('');
- }catch(e){console.error(e);box.innerHTML='<div class="empty">Les informations de l’équipe ne sont pas disponibles.</div>'}
+/* ÉQUIPE : niveaux, dépôts validés et commissions enregistrées.
+   Les profils et commissions doivent être accessibles via les règles RLS.
+   Les taux affichés ne remplacent pas le calcul côté serveur. */
+const REFERRAL_RATES={1:12,2:3,3:1};
+function normalizeReferralCode(v){return String(v||'').trim().toUpperCase()}
+function setTeamStats(members,deposits,commissions){
+ const validated=deposits.filter(d=>isDepositValidated(d.status));
+ $('teamTotal').textContent=String(members.length);
+ $('teamDepositors').textContent=String(new Set(validated.map(d=>d.user_id)).size);
+ $('teamDepositTotal').textContent=formatFC(validated.reduce((sum,d)=>sum+Number(d.amount_cdf||0),0));
+ $('teamCommissionTotal').textContent=formatFC(commissions.filter(c=>['success','approved','validated','paid','completed'].includes(String(c.status||'').toLowerCase())).reduce((sum,c)=>sum+Number(c.commission_amount_cdf||0),0));
 }
+async function loadTeam(){
+ if(!currentUser)return;
+ renderProfileSummary();
+ const box=$('teamList');box.innerHTML='<div class="empty">Chargement de votre équipe…</div>';
+ try{
+  /* Les fonctions existantes sont utilisées si disponibles. */
+  let rpcMembers=[],rpcError=null;
+  try{
+   const r=await db.rpc('sanotoleuro_my_team');
+   if(!r.error&&Array.isArray(r.data))rpcMembers=r.data;
+   else rpcError=r.error;
+  }catch(e){rpcError=e}
+
+  /* Récupérer les profils accessibles. Le code de parrainage peut être stocké
+     dans referred_by sous forme de code ou d'identifiant. */
+  const profileColumns='id,full_name,referral_code,referred_by,created_at';
+  let allProfiles=[],profilesError=null;
+  try{
+   const r=await db.from('sanotoleuro_profiles').select(profileColumns).limit(5000);
+   if(r.error)throw r.error;allProfiles=r.data||[];
+  }catch(e){profilesError=e}
+
+  /* Utiliser aussi la réponse RPC si la politique RLS empêche la liste globale. */
+  const profileMap=new Map(allProfiles.map(p=>[String(p.id),p]));
+  const codeMap=new Map(allProfiles.filter(p=>p.referral_code).map(p=>[normalizeReferralCode(p.referral_code),p]));
+  const ownCode=normalizeReferralCode(currentProfile?.referral_code);
+  const knownIds=new Set([currentUser.id]);
+  const levels={1:[],2:[],3:[]};
+  const assigned=new Set([currentUser.id]);
+
+  function matchesParent(profile,parent){
+   const referred=String(profile.referred_by||'').trim();
+   return referred===String(parent.id)||normalizeReferralCode(referred)===normalizeReferralCode(parent.referral_code);
+  }
+  let parents=[{id:currentUser.id,referral_code:currentProfile?.referral_code||''}];
+  for(let level=1;level<=3;level++){
+   const nextParents=[];
+   for(const parent of parents){
+    let children=allProfiles.filter(p=>matchesParent(p,parent)&&!assigned.has(String(p.id)));
+    /* Si le RPC renvoie déjà des membres, tenter de les rattacher par niveau. */
+    if(!children.length&&level===1&&parent.id===currentUser.id){
+     children=rpcMembers.filter(m=>{
+      const lvl=Number(m.referral_level||m.level||m.team_level||1);
+      return lvl===1&&m.id&& !assigned.has(String(m.id));
+     }).map(m=>({
+      id:m.id||m.user_id,
+      full_name:m.full_name||m.name||'Membre',
+      referral_code:m.referral_code||'',
+      referred_by:m.referred_by||'',
+      created_at:m.created_at||m.signup_date||null
+     })).filter(p=>p.id);
+    }
+    for(const child of children){
+     const id=String(child.id);if(assigned.has(id))continue;
+     assigned.add(id);knownIds.add(id);
+     child._level=level;levels[level].push(child);nextParents.push(child);
+    }
+   }
+   parents=nextParents;
+  }
+
+  /* Récupérer les dépôts de l'équipe et les commissions du membre connecté. */
+  const memberIds=[...knownIds].filter(id=>id!==currentUser.id);
+  let deposits=[],commissions=[],depositsError=null,commissionsError=null;
+  if(memberIds.length){
+   try{
+    const r=await db.from('sanotoleuro_deposit_requests').select('id,user_id,amount_cdf,status,created_at').in('user_id',memberIds).order('created_at',{ascending:false}).limit(5000);
+    if(r.error)throw r.error;deposits=r.data||[];
+   }catch(e){depositsError=e}
+  }
+  try{
+   const r=await db.from('sanotoleuro_referral_commissions').select('beneficiary_user_id,source_user_id,referral_level,commission_percent,commission_amount_cdf,status,created_at').eq('beneficiary_user_id',currentUser.id).order('created_at',{ascending:false}).limit(5000);
+   if(r.error)throw r.error;commissions=r.data||[];
+  }catch(e){commissionsError=e}
+
+  /* Une RPC fonctionnelle peut retourner la liste même lorsque les profils
+     ne sont pas lisibles. Ne pas fabriquer de montants de commission. */
+  const flattened=[...levels[1],...levels[2],...levels[3]];
+  setTeamStats(flattened,deposits,commissions);
+
+  if(!flattened.length){
+   let message='Aucun membre trouvé dans les niveaux 1, 2 et 3.';
+   if(profilesError&&rpcError)message='Impossible de lire la liste de l’équipe. Vérifiez la fonction sanotoleuro_my_team et les droits SELECT des tables Supabase.';
+   else if(profilesError)message='La liste des profils est protégée par Supabase et la fonction d’équipe ne renvoie aucun membre.';
+   box.innerHTML=`<div class="empty">${esc(message)}</div><button class="btn light full" onclick="loadTeam()">Réessayer</button>`;
+   return;
+  }
+
+  let html='';
+  for(let level=1;level<=3;level++){
+   const members=levels[level];
+   const levelDeposits=deposits.filter(d=>members.some(m=>String(m.id)===String(d.user_id)));
+   const validated=levelDeposits.filter(d=>isDepositValidated(d.status));
+   const depositTotal=validated.reduce((sum,d)=>sum+Number(d.amount_cdf||0),0);
+   const rate=REFERRAL_RATES[level];
+   const levelCommissions=commissions.filter(c=>Number(c.referral_level)===level);
+   const credited=levelCommissions.filter(c=>['success','approved','validated','paid','completed'].includes(String(c.status||'').toLowerCase())).reduce((sum,c)=>sum+Number(c.commission_amount_cdf||0),0);
+
+   html+=`<div class="level-title">Niveau ${level} · Commission ${rate}% · ${members.length} membre(s)</div>`;
+   html+=`<div class="stats"><div class="stat"><small>Dépôts validés</small><strong>${formatFC(depositTotal)}</strong></div><div class="stat"><small>Commissions enregistrées</small><strong>${formatFC(credited)}</strong></div></div>`;
+
+   if(!members.length){
+    html+='<div class="empty">Aucun membre à ce niveau.</div>';continue;
+   }
+   html+=members.map(m=>{
+    const memberDeposits=deposits.filter(d=>String(d.user_id)===String(m.id));
+    const approved=memberDeposits.filter(d=>isDepositValidated(d.status));
+    const total=approved.reduce((sum,d)=>sum+Number(d.amount_cdf||0),0);
+    const last=approved[0]?.created_at||null;
+    return `<div class="item">
+      <div class="itemtop"><strong>${esc(m.full_name||m.name||'Membre')}</strong><span class="status">${'Niveau '+level}</span></div>
+      <div class="muted small">Inscription : ${m.created_at?new Date(m.created_at).toLocaleDateString('fr-FR'):'Date indisponible'}</div>
+      <div class="muted small">Code de parrainage : ${esc(m.referral_code||'—')}</div>
+      <div class="muted small">Dépôts enregistrés : ${memberDeposits.length}</div>
+      <div class="muted small">Dépôts validés : ${approved.length}</div>
+      <div class="amount" style="margin-top:8px">Total des dépôts validés : ${formatFC(total)}</div>
+      <div class="muted small">Dernier dépôt validé : ${last?new Date(last).toLocaleDateString('fr-FR'):'Aucun'}</div>
+    </div>`;
+   }).join('');
+  }
+
+  if(commissionsError){
+   html+='<div class="notice">Les membres et leurs dépôts sont affichés, mais les commissions enregistrées ne peuvent pas être lues. Vérifiez les droits SELECT sur sanotoleuro_referral_commissions.</div>';
+  }else{
+   html+='<div class="level-title">Historique des commissions créditées</div>';
+   const credited=commissions.filter(c=>['success','approved','validated','paid','completed'].includes(String(c.status||'').toLowerCase()));
+   if(!commissions.length)html+='<div class="empty">Aucune commission enregistrée pour le moment. Les taux affichés ne signifient pas qu’une commission a déjà été créditée.</div>';
+   else html+=commissions.map(c=>{
+    const source=profileMap.get(String(c.source_user_id));
+    const level=Number(c.referral_level||0);
+    return `<div class="item"><div class="itemtop"><strong>Niveau ${esc(level||'—')} · ${esc(c.commission_percent??REFERRAL_RATES[level]??0)}%</strong>${statusLabel(c.status)}</div><div class="muted small">Membre concerné : ${esc(source?.full_name||c.source_user_id||'Membre')}</div><div class="amount" style="margin-top:8px">${formatFC(c.commission_amount_cdf)}</div><div class="muted small">${c.created_at?new Date(c.created_at).toLocaleString('fr-FR'):'Date indisponible'}</div></div>`;
+   }).join('');
+  }
+
+  if(depositsError)html+='<div class="notice">Les dépôts individuels ne sont pas accessibles. Vérifiez les règles SELECT de sanotoleuro_deposit_requests.</div>';
+  box.innerHTML=html;
+ }catch(e){
+  console.error('Équipe',e);
+  box.innerHTML='<div class="notice">Impossible de charger l’équipe. Vérifiez la fonction sanotoleuro_my_team, les colonnes de sanotoleuro_profiles et les autorisations Supabase.</div><button class="btn light full" onclick="loadTeam()">Réessayer</button>';
+ }
+}
+
 async function copyText(v){
  try{await navigator.clipboard.writeText(v);alert('Copié.')}
  catch(e){const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Copié.')}
@@ -671,8 +768,7 @@ async function loadAdmin(){
  await Promise.all([loadAdminRequests('deposit'),loadAdminRequests('withdrawal'),loadAdminMembers(),loadSettings(),loadAdminVIP()]);
 }
 async function loadAdminRequests(type){
- const dep=type==='deposit',box=$(dep?'adminDeposits':'adminWithdrawals');
- const table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';
+ const dep=type==='deposit',box=$(dep?'adminDeposits':'adminWithdrawals'),table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';
  box.innerHTML='<div class="empty">Chargement…</div>';
  try{
   const {data,error}=await db.from(table).select('*').order('created_at',{ascending:false}).limit(100);
@@ -697,7 +793,7 @@ async function updateRequest(type,id,status){
    const {data,error}=await db.rpc(functionName,{p_deposit_id:id,p_admin_note:note||null});
    if(error)throw error;if(!data?.success)throw new Error(data?.message||'Supabase n’a pas confirmé l’opération.');
    alert(data.message||'Opération terminée.');
-   await Promise.all([loadAdminRequests('deposit'),loadAdminVIP(),loadMyVIP(),loadHistory()]);
+   await Promise.all([loadAdminRequests('deposit'),loadAdminVIP(),loadMyVIP(),loadHistory(),loadTeam()]);
   }else{
    const {data,error}=await db.from('sanotoleuro_withdrawal_requests').update({status,admin_note:note,updated_at:new Date().toISOString()}).eq('id',id).eq('status','pending').select('id');
    if(error)throw error;if(!data?.length)throw new Error('Retrait introuvable ou déjà traité.');
@@ -706,13 +802,9 @@ async function updateRequest(type,id,status){
   }
  }catch(e){console.error('Administration',e);alert('Échec : '+(e.message||'Vérifiez les fonctions et les données dans Supabase.'))}
 }
-
 async function loadAdminVIP(){
  const box=$('adminVIP');if(!box||!isAdmin)return;box.innerHTML='<div class="empty">Chargement…</div>';
- const columns=[
-  'id,user_id,plan_number,capital_cdf,daily_estimate_cdf,activated_at,ends_at,status,last_claim_at',
-  'id,user_id,plan_number,capital_cdf,activated_at,ends_at,status,last_claim_at'
- ];
+ const columns=['id,user_id,plan_number,capital_cdf,daily_estimate_cdf,activated_at,ends_at,status,last_claim_at','id,user_id,plan_number,capital_cdf,activated_at,ends_at,status,last_claim_at'];
  for(const select of columns){
   try{
    const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select(select).order('activated_at',{ascending:false}).limit(100);
