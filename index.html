@@ -7,7 +7,7 @@
 <title>SANOTOLEURO RDC</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--g:#238b45;--gd:#12652e;--gl:#e8f5e9;--w:#fff;--b:#172019;--gr:#f4f7f4;--bd:#dce7dd;--r:#c62828}
+:root{--g:#238b45;--gd:#12652e;--gl:#e8f5e9;--w:#fff;--b:#172019;--gr:#f4f7f4;--bd:#dce7dd;--r:#c62828;--gold:#d6a329}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--gr);color:var(--b)}
 button,input,select{font:inherit}
@@ -86,7 +86,14 @@ input:focus,select:focus{border-color:var(--g)}
 .payrow strong{font-size:14px;overflow-wrap:anywhere}
 .copybtn{border:0;border-radius:9px;background:var(--g);color:white;font-size:12px;font-weight:800;padding:9px 10px;flex-shrink:0}
 .footer{text-align:center;color:#778278;font-size:11px;line-height:1.5;padding:14px}
-hr{border:0;border-top:1px solid var(--bd);margin:18px 0}
+.claimbox{border:1px solid #b8dfc0;background:linear-gradient(135deg,#f4fff5,#e0f4e5);padding:14px;border-radius:13px;margin-top:12px}
+.claimamount{font-size:20px;font-weight:900;color:var(--gd);margin:8px 0}
+.claimbutton{width:100%;background:linear-gradient(135deg,#238b45,#12652e);color:#fff;padding:14px;border-radius:11px;border:0;font-weight:900}
+.claimbutton:disabled{opacity:.55;cursor:not-allowed}
+.claimtimer{font-size:12px;color:#526b56;margin-top:8px;line-height:1.5}
+.vipbadge{display:inline-block;padding:5px 9px;background:#fff3cd;color:#785400;border-radius:8px;font-weight:800;font-size:11px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ffffff80;margin:3px}
+.dot.active{background:#fff}
 @keyframes fade{from{opacity:.4}to{opacity:1}}
 @media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{height:280px}}
 </style>
@@ -144,11 +151,8 @@ hr{border:0;border-top:1px solid var(--bd);margin:18px 0}
 <section id="appScreen" class="hidden">
   <section id="homePage" class="page">
     <div class="hero" id="adCarousel">
-      <div class="slide active">
-        <div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p></div>
-      </div>
+      <div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Bienvenue sur votre espace.</p></div></div>
     </div>
-
     <div class="card">
       <p class="muted">Bienvenue, <strong id="welcomeName">Membre</strong></p>
       <h2>Votre espace personnel</h2>
@@ -157,12 +161,10 @@ hr{border:0;border-top:1px solid var(--bd);margin:18px 0}
         <div class="stat"><small>Code de parrainage</small><strong id="homeReferral">—</strong></div>
       </div>
     </div>
-
     <div class="card">
-      <div class="itemtop"><h2>Mes plans VIP actifs</h2><button class="btn light smallbtn" onclick="loadMyVIP()">Actualiser</button></div>
+      <div class="itemtop"><h2>Mes plans VIP actifs</h2><button class="btn light smallbtn" onclick="refreshVIP()">Actualiser</button></div>
       <div id="myVipList"><div class="empty">Chargement…</div></div>
     </div>
-
     <div class="grid">
       <button class="tile" onclick="showPage('plans')"><div class="icon">📊</div><strong>Plans / Recharger</strong><span>Consulter les plans</span></button>
       <button class="tile" onclick="showPage('withdraw')"><div class="icon">💸</div><strong>Retrait</strong><span>Demander un retrait</span></button>
@@ -171,7 +173,6 @@ hr{border:0;border-top:1px solid var(--bd);margin:18px 0}
       <button class="tile" onclick="showPage('account')"><div class="icon">👤</div><strong>Mon compte</strong><span>Informations personnelles</span></button>
       <button class="tile hidden" id="adminTile" onclick="showPage('admin')"><div class="icon">🛡️</div><strong>Administration</strong><span>Gérer la plateforme</span></button>
     </div>
-
     <div class="card" style="margin-top:14px">
       <h3>Besoin d’assistance ?</h3>
       <a class="btn primary full" href="https://t.me/Drcprom" target="_blank" rel="noopener">Service client Telegram</a>
@@ -303,18 +304,8 @@ const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let currentUser=null,currentProfile=null,isAdmin=false,carouselTimer=null,carouselIndex=0,carouselImages=[];
 let selectedPlan=null;
-
-const defaultPlans=[
-{plan_number:1,amount_cdf:25000,illustrative_daily_amount_cdf:1000,duration_days:51},
-{plan_number:2,amount_cdf:40000,illustrative_daily_amount_cdf:1700,duration_days:62},
-{plan_number:3,amount_cdf:80000,illustrative_daily_amount_cdf:3400,duration_days:73},
-{plan_number:4,amount_cdf:120000,illustrative_daily_amount_cdf:5100,duration_days:95},
-{plan_number:5,amount_cdf:190000,illustrative_daily_amount_cdf:7800,duration_days:100},
-{plan_number:6,amount_cdf:360000,illustrative_daily_amount_cdf:15000,duration_days:120},
-{plan_number:7,amount_cdf:650000,illustrative_daily_amount_cdf:28000,duration_days:150},
-{plan_number:8,amount_cdf:1200000,illustrative_daily_amount_cdf:51000,duration_days:200},
-{plan_number:9,amount_cdf:2500000,illustrative_daily_amount_cdf:115000,duration_days:250}
-];
+let mySubscriptions=[];
+let vipCountdownTimer=null;
 
 function $(id){return document.getElementById(id)}
 function formatFC(v){return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}).format(Number(v||0))+' FC'}
@@ -323,7 +314,7 @@ function safeURL(v){try{let u=new URL(v);return ['http:','https:'].includes(u.pr
 function busy(btn,on,label){if(!btn)return;if(on){btn.dataset.old=btn.textContent;btn.disabled=true;btn.textContent=label||'Patientez…'}else{btn.disabled=false;btn.textContent=btn.dataset.old||'Envoyer'}}
 function statusLabel(s){
  s=String(s||'pending').toLowerCase();
- if(['success','approved','validated','completed'].includes(s))return '<span class="status success">Validée</span>';
+ if(['success','approved','validated','completed','active'].includes(s))return '<span class="status success">Validée</span>';
  if(['rejected','refused','cancelled'].includes(s))return '<span class="status rejected">Rejetée</span>';
  return '<span class="status">En attente</span>';
 }
@@ -383,7 +374,7 @@ async function register(e){
    showAuthForm('login');
    $('loginEmail').value=email;
   }
- }catch(err){console.error(err);alert('Impossible de créer le compte. Vérifiez les informations et réessayez.')}
+ }catch(err){console.error(err);alert(err.message||'Impossible de créer le compte. Vérifiez les informations et réessayez.')}
  finally{busy(btn,false)}
 }
 
@@ -394,7 +385,7 @@ async function login(e){
   if(error)throw error;
   currentUser=data.user;
   await afterLogin();
- }catch(err){console.error(err);alert('Connexion impossible. Vérifiez votre e-mail et votre mot de passe.')}
+ }catch(err){console.error(err);alert(err.message||'Connexion impossible. Vérifiez votre e-mail et votre mot de passe.')}
  finally{busy(btn,false)}
 }
 
@@ -410,8 +401,9 @@ async function resetPassword(){
 
 async function logout(){
  await db.auth.signOut();
- currentUser=null;currentProfile=null;isAdmin=false;
+ currentUser=null;currentProfile=null;isAdmin=false;mySubscriptions=[];
  if(carouselTimer)clearInterval(carouselTimer);
+ if(vipCountdownTimer)clearInterval(vipCountdownTimer);
  showAuth();
 }
 
@@ -530,7 +522,7 @@ async function loadPlans(){
   renderPlans(data);
  }catch(e){
   console.error('Plans Supabase indisponibles',e);
-  box.innerHTML='<div class="notice">Les plans ne sont pas disponibles dans la base. Vérifiez les plans actifs dans Supabase avant d’envoyer un dépôt.</div>';
+  box.innerHTML='<div class="notice">Les plans ne sont pas disponibles actuellement.</div>';
  }
 }
 
@@ -546,7 +538,6 @@ function renderPlans(plans){
     <div><small>Capital du plan</small><strong>${formatFC(amount)}</strong></div>
     <div><small>État</small><strong>Disponible</strong></div>
    </div>
-   <p class="muted small">Les estimations ne constituent pas une promesse de rendement.</p>
    <button class="btn primary full" onclick="selectPlan(${Number(p.amount_cdf)},${Number(p.plan_number)})">Choisir ce plan</button>
   </div>`;
  }).join('');
@@ -569,14 +560,7 @@ async function submitDeposit(e){
  if(!method||!ref){alert('Complétez les informations demandées.');return}
  busy(btn,true,'Envoi…');
  try{
-  let row={
-   user_id:currentUser.id,
-   plan_number:selectedPlan.number,
-   amount_cdf:amount,
-   payment_method:method,
-   payment_reference:ref,
-   status:'pending'
-  };
+  let row={user_id:currentUser.id,plan_number:selectedPlan.number,amount_cdf:amount,payment_method:method,payment_reference:ref,status:'pending'};
   let {error}=await db.from('sanotoleuro_deposit_requests').insert(row);
   if(error)throw error;
   $('depositForm').reset();
@@ -586,7 +570,7 @@ async function submitDeposit(e){
   showPage('orders');
  }catch(err){
   console.error(err);
-  alert('Demande non envoyée. Vérifiez les règles d’accès et les colonnes de la table Supabase.');
+  alert('Demande non envoyée. Vérifiez les autorisations Supabase.');
  }finally{busy(btn,false)}
 }
 
@@ -659,7 +643,7 @@ async function submitWithdrawal(e){
   alert('Demande de retrait envoyée pour vérification.');
   await loadHistory();
   showPage('orders');
- }catch(err){console.error(err);alert('Demande non envoyée. Vérifiez les règles Supabase.')}
+ }catch(err){console.error(err);alert('Demande non envoyée. Vérifiez les autorisations Supabase.')}
  finally{busy(btn,false)}
 }
 
@@ -686,26 +670,137 @@ async function loadHistory(){
  }catch(e){console.error(e);box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>'}
 }
 
+/* VIP : charge les colonnes réellement créées par le SQL fourni.
+   La fonction de récolte côté serveur reste l'autorité pour les 24 heures. */
 async function loadMyVIP(){
  let box=$('myVipList');if(!box||!currentUser)return;
- box.innerHTML='<div class="empty">Chargement…</div>';
+ box.innerHTML='<div class="empty">Chargement des abonnements VIP…</div>';
  try{
   let {data,error}=await db.from('sanotoleuro_vip_subscriptions')
-   .select('id,plan_number,capital_cdf,daily_amount_cdf,duration_days,activated_at,ends_at,status')
+   .select('id,user_id,plan_number,capital_cdf,daily_estimate_cdf,daily_amount_cdf,duration_days,activated_at,ends_at,last_claim_at,status')
    .eq('user_id',currentUser.id).order('activated_at',{ascending:false}).limit(30);
   if(error)throw error;
-  if(!data?.length){box.innerHTML='<div class="empty">Aucun plan VIP activé pour le moment.</div>';return}
-  box.innerHTML=data.map(v=>`<div class="item">
-   <div class="itemtop"><strong>PLAN VIP ${esc(v.plan_number)}</strong>${statusLabel(v.status==='active'?'success':v.status)}</div>
-   <p class="amount">${formatFC(v.capital_cdf)}</p>
-   <div class="muted small">Activé : ${new Date(v.activated_at).toLocaleString('fr-FR')}</div>
-   <div class="muted small">Fin prévue : ${new Date(v.ends_at).toLocaleDateString('fr-FR')}</div>
-   <div class="muted small">Montant quotidien indicatif : ${formatFC(v.daily_amount_cdf)}</div>
-  </div>`).join('');
+  mySubscriptions=data||[];
+  renderMyVIP(mySubscriptions);
  }catch(e){
   console.error('Chargement VIP',e);
-  box.innerHTML='<div class="empty">Impossible de charger les VIP. Vérifiez la table des abonnements dans Supabase.</div>';
+  /* Compatibilité si une colonne quotidienne porte l'ancien nom. */
+  try{
+   let {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+    .select('id,user_id,plan_number,capital_cdf,duration_days,activated_at,ends_at,last_claim_at,status')
+    .eq('user_id',currentUser.id).order('activated_at',{ascending:false}).limit(30);
+   if(error)throw error;
+   mySubscriptions=data||[];
+   renderMyVIP(mySubscriptions);
+  }catch(err){
+   console.error(err);
+   box.innerHTML='<div class="empty">Impossible de charger les abonnements VIP pour le moment.</div>';
+  }
  }
+}
+
+function renderMyVIP(data){
+ let box=$('myVipList');
+ if(!data||!data.length){
+  box.innerHTML='<div class="empty">Aucun plan VIP activé pour le moment.</div>';
+  return;
+ }
+ box.innerHTML=data.map(v=>{
+  const daily=Number(v.daily_estimate_cdf??v.daily_amount_cdf??0);
+  const active=String(v.status||'').toLowerCase()==='active';
+  const activated=v.activated_at?new Date(v.activated_at):null;
+  const ends=v.ends_at?new Date(v.ends_at):null;
+  const now=new Date();
+  const expired=ends&&now>=ends;
+  let button='';
+  if(active&&!expired){
+   const last=v.last_claim_at?new Date(v.last_claim_at):null;
+   const earliest=last?new Date(last.getTime()+86400000):(activated?new Date(activated.getTime()+86400000):new Date(now.getTime()+86400000));
+   const ready=now>=earliest;
+   button=`<div class="claimbox">
+     <div class="muted">Montant indicatif disponible par récolte</div>
+     <div class="claimamount">${formatFC(daily)}</div>
+     <button class="claimbutton" id="claim-${esc(v.id)}" onclick="claimVIP('${esc(v.id)}')" ${(!ready||daily<=0)?'disabled':''}>${ready?'🟢 RÉCOLTER MES REVENUS':'🔒 RÉCOLTE DANS 24 H'}</button>
+     <div class="claimtimer" id="claimtimer-${esc(v.id)}">${ready?'Vous pouvez demander une récolte.':`Prochaine récolte possible : ${earliest.toLocaleString('fr-FR')}`}</div>
+     <div class="muted small">Une seule récolte toutes les 24 heures. La demande est vérifiée par Supabase.</div>
+   </div>`;
+  }else if(expired){
+   button='<div class="notice">La période de cet abonnement est terminée.</div>';
+  }
+  return `<div class="item">
+   <div class="itemtop"><strong>PLAN VIP ${esc(v.plan_number)}</strong>${active&&!expired?'<span class="status success">Actif</span>':statusLabel(expired?'completed':v.status)}</div>
+   <p class="amount">${formatFC(v.capital_cdf)}</p>
+   <div class="muted small">Activé : ${activated?activated.toLocaleString('fr-FR'):'—'}</div>
+   <div class="muted small">Fin prévue : ${ends?ends.toLocaleDateString('fr-FR'):'—'}</div>
+   <div class="muted small">Montant quotidien indicatif : ${formatFC(daily)}</div>
+   ${v.last_claim_at?`<div class="muted small">Dernière récolte : ${new Date(v.last_claim_at).toLocaleString('fr-FR')}</div>`:''}
+   ${button}
+  </div>`;
+ }).join('');
+ startVIPCountdown();
+}
+
+function startVIPCountdown(){
+ if(vipCountdownTimer)clearInterval(vipCountdownTimer);
+ vipCountdownTimer=setInterval(()=>{
+  if(!currentUser||!mySubscriptions.length)return;
+  const now=new Date();
+  mySubscriptions.forEach(v=>{
+   if(String(v.status||'').toLowerCase()!=='active')return;
+   const btn=$('claim-'+v.id),timer=$('claimtimer-'+v.id);
+   if(!btn||!timer)return;
+   const last=v.last_claim_at?new Date(v.last_claim_at):null;
+   const activated=v.activated_at?new Date(v.activated_at):now;
+   const next=new Date((last||activated).getTime()+86400000);
+   if(v.ends_at&&now>=new Date(v.ends_at)){
+    btn.disabled=true;btn.textContent='Abonnement terminé';
+    timer.textContent='La période de cet abonnement est terminée.';
+    return;
+   }
+   if(now>=next){
+    btn.disabled=Number(v.daily_estimate_cdf??v.daily_amount_cdf??0)<=0;
+    btn.textContent='🟢 RÉCOLTER MES REVENUS';
+    timer.textContent='Vous pouvez demander une récolte.';
+   }else{
+    btn.disabled=true;btn.textContent='🔒 RÉCOLTE DANS 24 H';
+    const diff=Math.max(0,next-now);
+    const hours=Math.floor(diff/3600000),mins=Math.floor((diff%3600000)/60000),secs=Math.floor((diff%60000)/1000);
+    timer.textContent=`Prochaine récolte possible dans ${hours} h ${mins} min ${secs} s.`;
+   }
+  });
+ },1000);
+}
+
+async function claimVIP(subscriptionId){
+ if(!currentUser){showAuth();return}
+ const btn=$('claim-'+subscriptionId);
+ if(btn&&btn.disabled)return;
+ if(!confirm('Demander la récolte quotidienne de ce VIP ? Le montant affiché est indicatif et la demande sera vérifiée par Supabase.'))return;
+ busy(btn,true,'Vérification…');
+ try{
+  const {data,error}=await db.rpc('sanotoleuro_claim_vip',{p_subscription_id:subscriptionId});
+  if(error)throw error;
+  if(!data||data.success!==true){
+   throw new Error(data?.message||'La récolte n’a pas été confirmée.');
+  }
+  const amount=Number(data.amount_cdf||0);
+  alert('Récolte confirmée : '+formatFC(amount)+'.');
+  await loadProfile();
+  await loadMyVIP();
+ }catch(e){
+  console.error('Récolte VIP',e);
+  let message=String(e.message||'').replace(/^.*ERROR:\s*/i,'').trim();
+  alert(message||'Récolte impossible pour le moment. Vérifiez votre abonnement et réessayez plus tard.');
+  await loadProfile();
+  await loadMyVIP();
+ }finally{
+  if(btn){btn.disabled=false;btn.textContent='🟢 RÉCOLTER MES REVENUS'}
+ }
+}
+
+async function refreshVIP(){
+ await loadMyVIP();
+ await loadProfile();
 }
 
 async function loadTeam(){
@@ -795,12 +890,6 @@ async function loadAdminRequests(type){
  }
 }
 
-/*
- * CORRECTION PRINCIPALE :
- * Un dépôt validé appelle la fonction SQL sécurisée.
- * Cette fonction valide le dépôt ET crée l'abonnement VIP
- * dans une transaction, sans double activation.
- */
 async function updateRequest(type,id,status){
  if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}
  let dep=type==='deposit';
@@ -808,15 +897,10 @@ async function updateRequest(type,id,status){
  if(!confirm(status==='success'?'Confirmer après avoir vérifié le paiement réel ?':'Confirmer le rejet ?'))return;
  try{
   if(dep){
-   let functionName=status==='success'
-    ?'sanotoleuro_admin_approve_deposit'
-    :'sanotoleuro_admin_reject_deposit';
-   let {data,error}=await db.rpc(functionName,{
-    p_deposit_id:id,
-    p_admin_note:note||null
-   });
+   let functionName=status==='success'?'sanotoleuro_admin_approve_deposit':'sanotoleuro_admin_reject_deposit';
+   let {data,error}=await db.rpc(functionName,{p_deposit_id:id,p_admin_note:note||null});
    if(error)throw error;
-   if(!data?.success)throw new Error(data?.message||'La fonction Supabase n’a pas confirmé la validation.');
+   if(!data?.success)throw new Error(data?.message||'La fonction Supabase n’a pas confirmé l’opération.');
    alert(data.message||'Opération terminée.');
    await Promise.all([loadAdminRequests('deposit'),loadAdminVIP(),loadMyVIP(),loadHistory()]);
   }else{
@@ -840,18 +924,29 @@ async function loadAdminVIP(){
  box.innerHTML='<div class="empty">Chargement…</div>';
  try{
   let {data,error}=await db.from('sanotoleuro_vip_subscriptions')
-   .select('id,user_id,plan_number,capital_cdf,daily_amount_cdf,activated_at,ends_at,status')
+   .select('id,user_id,plan_number,capital_cdf,daily_estimate_cdf,daily_amount_cdf,activated_at,ends_at,status,last_claim_at')
    .order('activated_at',{ascending:false}).limit(100);
   if(error)throw error;
   if(!data?.length){box.innerHTML='<div class="empty">Aucun abonnement VIP activé.</div>';return}
   box.innerHTML=data.map(v=>`<div class="item">
    <strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong>
    <div class="muted small">Membre : ${esc(v.user_id)}</div>
-   <div class="muted small">Activation : ${new Date(v.activated_at).toLocaleString('fr-FR')}</div>
-   <div class="muted small">Fin : ${new Date(v.ends_at).toLocaleDateString('fr-FR')}</div>
-   ${statusLabel(v.status==='active'?'success':v.status)}
+   <div class="muted small">Montant indicatif : ${formatFC(v.daily_estimate_cdf??v.daily_amount_cdf??0)}</div>
+   <div class="muted small">Activation : ${v.activated_at?new Date(v.activated_at).toLocaleString('fr-FR'):'—'}</div>
+   <div class="muted small">Fin : ${v.ends_at?new Date(v.ends_at).toLocaleDateString('fr-FR'):'—'}</div>
+   <div class="muted small">Dernière récolte : ${v.last_claim_at?new Date(v.last_claim_at).toLocaleString('fr-FR'):'Aucune'}</div>
+   ${statusLabel(v.status)}
   </div>`).join('');
- }catch(e){console.error(e);box.innerHTML='<div class="empty">Liste VIP indisponible. Vérifiez les autorisations Supabase.</div>'}
+ }catch(e){
+  console.error(e);
+  try{
+   let {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+    .select('id,user_id,plan_number,capital_cdf,activated_at,ends_at,status,last_claim_at')
+    .order('activated_at',{ascending:false}).limit(100);
+   if(error)throw error;
+   box.innerHTML=(data||[]).map(v=>`<div class="item"><strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong><div class="muted small">Membre : ${esc(v.user_id)}</div><div class="muted small">Activation : ${v.activated_at?new Date(v.activated_at).toLocaleString('fr-FR'):'—'}</div><div class="muted small">Fin : ${v.ends_at?new Date(v.ends_at).toLocaleDateString('fr-FR'):'—'}</div>${statusLabel(v.status)}</div>`).join('')||'<div class="empty">Aucun abonnement VIP.</div>';
+  }catch(err){console.error(err);box.innerHTML='<div class="empty">Liste VIP indisponible.</div>'}
+ }
 }
 
 async function loadAdminMembers(){
@@ -927,7 +1022,7 @@ async function saveSettings(e){
    if(error)throw error;
   }
   alert('Coordonnées enregistrées.');
- }catch(e){console.error(e);alert('Enregistrement impossible. Vérifiez les règles Supabase.')}
+ }catch(e){console.error(e);alert('Enregistrement impossible. Vérifiez les autorisations Supabase.')}
  finally{busy(btn,false)}
 }
 
@@ -942,7 +1037,9 @@ async function initApp(){
     isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
     if($('appScreen').classList.contains('hidden'))await afterLogin();
    }else{
-    currentUser=null;currentProfile=null;isAdmin=false;showAuth();
+    currentUser=null;currentProfile=null;isAdmin=false;mySubscriptions=[];
+    if(vipCountdownTimer)clearInterval(vipCountdownTimer);
+    showAuth();
    }
   },0);
  });
