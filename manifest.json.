@@ -4,6 +4,7 @@
   "short_name": "SANOTOLEURO",
   "description": "SANOTOLEURO - Matériel médical",
   "lang": "fr",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
