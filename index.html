@@ -4,101 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#20B342">
-<meta name="description" content="SANOTOLEURO S.A. - Matériel médical, équipements hospitaliers et solutions de santé.">
+<meta name="description" content="SANOTOLEURO RDC - Matériel médical, équipements hospitaliers et fournitures de santé.">
 <link rel="manifest" href="/manifest.json">
-<title>SANOTOLEURO S.A.</title>
+<title>SANOTOLEURO RDC</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
- --green:#20B342;
- --dark:#08752D;
- --light:#E9F8ED;
- --bg:#EDF1F7;
- --white:#fff;
- --text:#202631;
- --muted:#687482;
- --border:#DDE5E0;
- --red:#E53935;
-}
+:root{--green:#20B342;--dark:#08752D;--light:#E9F8ED;--bg:#EDF1F7;--white:#fff;--text:#202631;--muted:#687482;--border:#DDE5E0;--red:#E53935}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
 button,input,select{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
-
-header{
- position:sticky;
- top:0;
- z-index:50;
- background:linear-gradient(110deg,#55D337,#16A83B);
- box-shadow:0 2px 9px #00000012;
-}
-.header-inner{
- height:68px;
- max-width:900px;
- margin:auto;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:8px 15px;
-}
-.brand{
- width:100%;
- text-align:center;
- color:#fff;
- font-size:22px;
- font-weight:900;
- letter-spacing:.4px;
-}
+header{position:sticky;top:0;z-index:50;background:linear-gradient(110deg,#55D337,#16A83B)}
+.header-inner{height:68px;max-width:900px;margin:auto;display:flex;align-items:center;justify-content:center;padding:8px 15px}
+.brand{width:100%;text-align:center;color:#fff;font-size:22px;font-weight:900}
 .brand .logo{display:none}
 #headerBalance{display:none!important}
-#logoutBtn{
- position:absolute;
- right:10px;
- background:#fff;
- color:var(--dark);
-}
-.auth-mode header .header-inner{height:0;padding:0;overflow:hidden}
-.auth-mode header{box-shadow:none}
-
+#logoutBtn{position:absolute;right:10px;background:#fff;color:var(--dark)}
 main{max-width:900px;margin:auto;padding:14px 13px 100px}
-.card{
- background:#fff;
- border:1px solid var(--border);
- border-radius:16px;
- padding:16px;
- margin-bottom:14px;
- box-shadow:0 3px 12px #143b1b08;
-}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 3px 12px #143b1b08}
 h1,h2,h3,p{margin-top:0}
 h2{font-size:20px;margin-bottom:14px}
 h3{font-size:16px}
-.muted{color:var(--muted);font-size:13px;line-height:1.55}
+.muted{color:var(--muted);font-size:13px;line-height:1.5}
 .small{font-size:12px}
 label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
-input,select{
- width:100%;
- padding:12px;
- border:1px solid #D5DFD6;
- border-radius:10px;
- background:#fff;
- outline:none;
- color:var(--text);
-}
+input,select{width:100%;padding:12px;border:1px solid #D5DFD6;border-radius:10px;background:#fff;outline:none;color:var(--text)}
 input:focus,select:focus{border-color:var(--green)}
-.btn{
- border:0;
- border-radius:11px;
- padding:12px 14px;
- font-weight:800;
- display:inline-flex;
- align-items:center;
- justify-content:center;
- gap:7px;
- text-decoration:none;
-}
+.btn{border:0;border-radius:11px;padding:12px 14px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px;text-decoration:none}
 .primary{background:var(--dark);color:#fff}
 .light{background:var(--light);color:var(--dark)}
 .danger{background:#FFEBEE;color:#C62828}
@@ -107,279 +41,66 @@ input:focus,select:focus{border-color:var(--green)}
 .row{display:flex;gap:8px}
 .row>*{flex:1;min-width:0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.tile{
- padding:14px 11px;
- min-height:95px;
- border:1px solid var(--border);
- background:#fff;
- border-radius:15px;
- text-align:left;
-}
+.tile{padding:14px 11px;min-height:95px;border:1px solid var(--border);background:#fff;border-radius:15px;text-align:left}
 .tile .icon{font-size:25px;margin-bottom:8px}
 .tile strong{display:block;font-size:14px}
 .tile span{display:block;color:var(--muted);font-size:12px;margin-top:5px}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 .stat{background:var(--light);border-radius:13px;padding:12px;min-width:0}
 .stat small{display:block;color:#526B56;font-size:12px}
-.stat strong{
- display:block;
- margin-top:6px;
- font-size:17px;
- color:var(--dark);
- overflow-wrap:anywhere;
-}
-.notice{
- padding:12px;
- border-radius:11px;
- background:#F0F7F0;
- border:1px solid #D9EADB;
- font-size:13px;
- line-height:1.6;
- margin:12px 0;
-}
-.item{
- border:1px solid var(--border);
- border-radius:13px;
- padding:13px;
- margin:10px 0;
- background:#fff;
- overflow-wrap:anywhere;
-}
+.stat strong{display:block;margin-top:6px;font-size:17px;color:var(--dark);overflow-wrap:anywhere}
+.notice{padding:12px;border-radius:11px;background:#F0F7F0;border:1px solid #D9EADB;font-size:13px;line-height:1.6;margin:12px 0}
+.item{border:1px solid var(--border);border-radius:13px;padding:13px;margin:10px 0;background:#fff;overflow-wrap:anywhere}
 .itemtop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .amount{font-weight:900;color:var(--dark)}
-.status{
- display:inline-block;
- padding:5px 9px;
- border-radius:20px;
- font-size:11px;
- font-weight:800;
- background:#FFF3CD;
- color:#7A5700;
- white-space:nowrap;
-}
+.status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800;background:#FFF3CD;color:#7A5700;white-space:nowrap}
 .status.success{background:#E0F4E5;color:#17632B}
 .status.rejected{background:#FFEBEE;color:#B71C1C}
 .empty{text-align:center;padding:20px 10px;color:var(--muted);font-size:13px}
-
-/* Navigation inférieure */
-.bottom{
- position:fixed;
- z-index:40;
- bottom:0;
- left:0;
- right:0;
- background:#fff;
- border-top:1px solid var(--border);
- display:flex;
- justify-content:center;
-}
-.bottominner{
- width:100%;
- max-width:900px;
- display:flex;
- justify-content:space-around;
- padding:7px 3px calc(7px + env(safe-area-inset-bottom));
-}
-.navbtn{
- border:0;
- background:transparent;
- color:#9299A2;
- min-width:50px;
- padding:5px 3px;
- font-size:10px;
-}
+.bottom{position:fixed;z-index:40;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);display:flex;justify-content:center}
+.bottominner{width:100%;max-width:900px;display:flex;justify-content:space-around;padding:7px 3px calc(7px + env(safe-area-inset-bottom))}
+.navbtn{border:0;background:transparent;color:#9299A2;min-width:50px;padding:5px 3px;font-size:10px}
 .navbtn span{display:block;font-size:21px;margin-bottom:3px}
 .navbtn.active{color:#11A66A;font-weight:900}
-
-/* Connexion et inscription */
 .auth{max-width:480px;margin:15px auto}
 .authbrand{text-align:center;padding:16px 10px}
-.authbrand .logo{
- margin:0 auto 10px;
- width:65px;
- height:65px;
- font-size:32px;
- display:grid;
- place-items:center;
- border-radius:18px;
- background:linear-gradient(135deg,#8EDBA5,#0B6B3A);
- color:#fff;
-}
+.authbrand .logo{margin:0 auto 10px;width:65px;height:65px;font-size:32px}
 .authbrand h1{color:var(--dark);font-size:27px}
 .tabs{display:flex;gap:8px;margin-bottom:15px}
 .tabs button{flex:1}
 
 /* Accueil professionnel */
-.home-hero{
- position:relative;
- height:260px;
- overflow:hidden;
- border-radius:18px;
- background:#DDEFE3;
- margin-bottom:13px;
- box-shadow:0 5px 16px #00000012;
-}
-.home-slide{
- position:absolute;
- inset:0;
- opacity:0;
- transition:opacity .8s ease;
-}
-.home-slide.active{opacity:1}
-.home-slide img{
- width:100%;
- height:100%;
- object-fit:cover;
- display:block;
-}
-.home-overlay{
- position:absolute;
- inset:0;
- display:flex;
- flex-direction:column;
- justify-content:flex-end;
- padding:22px 18px;
- background:linear-gradient(transparent 20%,#031d12d9 100%);
- color:#fff;
-}
-.home-overlay .eyebrow{
- display:inline-block;
- width:max-content;
- padding:5px 9px;
- border-radius:20px;
- background:#ffffff2b;
- font-size:11px;
- font-weight:800;
- margin-bottom:8px;
-}
-.home-overlay h1{
- font-size:23px;
- line-height:1.25;
- margin:0 0 7px;
- max-width:540px;
-}
-.home-overlay p{
- font-size:13px;
- line-height:1.5;
- margin:0;
- max-width:560px;
- color:#fff;
-}
-.hero-dots{
- position:absolute;
- bottom:10px;
- right:14px;
- display:flex;
- gap:6px;
- z-index:3;
-}
-.hero-dot{
- width:7px;
- height:7px;
- border:0;
- border-radius:20px;
- background:#ffffff80;
- padding:0;
-}
-.hero-dot.active{width:21px;background:#fff}
-.referral-ticker{
- height:42px;
- margin:0 0 15px;
- padding:0 11px;
- display:flex;
- align-items:center;
- gap:10px;
- overflow:hidden;
- border-radius:11px;
- background:#fff;
- border:1px solid #E1E9E3;
- box-shadow:0 2px 7px #00000008;
- color:#08752D;
-}
-.referral-bell{
- flex-shrink:0;
- font-size:21px;
- animation:bellMove 1.1s infinite;
-}
-.referral-ticker-window{overflow:hidden;white-space:nowrap;flex:1}
-.referral-ticker-text{
- display:inline-block;
- padding-left:100%;
- font-size:12px;
- font-weight:800;
- animation:referralScroll 23s linear infinite;
-}
-@keyframes bellMove{
- 0%,100%{transform:rotate(0)}
- 15%{transform:rotate(17deg)}
- 30%{transform:rotate(-17deg)}
- 45%{transform:rotate(12deg)}
- 60%{transform:rotate(-12deg)}
- 75%{transform:rotate(0)}
-}
-@keyframes referralScroll{
- 0%{transform:translateX(0)}
- 100%{transform:translateX(-100%)}
-}
-.home-intro{
- background:#fff;
- border-radius:16px;
- padding:19px 17px;
- margin-bottom:15px;
- border:1px solid var(--border);
-}
-.home-intro h2{
- color:#08752D;
- font-size:21px;
- margin-bottom:9px;
-}
-.home-intro p{font-size:14px;line-height:1.65;color:#58636D;margin-bottom:0}
-.home-section-title{
- font-size:20px;
- font-weight:900;
- margin:22px 2px 12px;
- color:#202631;
-}
-.service-grid{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:11px;
-}
-.service-card{
- background:#fff;
- border-radius:15px;
- overflow:hidden;
- border:1px solid var(--border);
- box-shadow:0 3px 10px #00000009;
-}
-.service-card img{
- width:100%;
- height:115px;
- object-fit:cover;
- display:block;
- background:#E9F1ED;
-}
-.service-card-body{padding:12px}
-.service-card h3{font-size:14px;margin:0 0 6px;color:#153C25}
-.service-card p{font-size:12px;line-height:1.5;color:var(--muted);margin:0}
-.home-about{
- margin-top:15px;
- padding:18px;
- border-radius:16px;
- background:linear-gradient(135deg,#EAF8EE,#fff);
- border:1px solid #D4EBDD;
-}
-.home-about h2{color:#08752D}
-.home-about p{font-size:13px;line-height:1.7;color:#56635A;margin-bottom:0}
-.home-contact{
- background:#fff;
- border-radius:16px;
- padding:16px;
- margin-top:15px;
- border:1px solid var(--border);
-}
+.home-hero{height:245px;border-radius:18px;overflow:hidden;position:relative;margin-bottom:15px;background:#164D32}
+.home-hero img{width:100%;height:100%;object-fit:cover}
+.home-hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#052C1DD9,#052C1D25);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;color:#fff}
+.home-hero-overlay h1{font-size:24px;line-height:1.2;margin:0 0 8px}
+.home-hero-overlay p{font-size:13px;line-height:1.5;margin:0;max-width:480px}
+.home-intro{padding:20px}
+.home-intro h2{font-size:22px;color:var(--dark);line-height:1.3}
+.home-intro p{font-size:14px;line-height:1.7;color:#4F5B56}
+.home-section-title{font-size:21px;font-weight:900;margin:22px 3px 13px}
+.medical-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.medical-card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 3px 9px #00000009}
+.medical-card img{width:100%;height:125px;object-fit:cover;display:block}
+.medical-card div{padding:12px}
+.medical-card strong{display:block;font-size:14px;color:var(--dark);margin-bottom:5px}
+.medical-card p{font-size:12px;line-height:1.5;color:var(--muted);margin:0}
+.home-service{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.home-service div{background:#fff;border-radius:13px;padding:13px 8px;text-align:center;border:1px solid var(--border)}
+.home-service span{display:block;font-size:25px;margin-bottom:8px}
+.home-service strong{font-size:12px;line-height:1.4}
+.home-photo{width:100%;height:180px;object-fit:cover;border-radius:12px;margin:8px 0}
+.hero{height:190px;border-radius:18px;overflow:hidden;position:relative;background:linear-gradient(130deg,#DFF4E2,#8ACB97);margin-bottom:15px;border:1px solid #D2E6D4}
+.slide{position:absolute;inset:0;display:none}
+.slide.active{display:block}
+.slide img{width:100%;height:100%;object-fit:cover}
+.caption{position:absolute;left:0;right:0;bottom:0;padding:30px 15px 13px;color:#fff;background:linear-gradient(transparent,#000B)}
+.caption strong{font-size:18px;display:block}
+.caption span{font-size:12px}
+.fallback{height:100%;padding:25px;display:flex;flex-direction:column;justify-content:center;color:#145B2B;background:linear-gradient(135deg,#F7FFF7,#A9DFB1)}
+.fallback strong{font-size:25px}
 
-/* Plans */
+/* Plans et formulaires */
 .plancard{border:1px solid var(--border);border-radius:15px;padding:14px;margin:12px 0;background:#fff}
 .planhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .plannumber{background:var(--light);color:var(--dark);padding:7px 10px;border-radius:9px;font-weight:900}
@@ -393,85 +114,31 @@ input:focus,select:focus{border-color:var(--green)}
 .copybtn{border:0;border-radius:9px;background:var(--dark);color:#fff;font-size:12px;font-weight:800;padding:9px 10px}
 .claimbox{border:1px solid #B8DFC0;background:linear-gradient(135deg,#F4FFF5,#E0F4E5);padding:14px;border-radius:13px;margin-top:12px}
 .claimamount{font-size:20px;font-weight:900;color:var(--dark);margin:8px 0}
-.claimbutton{
- width:100%;
- background:linear-gradient(135deg,#8EDBA5,#176B38);
- color:#fff;
- padding:14px;
- border-radius:11px;
- border:0;
- font-weight:900;
-}
+.claimbutton{width:100%;background:linear-gradient(135deg,#8EDBA5,#176B38);color:#fff;padding:14px;border-radius:11px;border:0;font-weight:900}
 .claimbutton:disabled{opacity:.55;cursor:not-allowed}
 .claimtimer{font-size:12px;color:#526B56;margin-top:8px;line-height:1.5}
-.product-active{
- background:#E5F7E9;
- color:#176B32;
- border-radius:20px;
- padding:5px 9px;
- font-size:11px;
- font-weight:900;
-}
-
-/* Historique */
-.history-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}
-.history-tab{
- border:1px solid var(--border);
- background:#fff;
- color:#526052;
- border-radius:10px;
- padding:11px 4px;
- font-size:12px;
- font-weight:800;
-}
-.history-tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
-.history-tab.deposit.active{background:#1565C0;border-color:#1565C0}
-.history-tab.withdraw.active{background:#EF6C00;border-color:#EF6C00}
-.history-tab.bonus.active{background:#6A1B9A;border-color:#6A1B9A}
-.history-heading{border-radius:11px;padding:11px;font-size:14px;font-weight:900;margin:10px 0}
-.history-heading.deposit{background:#E3F2FD;color:#0D47A1}
-.history-heading.withdraw{background:#FFF3E0;color:#E65100}
-.history-heading.bonus{background:#F3E5F5;color:#6A1B9A}
-.history-date{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
 .level-title{margin:18px 0 8px;padding:11px;background:var(--light);border-radius:10px;color:var(--dark);font-weight:900}
+
+/* Notification défilante */
+.referral-ticker{height:39px;margin:0 0 14px;padding:0 10px;display:flex;align-items:center;gap:9px;overflow:hidden;border-radius:10px;background:#E8F8ED;border:1px solid #C9E9D0;color:#07502B}
+.referral-bell{flex-shrink:0;font-size:19px;animation:bellMove 1s infinite}
+.referral-ticker-window{overflow:hidden;white-space:nowrap;flex:1}
+.referral-ticker-text{display:inline-block;padding-left:100%;font-size:12px;font-weight:800;animation:referralScroll 22s linear infinite}
+@keyframes bellMove{0%,100%{transform:rotate(0)}15%{transform:rotate(18deg)}30%{transform:rotate(-18deg)}45%{transform:rotate(13deg)}60%{transform:rotate(-13deg)}75%{transform:rotate(0)}}
+@keyframes referralScroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
 /* Page Moi */
 #accountPage{background:var(--bg)}
-.moi-profile{
- background:#fff;
- padding:17px 14px;
- margin:-14px -13px 18px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
-}
+.moi-profile{background:#fff;padding:17px 14px;margin:-14px -13px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .moi-identity{font-size:16px;font-weight:900;color:#202631;overflow-wrap:anywhere}
 .moi-vip{background:#FFC52E;color:#533900;border-radius:20px;padding:7px 15px;font-size:13px;font-weight:900;white-space:nowrap}
 .moi-wallets{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:23px}
-.moi-wallet{
- min-height:145px;
- padding:18px 15px;
- border-radius:22px;
- color:#fff;
- background:linear-gradient(135deg,#79D84D,#16A83B);
- box-shadow:0 5px 12px #164d231c;
- display:flex;
- flex-direction:column;
- justify-content:center;
-}
+.moi-wallet{min-height:145px;padding:18px 15px;border-radius:22px;color:#fff;background:linear-gradient(135deg,#79D84D,#16A83B);box-shadow:0 5px 12px #164d231c;display:flex;flex-direction:column;justify-content:center}
 .moi-wallet small{font-size:14px;line-height:1.5}
 .moi-wallet strong{font-size:24px;margin-top:12px;overflow-wrap:anywhere}
 .moi-dashboard-title{font-size:23px;font-weight:900;margin:12px 0 18px;color:#202938}
 .moi-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:22px}
-.moi-stat{
- min-height:105px;
- background:#fff;
- border-radius:16px;
- padding:17px 13px;
- box-shadow:0 3px 8px #00000012;
- border-top:5px solid #75C9AE;
-}
+.moi-stat{min-height:105px;background:#fff;border-radius:16px;padding:17px 13px;box-shadow:0 3px 8px #00000012;border-top:5px solid #75C9AE}
 .moi-stat:nth-child(1){border-color:#E99A68}
 .moi-stat:nth-child(2){border-color:#65BFA9}
 .moi-stat:nth-child(3){border-color:#C96BE0}
@@ -481,30 +148,8 @@ input:focus,select:focus{border-color:var(--green)}
 .moi-stat small{display:block;color:#657080;font-size:13px;line-height:1.5}
 .moi-stat strong{display:block;margin-top:7px;color:#202631;font-size:19px;overflow-wrap:anywhere}
 .moi-menu{display:flex;flex-direction:column;gap:12px;margin-top:15px}
-.moi-menu-button{
- width:100%;
- min-height:75px;
- background:#fff;
- border:0;
- border-radius:9px;
- padding:10px 14px;
- display:flex;
- align-items:center;
- gap:14px;
- text-align:left;
- box-shadow:0 1px 3px #00000006;
- text-decoration:none;
-}
-.moi-menu-icon{
- width:47px;
- height:47px;
- border-radius:15px;
- display:grid;
- place-items:center;
- color:#fff;
- font-size:23px;
- flex-shrink:0;
-}
+.moi-menu-button{width:100%;min-height:75px;background:#fff;border:0;border-radius:9px;padding:10px 14px;display:flex;align-items:center;gap:14px;text-align:left;box-shadow:0 1px 3px #00000006;text-decoration:none}
+.moi-menu-icon{width:47px;height:47px;border-radius:15px;display:grid;place-items:center;color:#fff;font-size:23px;flex-shrink:0}
 .moi-menu-label{flex:1;font-size:15px;font-weight:900;color:#15191D}
 .moi-menu-arrow{color:#887E67;font-size:27px}
 .moi-orange{background:linear-gradient(135deg,#FFD33E,#F28B17)}
@@ -513,89 +158,49 @@ input:focus,select:focus{border-color:var(--green)}
 .moi-blue{background:linear-gradient(135deg,#36C9F0,#0878C8)}
 .moi-purple{background:linear-gradient(135deg,#B6A2FF,#6259D8)}
 .moi-red{background:linear-gradient(135deg,#FF9C79,#EB432A)}
+.product-active{background:#E5F7E9;color:#176B32;border-radius:20px;padding:5px 9px;font-size:11px;font-weight:900}
 
-/* Roue dans Mes coupons */
-.wheelwrap{max-width:350px;margin:20px auto;position:relative}
-.wheel{
- width:100%;
- aspect-ratio:1;
- border-radius:50%;
- border:8px solid #07502B;
- box-shadow:0 5px 20px #0002;
- transition:transform 5s cubic-bezier(.15,.8,.15,1);
- position:relative;
- overflow:hidden;
- background:conic-gradient(
-  #F44336 0deg 45deg,
-  #FFC107 45deg 90deg,
-  #4CAF50 90deg 135deg,
-  #2196F3 135deg 180deg,
-  #9C27B0 180deg 225deg,
-  #FF9800 225deg 270deg,
-  #009688 270deg 315deg,
-  #795548 315deg 360deg
- );
-}
-.wheel span{
- position:absolute;
- width:50%;
- height:50%;
- left:50%;
- top:0;
- transform-origin:0% 100%;
- display:flex;
- align-items:center;
- justify-content:flex-start;
- color:#fff;
- font-size:12px;
- font-weight:900;
- text-shadow:1px 1px 2px #000;
- transform:rotate(var(--angle));
- padding-left:15px;
-}
-.wheelpointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:2;font-size:35px;color:#FFD700;text-shadow:0 2px 4px #000}
-.wheelcenter{
- position:absolute;
- left:50%;
- top:50%;
- transform:translate(-50%,-50%);
- background:#fff;
- border:5px solid #07502B;
- width:65px;
- height:65px;
- border-radius:50%;
- display:grid;
- place-items:center;
- font-size:14px;
- font-weight:900;
- color:#07502B;
- z-index:2;
-}
-
-/* Administration */
+/* Historique et administration */
+.history-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:12px 0}
+.history-tab{border:1px solid var(--border);background:#fff;color:#526052;border-radius:10px;padding:11px 4px;font-size:12px;font-weight:800}
+.history-tab.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.history-tab.deposit.active{background:#1565C0;border-color:#1565C0}
+.history-tab.withdraw.active{background:#EF6C00;border-color:#EF6C00}
+.history-tab.bonus.active{background:#6A1B9A;border-color:#6A1B9A}
+.history-heading{border-radius:11px;padding:11px;font-size:14px;font-weight:900;margin:10px 0}
+.history-heading.deposit{background:#E3F2FD;color:#0D47A1}
+.history-heading.withdraw{background:#FFF3E0;color:#E65100}
+.history-heading.bonus{background:#F3E5F5;color:#6A1B9A}
+.history-date{font-size:12px;color:#657368;margin-top:8px;line-height:1.5}
 .admin-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
 .admin-tabs button{padding:11px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:800}
 .admin-tabs button.active{background:var(--dark);color:#fff}
 
+/* Coupons : roulette accessible depuis Moi seulement */
+.wheelwrap{max-width:350px;margin:20px auto;position:relative}
+.wheel{width:100%;aspect-ratio:1;border-radius:50%;border:8px solid #07502B;box-shadow:0 5px 20px #0002;transition:transform 5s cubic-bezier(.15,.8,.15,1);position:relative;overflow:hidden;background:conic-gradient(#F44336 0deg 45deg,#FFC107 45deg 90deg,#4CAF50 90deg 135deg,#2196F3 135deg 180deg,#9C27B0 180deg 225deg,#FF9800 225deg 270deg,#009688 270deg 315deg,#795548 315deg 360deg)}
+.wheel span{position:absolute;width:50%;height:50%;left:50%;top:0;transform-origin:0% 100%;display:flex;align-items:center;justify-content:flex-start;color:#fff;font-size:12px;font-weight:900;text-shadow:1px 1px 2px #000;transform:rotate(var(--angle));padding-left:15px}
+.wheelpointer{position:absolute;top:-14px;left:50%;transform:translateX(-50%);z-index:2;font-size:35px;color:#FFD700;text-shadow:0 2px 4px #000}
+.wheelcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:5px solid #07502B;width:65px;height:65px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:900;color:#07502B;z-index:2}
+
 @media(min-width:650px){
  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
  .stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .hero{height:270px}
  .home-hero{height:340px}
- .service-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
- .service-card img{height:135px}
+ .medical-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media(max-width:380px){
  .moi-wallet{padding:14px 11px}
  .moi-wallet small{font-size:12px}
  .moi-stat{padding:13px 10px}
  .moi-menu-label{font-size:14px}
- .home-hero{height:225px}
- .home-overlay h1{font-size:20px}
+ .home-hero{height:220px}
 }
 </style>
 </head>
 
-<body class="auth-mode">
+<body>
 <header>
  <div class="header-inner">
   <div class="brand" id="brandName"></div>
@@ -607,21 +212,17 @@ input:focus,select:focus{border-color:var(--green)}
 </header>
 
 <main>
-
-<!-- CONNEXION ET INSCRIPTION -->
 <section id="authScreen" class="auth">
  <div class="authbrand">
   <div class="logo">S</div>
-  <h1 id="authBrandName">SANOTOLEURO S.A.</h1>
-  <p class="muted">Matériel médical et solutions pour les professionnels de santé.</p>
+  <h1 id="authBrandName">SANOTOLEURO RDC</h1>
+  <p class="muted">Bienvenue sur votre espace personnel.</p>
  </div>
-
  <div class="card">
   <div class="tabs">
    <button class="btn primary" id="loginTab" onclick="showAuthForm('login')">Connexion</button>
    <button class="btn light" id="registerTab" onclick="showAuthForm('register')">Créer un compte</button>
   </div>
-
   <form id="loginForm" onsubmit="login(event)">
    <h2>Connexion</h2>
    <label>Adresse e-mail</label>
@@ -631,7 +232,6 @@ input:focus,select:focus{border-color:var(--green)}
    <button class="btn primary full" type="submit">Se connecter</button>
    <button class="btn light full" type="button" onclick="resetPassword()">Réinitialiser mon mot de passe</button>
   </form>
-
   <form id="registerForm" class="hidden" onsubmit="register(event)">
    <h2>Créer un compte</h2>
    <label>Nom complet</label>
@@ -650,131 +250,95 @@ input:focus,select:focus{border-color:var(--green)}
  </div>
 </section>
 
-<!-- APPLICATION -->
 <section id="appScreen" class="hidden">
-
-<!-- ACCUEIL -->
-<section id="homePage" class="page">
-
- <div class="home-hero" id="homeHero">
-  <div class="home-slide active">
-   <img src="https://selfimed.com/cdn/shop/collections/clinical_surgical.png?v=1771092901" alt="Équipements médicaux et salle de consultation" onerror="this.style.display='none'">
-   <div class="home-overlay">
-    <span class="eyebrow">SANOTOLEURO S.A.</span>
-    <h1>Des équipements médicaux pour mieux prendre soin.</h1>
-    <p>Découvrez des solutions et du matériel destinés aux hôpitaux, cliniques et professionnels de santé.</p>
-   </div>
-  </div>
-
-  <div class="home-slide">
-   <img src="https://static.wixstatic.com/media/bf18c9_cb6da73794e244c099143936ef173fc4~mv2.png/v1/fill/w_750%2Ch_500%2Cal_c%2Cq_90%2Cenc_avif%2Cquality_auto/bf18c9_cb6da73794e244c099143936ef173fc4~mv2.png" alt="Consommables et fournitures médicales" onerror="this.style.display='none'">
-   <div class="home-overlay">
-    <span class="eyebrow">FOURNITURES MÉDICALES</span>
-    <h1>Le matériel essentiel à votre activité de santé.</h1>
-    <p>Consommables, instruments et fournitures pour accompagner les établissements de santé.</p>
-   </div>
-  </div>
-
-  <div class="home-slide">
-   <img src="https://www.globalcaremedicalsuae.com/assets/img/products-equipment.png" alt="Matériel de diagnostic et équipement hospitalier" onerror="this.style.display='none'">
-   <div class="home-overlay">
-    <span class="eyebrow">ÉQUIPEMENTS ET DIAGNOSTIC</span>
-    <h1>Des solutions adaptées aux besoins des professionnels.</h1>
-    <p>Explorez des équipements pour le diagnostic, les soins et les environnements hospitaliers.</p>
-   </div>
-  </div>
-
-  <div class="hero-dots" id="heroDots">
-   <button class="hero-dot active" onclick="showHomeSlide(0)" aria-label="Diapositive 1"></button>
-   <button class="hero-dot" onclick="showHomeSlide(1)" aria-label="Diapositive 2"></button>
-   <button class="hero-dot" onclick="showHomeSlide(2)" aria-label="Diapositive 3"></button>
-  </div>
- </div>
-
- <div class="referral-ticker">
+ <div class="referral-ticker" id="referralTicker">
   <span class="referral-bell">🔔</span>
   <div class="referral-ticker-window">
-   <span class="referral-ticker-text">
-    Les membres qui invitent peuvent gagner des bonus de 12 %, 2 % et 1 % aux niveaux 1, 2 et 3. Partagez votre code de parrainage !
-   </span>
+   <span class="referral-ticker-text">Les membres qui invitent peuvent gagner des bonus de 12 %, 2 % et 1 % aux niveaux 1, 2 et 3. Partagez votre code de parrainage SANOTOLEURO !</span>
   </div>
  </div>
 
- <div class="home-intro">
-  <h2>Bienvenue chez SANOTOLEURO S.A.</h2>
-  <p>
-   SANOTOLEURO S.A. met en avant le matériel médical, les équipements hospitaliers,
-   les instruments de soins et les fournitures destinés aux professionnels de santé.
-   Notre objectif est de contribuer à un environnement de soins mieux équipé grâce
-   à des solutions adaptées aux besoins des établissements médicaux.
-  </p>
+<section id="homePage" class="page">
+ <div class="home-hero">
+  <img src="https://dmedistribuidora.com.br/images/hero-image.jpg" alt="Matériel médical et fournitures hospitalières" onerror="this.src='https://rwmedical.ca/cdn/shop/collections/medical-supplies.png?crop=center&height=1200&v=1773780778&width=1200'">
+  <div class="home-hero-overlay">
+   <h1>SANOTOLEURO RDC</h1>
+   <p>Votre espace dédié au matériel médical, aux équipements hospitaliers et aux fournitures de santé.</p>
+  </div>
  </div>
 
- <h2 class="home-section-title">Nos domaines de produits</h2>
-
- <div class="service-grid">
-  <article class="service-card">
-   <img src="https://selfimed.com/cdn/shop/collections/clinical_surgical.png?v=1771092901" alt="Équipement de consultation médicale" loading="lazy">
-   <div class="service-card-body">
-    <h3>Équipement hospitalier</h3>
-    <p>Matériel et équipements pour les salles de soins et les établissements hospitaliers.</p>
-   </div>
-  </article>
-
-  <article class="service-card">
-   <img src="https://www.globalcaremedicalsuae.com/assets/img/products-equipment.png" alt="Appareils de diagnostic médical" loading="lazy">
-   <div class="service-card-body">
-    <h3>Diagnostic médical</h3>
-    <p>Équipements destinés à l'observation, au contrôle et au diagnostic.</p>
-   </div>
-  </article>
-
-  <article class="service-card">
-   <img src="https://static.wixstatic.com/media/bf18c9_cb6da73794e244c099143936ef173fc4~mv2.png/v1/fill/w_750%2Ch_500%2Cal_c%2Cq_90%2Cenc_avif%2Cquality_auto/bf18c9_cb6da73794e244c099143936ef173fc4~mv2.png" alt="Fournitures et consommables médicaux" loading="lazy">
-   <div class="service-card-body">
-    <h3>Consommables médicaux</h3>
-    <p>Fournitures, accessoires et consommables utilisés dans les soins.</p>
-   </div>
-  </article>
-
-  <article class="service-card">
-   <img src="https://zeolifemed.com/feature.png" alt="Mobilier et équipement hospitalier" loading="lazy">
-   <div class="service-card-body">
-    <h3>Mobilier médical</h3>
-    <p>Solutions de mobilier et équipements pour les espaces de consultation et de soins.</p>
-   </div>
-  </article>
+ <div class="card home-intro">
+  <h2>Bienvenue chez SANOTOLEURO</h2>
+  <p>SANOTOLEURO met en avant les équipements médicaux et les fournitures nécessaires aux professionnels de santé, aux centres médicaux, aux cliniques et aux établissements hospitaliers.</p>
+  <p>Découvrez des articles destinés aux soins, au diagnostic, à la protection sanitaire et aux activités de laboratoire. Notre objectif est de faciliter l'accès à des solutions adaptées aux besoins du secteur de la santé en République démocratique du Congo.</p>
  </div>
 
- <div class="home-about">
-  <h2>Notre engagement</h2>
-  <p>
-   La qualité des soins repose aussi sur la disponibilité d'équipements appropriés.
-   SANOTOLEURO S.A. souhaite accompagner les professionnels de santé en mettant en
-   avant des solutions médicales, des fournitures et des équipements répondant à
-   leurs besoins.
-  </p>
+ <h2 class="home-section-title">Nos domaines de matériel</h2>
+ <div class="medical-grid">
+  <div class="medical-card">
+   <img src="https://lmea.co.uk/_next/image?q=75&url=https%3A%2F%2Flogin.lmea.co.uk%2Fstorage%2Fblogs%2Fimages%2Fen-essential-medical-equipment-used-in-modern-healthcare.webp&w=3840" alt="Équipements de diagnostic médical" loading="lazy">
+   <div><strong>Diagnostic et consultation</strong><p>Stéthoscopes, thermomètres, tensiomètres et accessoires d'examen.</p></div>
+  </div>
+  <div class="medical-card">
+   <img src="https://www.ailehekimialisveris.com/idea/nx/26/myassets/blogs/blog-103.webp?revision=1780342967" alt="Consommables et fournitures médicales" loading="lazy">
+   <div><strong>Consommables médicaux</strong><p>Gants, masques, seringues, compresses et articles de soins.</p></div>
+  </div>
+  <div class="medical-card">
+   <img src="https://rwmedical.ca/cdn/shop/collections/medical-supplies.png?crop=center&height=1200&v=1773780778&width=1200" alt="Instruments et fournitures hospitalières" loading="lazy">
+   <div><strong>Instruments et soins</strong><p>Instruments médicaux et accessoires destinés aux soins quotidiens.</p></div>
+  </div>
+  <div class="medical-card">
+   <img src="https://dmedistribuidora.com.br/images/hero-image.jpg" alt="Matériel de protection sanitaire" loading="lazy">
+   <div><strong>Protection sanitaire</strong><p>Équipements de protection et articles d'hygiène médicale.</p></div>
+  </div>
  </div>
 
- <div class="home-contact">
-  <h3>Contact et assistance</h3>
-  <p class="muted">Notre service client est disponible pour vous orienter.</p>
-  <a class="btn primary full" href="https://wa.me/243968416085" target="_blank" rel="noopener">💬 Contacter SANOTOLEURO sur WhatsApp</a>
+ <h2 class="home-section-title">Nos engagements</h2>
+ <div class="home-service">
+  <div><span>🩺</span><strong>Équipement médical</strong></div>
+  <div><span>🏥</span><strong>Solutions hospitalières</strong></div>
+  <div><span>🔬</span><strong>Matériel de laboratoire</strong></div>
+ </div>
+
+ <div class="card home-intro" style="margin-top:15px">
+  <h2>Accompagner les professionnels de santé</h2>
+  <p>Les structures de santé ont besoin d'équipements adaptés pour assurer les consultations, les examens, les soins et les analyses. SANOTOLEURO vous propose un espace pour découvrir les différentes catégories de matériel et suivre vos opérations sur la plateforme.</p>
+  <img class="home-photo" src="https://www.ailehekimialisveris.com/idea/nx/26/myassets/blogs/blog-103.webp?revision=1780342967" alt="Fournitures médicales pour les soins" loading="lazy">
+  <h3>Un espace simple pour suivre vos activités</h3>
+  <p>Retrouvez vos plans, vos demandes, votre équipe, vos produits actifs et vos informations personnelles depuis votre espace SANOTOLEURO.</p>
+ </div>
+
+ <div class="card">
+  <p class="muted">Bienvenue, <strong id="welcomeName">Membre</strong></p>
+  <h2>Votre espace personnel</h2>
+  <div class="stats">
+   <div class="stat"><small>Solde disponible</small><strong id="homeBalance">0 FC</strong></div>
+   <div class="stat"><small>Code de parrainage</small><strong id="homeReferral">—</strong></div>
+  </div>
+ </div>
+
+ <div class="grid">
+  <button class="tile" onclick="showPage('plans')"><div class="icon">📊</div><strong>Plans / Recharger</strong><span>Consulter les plans</span></button>
+  <button class="tile" onclick="showPage('withdraw')"><div class="icon">💸</div><strong>Retrait</strong><span>Demander un retrait</span></button>
+  <button class="tile" onclick="showPage('orders')"><div class="icon">📋</div><strong>Mes demandes</strong><span>Dépôts, retraits et bonus</span></button>
+  <button class="tile" onclick="showPage('team')"><div class="icon">👥</div><strong>Parrainage</strong><span>Partager votre code</span></button>
+  <button class="tile" onclick="showPage('account')"><div class="icon">👤</div><strong>Moi</strong><span>Mon espace personnel</span></button>
+  <button class="tile hidden" id="adminTile" onclick="showPage('admin')"><div class="icon">🛡️</div><strong>Administration</strong><span>Gérer la plateforme</span></button>
+ </div>
+
+ <div class="card" style="margin-top:14px">
+  <h3>Besoin d’assistance ?</h3>
+  <a class="btn primary full" href="https://wa.me/243968416085" target="_blank" rel="noopener">💬 Service client WhatsApp</a>
   <a id="groupWhatsappButton" class="btn light full" href="https://chat.whatsapp.com/BfmsplXRtMaH9emWzeFP2y" target="_blank" rel="noopener">👥 Rejoindre le groupe WhatsApp</a>
   <a id="customerTelegramButton" class="btn primary full" href="https://t.me/Drcprom" target="_blank" rel="noopener">Service client Telegram</a>
   <a id="groupTelegramButton" class="btn light full" href="https://t.me/+dbpiuZGoZUE4MDhk" target="_blank" rel="noopener">Rejoindre le groupe Telegram</a>
  </div>
 </section>
 
-<!-- INVESTIR -->
 <section id="plansPage" class="page hidden">
- <div class="card">
-  <h2>Plans disponibles</h2>
-  <div id="plansList"><div class="empty">Chargement…</div></div>
- </div>
+ <div class="card"><h2>Plans disponibles</h2><div id="plansList"></div></div>
 </section>
 
-<!-- DÉPÔT -->
 <section id="depositPage" class="page hidden">
  <div class="card">
   <h2>Demande de dépôt</h2>
@@ -789,9 +353,7 @@ input:focus,select:focus{border-color:var(--green)}
    <label>Plan choisi</label><input id="depositPlanName" readonly required placeholder="Choisissez d'abord un plan">
    <label>Montant (FC)</label><input id="depositAmount" type="number" min="25000" step="1" required>
    <label>Opérateur</label>
-   <select id="depositMethod" required>
-    <option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option>
-   </select>
+   <select id="depositMethod" required><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
    <label>Référence du transfert</label><input id="depositReference" required maxlength="120">
    <button class="btn primary full" type="submit">Envoyer la demande</button>
    <button class="btn light full" type="button" onclick="showPage('plans')">Retour aux plans</button>
@@ -799,27 +361,19 @@ input:focus,select:focus{border-color:var(--green)}
  </div>
 </section>
 
-<!-- RETRAIT -->
 <section id="withdrawPage" class="page hidden">
  <div class="card">
   <h2>Demande de retrait</h2>
   <div class="stat"><small>Solde disponible</small><strong id="withdrawBalance">0 FC</strong></div>
-  <div class="notice">
-   Minimum : <strong id="withdrawMinimumText">3 000 FC</strong><br>
-   Frais : <strong id="withdrawFeeText">10 %</strong><br>
-   Un abonnement VIP actif est requis.
-  </div>
+  <div class="notice">Minimum : <strong id="withdrawMinimumText">3 000 FC</strong><br>Frais : <strong id="withdrawFeeText">10 %</strong><br>Un abonnement VIP actif est requis.</div>
   <form id="withdrawForm" onsubmit="submitWithdrawal(event)">
-   <label>Montant à retirer (FC)</label>
-   <input id="withdrawAmount" type="number" min="3000" step="1" required oninput="calculateWithdrawal()">
+   <label>Montant à retirer (FC)</label><input id="withdrawAmount" type="number" min="3000" step="1" required oninput="calculateWithdrawal()">
    <div class="stats" style="margin-top:10px">
     <div class="stat"><small>Frais estimés</small><strong id="withdrawFee">0 FC</strong></div>
     <div class="stat"><small>Net estimé</small><strong id="withdrawNet">0 FC</strong></div>
    </div>
    <label>Opérateur de réception</label>
-   <select id="withdrawMethod" required>
-    <option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option>
-   </select>
+   <select id="withdrawMethod" required><option value="">Choisir</option><option>Airtel Money</option><option>Orange Money</option><option>M-Pesa</option></select>
    <label>Votre numéro de retrait</label><input id="withdrawPhone" type="tel" maxlength="30" required>
    <button class="btn light full" type="button" onclick="saveWithdrawalPhone()">Enregistrer mon numéro</button>
    <button class="btn primary full" type="submit">Envoyer la demande</button>
@@ -827,7 +381,6 @@ input:focus,select:focus{border-color:var(--green)}
  </div>
 </section>
 
-<!-- DEMANDES -->
 <section id="ordersPage" class="page hidden">
  <div class="card">
   <div class="itemtop"><h2>Mes demandes</h2><button class="btn light smallbtn" onclick="loadHistory()">Actualiser</button></div>
@@ -841,7 +394,6 @@ input:focus,select:focus{border-color:var(--green)}
  </div>
 </section>
 
-<!-- ÉQUIPE -->
 <section id="teamPage" class="page hidden">
  <div class="card">
   <h2>Mon parrainage</h2>
@@ -850,10 +402,7 @@ input:focus,select:focus{border-color:var(--green)}
   <label>Lien d'invitation</label>
   <div class="row"><input id="teamReferralLink" readonly><button class="btn primary" onclick="copyReferralLink()">Copier</button></div>
   <button class="btn light full" onclick="shareReferral()">Partager mon invitation</button>
-  <div class="notice">
-   <strong>Commissions de parrainage</strong><br>
-   <span id="teamRatesText">Niveau 1 : 12 %<br>Niveau 2 : 2 %<br>Niveau 3 : 1 %</span>
-  </div>
+  <div class="notice"><strong>Commissions de parrainage</strong><br><span id="teamRatesText">Niveau 1 : 12 %<br>Niveau 2 : 2 %<br>Niveau 3 : 1 %</span></div>
   <div class="stats">
    <div class="stat"><small>Membres inscrits</small><strong id="teamTotal">0</strong></div>
    <div class="stat"><small>Membres avec dépôt validé</small><strong id="teamDepositors">0</strong></div>
@@ -866,7 +415,7 @@ input:focus,select:focus{border-color:var(--green)}
  </div>
 </section>
 
-<!-- MOI -->
+<!-- PAGE MOI -->
 <section id="accountPage" class="page hidden">
  <div class="moi-profile">
   <div class="moi-identity" id="moiName">👤 Membre</div>
@@ -892,73 +441,56 @@ input:focus,select:focus{border-color:var(--green)}
   <button class="moi-menu-button" onclick="showPage('myproducts')">
    <span class="moi-menu-icon moi-orange">📋</span><span class="moi-menu-label">Mes produits</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="showPage('wheel')">
-   <span class="moi-menu-icon moi-cyan">🎟️</span><span class="moi-menu-label">Mes coupons / Jeu roulette</span><span class="moi-menu-arrow">›</span>
+   <span class="moi-menu-icon moi-cyan">🎟️</span><span class="moi-menu-label">Mes coupons</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="showPage('orders')">
    <span class="moi-menu-icon moi-green">⇄</span><span class="moi-menu-label">Détails du financement</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="showPage('team')">
    <span class="moi-menu-icon moi-blue">👥</span><span class="moi-menu-label">Mon équipe</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="showPage('withdraw')">
    <span class="moi-menu-icon moi-green">⇄</span><span class="moi-menu-label">Enregistrement de retrait</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="resetPassword()">
    <span class="moi-menu-icon moi-red">🔒</span><span class="moi-menu-label">Mot de passe de connexion</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="showPage('wallet')">
    <span class="moi-menu-icon moi-blue">💳</span><span class="moi-menu-label">Mon compte portefeuille</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <a class="moi-menu-button" href="https://wa.me/243968416085" target="_blank" rel="noopener">
    <span class="moi-menu-icon moi-purple">🎧</span><span class="moi-menu-label">Service en ligne</span><span class="moi-menu-arrow">›</span>
   </a>
-
   <button class="moi-menu-button" onclick="installApp()">
    <span class="moi-menu-icon moi-blue">📥</span><span class="moi-menu-label">APP Télécharger</span><span class="moi-menu-arrow">›</span>
   </button>
-
   <button class="moi-menu-button" onclick="logout()">
    <span class="moi-menu-icon moi-red">↪</span><span class="moi-menu-label">Déconnexion</span><span class="moi-menu-arrow">›</span>
   </button>
  </div>
 
- <!-- Champs gardés pour la compatibilité des fonctions existantes.
-      Le numéro de retrait n'est pas affiché dans cette page. -->
- <div class="hidden">
-  <input id="savedPhone">
-  <select id="savedPhoneMethod"></select>
- </div>
+ <!-- Numéro de retrait non affiché ici. Les éléments masqués gardent les références de l'ancien formulaire. -->
+ <div hidden><input id="savedPhone"><select id="savedPhoneMethod"></select></div>
 </section>
 
-<!-- MES PRODUITS : LES ABONNEMENTS ACTIFS SONT AFFICHÉS ICI UNIQUEMENT -->
+<!-- MES PRODUITS : abonnements actifs et bouton Récolter -->
 <section id="myproductsPage" class="page hidden">
  <div class="card">
-  <div class="itemtop">
-   <h2>Mes produits</h2>
-   <button class="btn light smallbtn" onclick="loadMyProducts()">Actualiser</button>
-  </div>
-  <p class="muted">Vos produits VIP actifs et leurs récoltes quotidiennes apparaissent ici.</p>
-  <div id="activeProductsList"><div class="empty">Chargement de vos produits...</div></div>
+  <div class="itemtop"><h2>Mes produits actifs</h2><button class="btn light smallbtn" onclick="loadMyProducts()">Actualiser</button></div>
+  <p class="muted">Retrouvez ici vos abonnements et produits VIP activés. Chaque produit possède son propre bouton de récolte.</p>
+  <div id="activeProductsList"><div class="empty">Chargement des produits...</div></div>
  </div>
 </section>
 
-<!-- MES COUPONS / JEU ROULETTE -->
+<!-- MES COUPONS : jeu roulette conservé dans cette rubrique, pas dans la barre du bas -->
 <section id="wheelPage" class="page hidden">
  <div class="card">
-  <h2>🎟️ Mes coupons / Jeu roulette</h2>
-  <p class="muted">Saisissez un code bonus ou utilisez la roue si votre compte est éligible.</p>
+  <h2>🎟️ Mes coupons</h2>
+  <p class="muted">Saisissez un code bonus ou utilisez la roue lorsque votre compte est éligible.</p>
   <label>Code bonus</label>
   <input id="wheelBonusCode" maxlength="80" placeholder="Saisissez votre code bonus">
   <button class="btn light full" onclick="applyWheelCode()">🎁 Valider mon code</button>
-
   <div class="wheelwrap">
    <div class="wheelpointer">▼</div>
    <div id="bonusWheel" class="wheel">
@@ -973,13 +505,11 @@ input:focus,select:focus{border-color:var(--green)}
    </div>
    <div class="wheelcenter">SANO</div>
   </div>
-
-  <button class="claimbutton" id="spinWheelButton" onclick="spinWheel()">🎡 TOURNER LA ROUE</button>
+  <button class="claimbutton" id="spinWheelButton" onclick="spinWheel()">🎡 JOUER À LA ROULETTE</button>
   <div class="notice" id="wheelMessage">La récompense est déterminée et validée par le serveur.</div>
  </div>
 </section>
 
-<!-- PORTEFEUILLE -->
 <section id="walletPage" class="page hidden">
  <div class="card">
   <h2>Mon compte portefeuille</h2>
@@ -988,7 +518,6 @@ input:focus,select:focus{border-color:var(--green)}
  </div>
 </section>
 
-<!-- ADMINISTRATION -->
 <section id="adminPage" class="page hidden">
  <div class="card">
   <div class="itemtop"><h2>Administration</h2><button class="btn light smallbtn" onclick="loadAdmin()">Actualiser</button></div>
@@ -1002,22 +531,19 @@ input:focus,select:focus{border-color:var(--green)}
    <button id="adminTabSettings" onclick="adminTab('settings')">Paramètres</button>
   </div>
  </div>
-
  <div class="card adminSection" id="adminSectionOverview">
   <h2>Résumé</h2>
   <div class="stats">
    <div class="stat"><small>Membres</small><strong id="adminTotalMembers">0</strong></div>
-   <div class="stat"><small>Dépôts validés</small><strong id="adminTotalDeposits">0 FC</strong></div>
-   <div class="stat"><small>Retraits payés</small><strong id="adminTotalWithdrawals">0 FC</strong></div>
-   <div class="stat"><small>Soldes membres</small><strong id="adminTotalBalances">0 FC</strong></div>
+   <div class="stat"><small>Dépôts</small><strong id="adminTotalDeposits">0 FC</strong></div>
+   <div class="stat"><small>Retraits</small><strong id="adminTotalWithdrawals">0 FC</strong></div>
+   <div class="stat"><small>Soldes</small><strong id="adminTotalBalances">0 FC</strong></div>
   </div>
  </div>
-
  <div class="card adminSection hidden" id="adminSectionDeposits"><h2>Dépôts</h2><div id="adminDeposits"></div></div>
  <div class="card adminSection hidden" id="adminSectionWithdrawals"><h2>Retraits</h2><div id="adminWithdrawals"></div></div>
  <div class="card adminSection hidden" id="adminSectionVIP"><h2>Abonnements VIP</h2><div id="adminVIP"></div></div>
  <div class="card adminSection hidden" id="adminSectionMembers"><h2>Membres</h2><div id="adminMembers"></div></div>
-
  <div class="card adminSection hidden" id="adminSectionBalance">
   <h2>Ajustement de solde</h2>
   <form id="adjustBalanceForm" onsubmit="adjustBalance(event)">
@@ -1027,12 +553,11 @@ input:focus,select:focus{border-color:var(--green)}
    <button class="btn primary full" type="submit">Enregistrer</button>
   </form>
  </div>
-
  <div class="card adminSection hidden" id="adminSectionSettings">
   <h2>Paramètres</h2>
   <form id="settingsForm" onsubmit="saveSettings(event)">
-   <label>Nom de la plateforme</label><input id="settingPlatformName" maxlength="80">
-   <label>Couleur principale</label><input id="settingColor" type="color" value="#0B6B3A">
+   <label>Nom</label><input id="settingPlatformName" maxlength="80">
+   <label>Couleur</label><input id="settingColor" type="color" value="#0B6B3A">
    <label>Airtel</label><input id="settingAirtel">
    <label>Nom Airtel</label><input id="settingAirtelName">
    <label>Orange</label><input id="settingOrange">
@@ -1043,22 +568,20 @@ input:focus,select:focus{border-color:var(--green)}
    <label>Groupe Telegram</label><input id="settingTelegramGroup">
    <label>Telegram service</label><input id="settingTelegram">
    <label>WhatsApp service</label><input id="settingWhatsapp">
-   <label>Niveau 1 (%)</label><input id="settingRate1" type="number" min="0" max="100" step=".01">
-   <label>Niveau 2 (%)</label><input id="settingRate2" type="number" min="0" max="100" step=".01">
-   <label>Niveau 3 (%)</label><input id="settingRate3" type="number" min="0" max="100" step=".01">
-   <label>Frais de retrait (%)</label><input id="settingWithdrawalFee" type="number" min="0" max="100" step=".01">
-   <label>Retrait minimum</label><input id="settingWithdrawalMinimum" type="number" min="1" step="1">
+   <label>Niveau 1 (%)</label><input id="settingRate1" type="number">
+   <label>Niveau 2 (%)</label><input id="settingRate2" type="number">
+   <label>Niveau 3 (%)</label><input id="settingRate3" type="number">
+   <label>Frais (%)</label><input id="settingWithdrawalFee" type="number">
+   <label>Minimum retrait</label><input id="settingWithdrawalMinimum" type="number">
    <button class="btn primary full" type="submit">Enregistrer</button>
   </form>
-  <hr>
-  <h3>Modifier les plans</h3>
-  <div id="adminPlansEditor"></div>
+  <hr><h3>Plans</h3><div id="adminPlansEditor"></div>
  </div>
 </section>
 </section>
 </main>
 
-<!-- NAVIGATION DU BAS : PAS DE BOUTON ROUE -->
+<!-- Barre de navigation : pas de bouton Roulette ici -->
 <nav id="bottomNav" class="bottom hidden">
  <div class="bottominner">
   <button class="navbtn active" data-page="home" onclick="showPage('home')"><span>🏠</span>Accueil</button>
@@ -1070,29 +593,20 @@ input:focus,select:focus{border-color:var(--green)}
 </nav>
 
 <script>
-/* CONFIGURATION SUPABASE */
 const SUPABASE_URL='https://mfusevvmaknlvqrlleui.supabase.co';
 const SUPABASE_KEY='sb_publishable_XGdaDC5JYRlQlabEpjZvCw_DO3Zh_SD';
 const ADMIN_EMAIL='angenabukuze@gmail.com';
 const SIGNUP_BONUS=3000;
 const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-let currentUser=null;
-let currentProfile=null;
-let isAdmin=false;
-let selectedPlan=null;
-let mySubscriptions=[];
-let knownPlans=[];
-let historyType='deposit';
-let historyCache={deposit:[],withdrawal:[],bonus:[]};
-let installPrompt=null;
-let wheelBusy=false;
-let homeSlideIndex=0;
-let homeSlideTimer=null;
-let claimTimer=null;
+let currentUser=null,currentProfile=null,isAdmin=false;
+let carouselTimer=null,carouselIndex=0,carouselImages=[];
+let selectedPlan=null,mySubscriptions=[],knownPlans=[];
+let historyType='deposit',historyCache={deposit:[],withdrawal:[],bonus:[]};
+let installPrompt=null,wheelBusy=false;
 
 let platformSettings={
- platform_name:'SANOTOLEURO S.A.',
+ platform_name:'SANOTOLEURO RDC',
  primary_color:'#0B6B3A',
  withdrawal_fee_percent:10,
  withdrawal_minimum_cdf:3000,
@@ -1118,88 +632,29 @@ const FALLBACK_PLANS=[
 ];
 
 function $(id){return document.getElementById(id)}
-function formatFC(value){
- return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}).format(Number(value||0))+' FC';
-}
-function esc(value){
- return String(value??'').replace(/[&<>"']/g,c=>({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
- }[c]));
-}
-function safeURL(value){
- try{
-  const url=new URL(value);
-  return ['http:','https:'].includes(url.protocol)?url.href:'';
- }catch(e){return ''}
-}
-function busy(button,on,label){
- if(!button)return;
- if(on){
-  if(!button.dataset.old)button.dataset.old=button.textContent;
-  button.disabled=true;
-  button.textContent=label||'Patientez…';
- }else{
-  button.disabled=false;
-  button.textContent=button.dataset.old||'Envoyer';
-  delete button.dataset.old;
- }
-}
-function dateTime(value){
- if(!value)return 'Date indisponible';
- const date=new Date(value);
- return Number.isNaN(date.getTime())?'Date indisponible':date.toLocaleString('fr-FR');
-}
-function statusLabel(status){
- status=String(status||'pending').toLowerCase();
- if(['success','approved','validated','completed','active','paid'].includes(status)){
-  return '<span class="status success">Validée</span>';
- }
- if(['rejected','refused','cancelled'].includes(status)){
-  return '<span class="status rejected">Rejetée</span>';
- }
- return '<span class="status">En attente</span>';
-}
-function isDepositValidated(status){
- return ['success','approved','validated','completed'].includes(String(status||'').toLowerCase());
-}
-function isWithdrawalPaid(status){
- return ['success','approved','validated','completed','paid'].includes(String(status||'').toLowerCase());
-}
+function formatFC(v){return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}).format(Number(v||0))+' FC'}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function safeURL(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:''}catch(e){return ''}}
+function busy(btn,on,label){if(!btn)return;if(on){if(!btn.dataset.old)btn.dataset.old=btn.textContent;btn.disabled=true;btn.textContent=label||'Patientez…'}else{btn.disabled=false;btn.textContent=btn.dataset.old||'Envoyer';delete btn.dataset.old}}
+function dateTime(v){if(!v)return 'Date et heure indisponibles';const d=new Date(v);return Number.isNaN(d.getTime())?'Date et heure indisponibles':d.toLocaleString('fr-FR')}
+function statusLabel(s){s=String(s||'pending').toLowerCase();if(['success','approved','validated','completed','active','paid'].includes(s))return '<span class="status success">Validée</span>';if(['rejected','refused','cancelled'].includes(s))return '<span class="status rejected">Rejetée</span>';return '<span class="status">En attente</span>'}
+function isDepositValidated(s){return ['success','approved','validated','completed'].includes(String(s||'').toLowerCase())}
+function isWithdrawalPaid(s){return ['success','approved','validated','completed','paid'].includes(String(s||'').toLowerCase())}
+function showAuthForm(which){$('loginForm').classList.toggle('hidden',which!=='login');$('registerForm').classList.toggle('hidden',which!=='register');$('loginTab').className=which==='login'?'btn primary':'btn light';$('registerTab').className=which==='register'?'btn primary':'btn light'}
 
-/* TITRES EN HAUT */
+/* En-tête : SANOTOLEURO uniquement sur Accueil ; vide sur les autres pages et sur Connexion/Inscription */
 function setTopTitle(page){
- const titles={
-  home:'SANOTOLEURO S.A.',
-  plans:'Investir',
-  deposit:'Dépôt',
-  withdraw:'Retrait',
-  orders:'Mes demandes',
-  team:'Mon équipe',
-  account:'Moi',
-  myproducts:'Mes produits',
-  wheel:'Mes coupons / Jeu roulette',
-  wallet:'Mon portefeuille',
-  admin:'Administration'
- };
- $('brandName').textContent=titles[page]||'SANOTOLEURO S.A.';
-}
-function showAuthForm(which){
- $('loginForm').classList.toggle('hidden',which!=='login');
- $('registerForm').classList.toggle('hidden',which!=='register');
- $('loginTab').className=which==='login'?'btn primary':'btn light';
- $('registerTab').className=which==='register'?'btn primary':'btn light';
+ $('brandName').textContent=(page==='home'&&currentUser)?'SANOTOLEURO':'';
 }
 function showAuth(){
- document.body.classList.add('auth-mode');
- $('brandName').textContent='';
  $('authScreen').classList.remove('hidden');
  $('appScreen').classList.add('hidden');
  $('bottomNav').classList.add('hidden');
  $('logoutBtn').classList.add('hidden');
  $('headerBalance').classList.add('hidden');
+ setTopTitle('');
 }
 function showApp(){
- document.body.classList.remove('auth-mode');
  $('authScreen').classList.add('hidden');
  $('appScreen').classList.remove('hidden');
  $('bottomNav').classList.remove('hidden');
@@ -1208,17 +663,11 @@ function showApp(){
 function showPage(name){
  if(!currentUser){showAuth();return}
  if(name==='admin'&&!isAdmin)name='home';
-
- document.querySelectorAll('.page').forEach(page=>page.classList.add('hidden'));
+ document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
  const page=$(name+'Page');
  if(page)page.classList.remove('hidden');
-
- document.querySelectorAll('.navbtn').forEach(button=>{
-  button.classList.toggle('active',button.dataset.page===name);
- });
-
+ document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
  setTopTitle(name);
-
  if(name==='plans')loadPlans();
  if(name==='orders')loadHistory();
  if(name==='team')loadTeam();
@@ -1226,9 +675,8 @@ function showPage(name){
  if(name==='myproducts')loadMyProducts();
  if(name==='wheel')loadWheelStatus();
  if(name==='admin')loadAdmin();
- if(name==='home')loadHomeCarousel();
+ if(name==='home')loadMyVIP();
  if(name==='wallet')loadProfile();
-
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function adminTab(name){
@@ -1236,59 +684,24 @@ function adminTab(name){
  names.forEach(n=>{
   const section=$('adminSection'+n.charAt(0).toUpperCase()+n.slice(1));
   if(section)section.classList.toggle('hidden',n!==name);
-  const button=$('adminTab'+n.charAt(0).toUpperCase()+n.slice(1));
-  if(button)button.classList.toggle('active',n===name);
+  const btn=$('adminTab'+n.charAt(0).toUpperCase()+n.slice(1));
+  if(btn)btn.classList.toggle('active',n===name);
  });
 }
 
-/* DIAPORAMA DE LA PAGE D'ACCUEIL */
-function showHomeSlide(index){
- const slides=document.querySelectorAll('.home-slide');
- const dots=document.querySelectorAll('.hero-dot');
- if(!slides.length)return;
-
- homeSlideIndex=(index+slides.length)%slides.length;
- slides.forEach((slide,i)=>slide.classList.toggle('active',i===homeSlideIndex));
- dots.forEach((dot,i)=>dot.classList.toggle('active',i===homeSlideIndex));
-}
-function loadHomeCarousel(){
- if(homeSlideTimer)clearInterval(homeSlideTimer);
- showHomeSlide(homeSlideIndex);
- homeSlideTimer=setInterval(()=>showHomeSlide(homeSlideIndex+1),5000);
-}
-
-/* AUTHENTIFICATION */
-async function register(event){
- event.preventDefault();
- const button=event.submitter;
- const name=$('regName').value.trim();
- const email=$('regEmail').value.trim().toLowerCase();
- const password=$('regPassword').value;
- const password2=$('regPassword2').value;
- const referral=$('regReferral').value.trim();
-
- if(!/^[0-9]{6,8}$/.test(password)){
-  alert('Le mot de passe doit contenir 6 à 8 chiffres.');
-  return;
- }
- if(password!==password2){
-  alert('Les mots de passe ne correspondent pas.');
-  return;
- }
-
- busy(button,true,'Création…');
+async function register(e){
+ e.preventDefault();
+ const btn=e.submitter,name=$('regName').value.trim(),email=$('regEmail').value.trim().toLowerCase(),password=$('regPassword').value,pass2=$('regPassword2').value,ref=$('regReferral').value.trim();
+ if(!/^[0-9]{6,8}$/.test(password)){alert('Le mot de passe doit contenir 6 à 8 chiffres.');return}
+ if(password!==pass2){alert('Les mots de passe ne correspondent pas.');return}
+ busy(btn,true,'Création…');
  try{
-  const {data,error}=await db.auth.signUp({
-   email,
-   password,
-   options:{data:{full_name:name,referral_code_used:referral}}
-  });
+  const {data,error}=await db.auth.signUp({email,password,options:{data:{full_name:name,referral_code_used:ref}}});
   if(error)throw error;
-
   if(data.user&&data.session){
    currentUser=data.user;
    await ensureProfile(name);
-   if(referral)await registerReferral(referral);
+   if(ref)await registerReferral(ref);
    await afterLogin();
    alert('Compte créé.');
   }else{
@@ -1296,103 +709,64 @@ async function register(event){
    showAuthForm('login');
    $('loginEmail').value=email;
   }
- }catch(error){
-  console.error(error);
-  alert(error.message||'Impossible de créer le compte.');
- }finally{
-  busy(button,false);
- }
+ }catch(err){console.error(err);alert(err.message||'Impossible de créer le compte.')}
+ finally{busy(btn,false)}
 }
-
-async function login(event){
- event.preventDefault();
- const button=event.submitter;
- busy(button,true,'Connexion…');
+async function login(e){
+ e.preventDefault();
+ const btn=e.submitter;
+ busy(btn,true,'Connexion…');
  try{
-  const {data,error}=await db.auth.signInWithPassword({
-   email:$('loginEmail').value.trim().toLowerCase(),
-   password:$('loginPassword').value
-  });
+  const {data,error}=await db.auth.signInWithPassword({email:$('loginEmail').value.trim().toLowerCase(),password:$('loginPassword').value});
   if(error)throw error;
   currentUser=data.user;
   await afterLogin();
- }catch(error){
-  console.error(error);
-  alert(error.message||'Connexion impossible.');
- }finally{
-  busy(button,false);
- }
+ }catch(err){console.error(err);alert(err.message||'Connexion impossible.')}
+ finally{busy(btn,false)}
 }
-
 async function resetPassword(){
  const email=(currentUser?.email||$('loginEmail').value||$('regEmail').value).trim();
- if(!email){
-  alert('Saisissez votre adresse e-mail.');
-  return;
- }
+ if(!email){alert('Saisissez votre adresse e-mail.');return}
  try{
   const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin});
   if(error)throw error;
   alert('Si cette adresse est enregistrée, un e-mail sera envoyé.');
- }catch(error){
-  console.error(error);
-  alert('Réinitialisation indisponible pour le moment.');
- }
+ }catch(e){console.error(e);alert('Réinitialisation indisponible pour le moment.')}
 }
-
 async function logout(){
  await db.auth.signOut();
- currentUser=null;
- currentProfile=null;
- isAdmin=false;
- mySubscriptions=[];
- if(homeSlideTimer)clearInterval(homeSlideTimer);
- if(claimTimer)clearInterval(claimTimer);
+ currentUser=null;currentProfile=null;isAdmin=false;mySubscriptions=[];
+ if(carouselTimer)clearInterval(carouselTimer);
  showAuth();
 }
 
-/* CHARGEMENT APRÈS CONNEXION */
 async function afterLogin(){
  if(!currentUser)return;
-
  isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
-
  await ensureProfile();
  await loadProfile();
-
  if(currentProfile?.is_blocked===true&&!isAdmin){
-  await db.auth.signOut();
-  currentUser=null;
-  currentProfile=null;
-  showAuth();
+  await db.auth.signOut();currentUser=null;currentProfile=null;showAuth();
   alert('Votre compte est bloqué. Contactez le service client.');
   return;
  }
-
  showApp();
  $('adminTile').classList.toggle('hidden',!isAdmin);
-
  await loadSettingsPublic();
+ await loadAds();
  await loadPlans();
  await loadMyVIP();
  await loadSavedPhone();
-
  showPage('home');
 }
 
 async function ensureProfile(name=''){
  if(!currentUser)return;
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles')
-   .select('id,signup_bonus_paid')
-   .eq('id',currentUser.id)
-   .maybeSingle();
-
+  const {data,error}=await db.from('sanotoleuro_profiles').select('id,signup_bonus_paid').eq('id',currentUser.id).maybeSingle();
   if(error)throw error;
-
   if(!data){
    const code='SANO'+currentUser.id.replace(/-/g,'').slice(0,8).toUpperCase();
-
    const result=await db.from('sanotoleuro_profiles').insert({
     id:currentUser.id,
     full_name:name||currentUser.user_metadata?.full_name||'Membre',
@@ -1400,9 +774,8 @@ async function ensureProfile(name=''){
     balance_cdf:SIGNUP_BONUS,
     signup_bonus_paid:true
    });
-
    if(result.error){
-    console.warn('Création du profil avec bonus:',result.error.message);
+    console.warn('Création profil avec bonus:',result.error.message);
     const fallback=await db.from('sanotoleuro_profiles').insert({
      id:currentUser.id,
      full_name:name||currentUser.user_metadata?.full_name||'Membre',
@@ -1412,109 +785,99 @@ async function ensureProfile(name=''){
     if(fallback.error)console.warn(fallback.error.message);
    }
   }
- }catch(error){
-  console.warn('Profil indisponible:',error);
- }
+ }catch(e){console.warn('Profil indisponible',e)}
 }
-
 async function loadProfile(){
  if(!currentUser)return;
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles')
-   .select('*')
-   .eq('id',currentUser.id)
-   .maybeSingle();
+  const {data,error}=await db.from('sanotoleuro_profiles').select('*').eq('id',currentUser.id).maybeSingle();
   if(error)throw error;
   currentProfile=data||{};
- }catch(error){
-  console.error('Profil:',error);
-  currentProfile=currentProfile||{};
- }
+ }catch(e){console.error('Profil:',e);currentProfile=currentProfile||{}}
  renderProfileSummary();
  renderAccount();
 }
-
 function renderProfileSummary(){
  const name=currentProfile?.full_name||currentUser?.user_metadata?.full_name||'Membre';
  const balance=Number(currentProfile?.balance_cdf||0);
  const code=currentProfile?.referral_code||'—';
-
- if($('welcomeName'))$('welcomeName').textContent=name;
- if($('homeBalance'))$('homeBalance').textContent=formatFC(balance);
- if($('headerBalance'))$('headerBalance').textContent=formatFC(balance);
- if($('withdrawBalance'))$('withdrawBalance').textContent=formatFC(balance);
- if($('homeReferral'))$('homeReferral').textContent=code;
-
- if($('teamReferralCode'))$('teamReferralCode').value=code==='—'?'':code;
- if($('teamReferralLink'))$('teamReferralLink').value=code==='—'?'':`${location.origin}${location.pathname}?ref=${encodeURIComponent(code)}`;
+ $('welcomeName').textContent=name;
+ $('homeBalance').textContent=formatFC(balance);
+ $('headerBalance').textContent=formatFC(balance);
+ $('withdrawBalance').textContent=formatFC(balance);
+ $('homeReferral').textContent=code;
+ $('teamReferralCode').value=code==='—'?'':code;
+ $('teamReferralLink').value=code==='—'?'':`${location.origin}${location.pathname}?ref=${encodeURIComponent(code)}`;
  if($('walletPageBalance'))$('walletPageBalance').textContent=formatFC(balance);
+ if($('moiBalance'))$('moiBalance').textContent=formatFC(balance);
 }
-
 function renderAccount(){
  if(!currentUser)return;
-
  const name=currentProfile?.full_name||currentUser.user_metadata?.full_name||'Membre';
  $('moiName').textContent='👤 '+name;
  $('moiBalance').textContent=formatFC(currentProfile?.balance_cdf||0);
-
  const active=(mySubscriptions||[]).filter(v=>{
-  const end=v.ends_at?new Date(v.ends_at):null;
+  const end=v.ends_at?v.ends_at?new Date(v.ends_at):null:null;
   return String(v.status||'').toLowerCase()==='active'&&(!end||end>new Date());
  });
-
  $('moiVIP').textContent='💎 VIP '+active.length;
  loadMoiDashboard();
 }
-
-/* PARRAINAGE */
 async function registerReferral(code){
  try{
   const {error}=await db.rpc('sanotoleuro_register_referral',{p_referral_code:code});
   if(error)console.warn('Parrainage:',error.message);
- }catch(error){
-  console.warn(error);
+ }catch(e){console.warn(e)}
+}
+
+/* Visuels publicitaires existants de Supabase, avec galerie médicale par défaut */
+async function loadAds(){
+ try{
+  const {data,error}=await db.from('sanotoleuro_products').select('name,image_url,description,created_at').eq('active',true).not('image_url','is',null).order('created_at',{ascending:false}).limit(7);
+  if(error)throw error;
+  carouselImages=(data||[]).filter(x=>safeURL(x.image_url));
+ }catch(e){carouselImages=[]}
+ renderCarousel();
+}
+function renderCarousel(){
+ const box=$('adCarousel');
+ if(!box)return;
+ if(carouselTimer)clearInterval(carouselTimer);
+ if(!carouselImages.length){
+  box.innerHTML='<div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Matériel médical et fournitures de santé.</p></div></div>';
+  return;
+ }
+ carouselIndex=0;
+ box.innerHTML=carouselImages.map((x,i)=>`<div class="slide ${i===0?'active':''}"><img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'SANOTOLEURO')}"><div class="caption"><strong>${esc(x.name||'SANOTOLEURO')}</strong><span>${esc(x.description||'')}</span></div></div>`).join('');
+ if(carouselImages.length>1){
+  carouselTimer=setInterval(()=>{
+   const slides=box.querySelectorAll('.slide');
+   slides.forEach(s=>s.classList.remove('active'));
+   carouselIndex=(carouselIndex+1)%slides.length;
+   slides[carouselIndex].classList.add('active');
+  },4000);
  }
 }
 
-/* PLANS */
 async function loadPlans(){
  const box=$('plansList');
  if(!box)return;
  box.innerHTML='<div class="empty">Chargement…</div>';
-
  try{
-  const {data,error}=await db.from('sanotoleuro_plans')
-   .select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active')
-   .eq('active',true)
-   .order('plan_number');
-
+  const {data,error}=await db.from('sanotoleuro_plans').select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active').eq('active',true).order('plan_number');
   if(error)throw error;
   knownPlans=data?.length?data:FALLBACK_PLANS;
   renderPlans(knownPlans);
- }catch(error){
-  console.warn('Plans:',error);
-  knownPlans=FALLBACK_PLANS;
-  renderPlans(knownPlans);
- }
+ }catch(e){knownPlans=FALLBACK_PLANS;renderPlans(knownPlans)}
 }
-
 function getPlan(number){
- return knownPlans.find(p=>Number(p.plan_number)===Number(number))
-  ||FALLBACK_PLANS.find(p=>Number(p.plan_number)===Number(number))
-  ||{};
+ return knownPlans.find(p=>Number(p.plan_number)===Number(number))||FALLBACK_PLANS.find(p=>Number(p.plan_number)===Number(number))||{};
 }
-
 function renderPlans(plans){
  $('plansList').innerHTML=plans.map(p=>{
-  const amount=Number(p.amount_cdf||0);
-  const daily=Number(p.illustrative_daily_amount_cdf||0);
-  const days=Number(p.duration_days||0);
-
+  const amount=Number(p.amount_cdf||0),daily=Number(p.illustrative_daily_amount_cdf||0),days=Number(p.duration_days||0);
   return `<div class="plancard">
-   <div class="planhead">
-    <span class="plannumber">PLAN ${esc(p.plan_number)}</span>
-    <span class="muted">${days} jours</span>
-   </div>
+   <div class="planhead"><span class="plannumber">PLAN ${esc(p.plan_number)}</span><span class="muted">${days} jours</span></div>
    <div class="price">${formatFC(amount)}</div>
    <div class="plandetails">
     <div><small>Montant quotidien indicatif</small><strong>${formatFC(daily)}</strong></div>
@@ -1526,7 +889,6 @@ function renderPlans(plans){
   </div>`;
  }).join('');
 }
-
 function selectPlan(amount,number){
  selectedPlan={amount:Number(amount),number:Number(number)};
  $('depositPlanName').value='PLAN '+number;
@@ -1534,192 +896,90 @@ function selectPlan(amount,number){
  showPage('deposit');
 }
 
-/* DÉPÔTS */
-async function submitDeposit(event){
- event.preventDefault();
+async function submitDeposit(e){
+ e.preventDefault();
  if(!currentUser){showAuth();return}
-
- const button=event.submitter;
- const amount=Number($('depositAmount').value);
- const method=$('depositMethod').value;
- const reference=$('depositReference').value.trim();
-
- if(!selectedPlan){
-  alert('Choisissez un plan avant de continuer.');
-  return;
- }
- if(amount!==selectedPlan.amount){
-  alert('Le montant ne correspond pas au plan choisi.');
-  return;
- }
- if(!Number.isFinite(amount)||amount<25000||!method||!reference){
-  alert('Vérifiez les informations du dépôt.');
-  return;
- }
-
- busy(button,true,'Envoi…');
+ const btn=e.submitter,amount=Number($('depositAmount').value),method=$('depositMethod').value,ref=$('depositReference').value.trim();
+ if(!selectedPlan){alert('Choisissez un plan avant de continuer.');return}
+ if(amount!==selectedPlan.amount){alert('Le montant ne correspond pas au plan choisi.');return}
+ if(!Number.isFinite(amount)||amount<25000||!method||!ref){alert('Vérifiez les informations du dépôt.');return}
+ busy(btn,true,'Envoi…');
  try{
   const {error}=await db.from('sanotoleuro_deposit_requests').insert({
    user_id:currentUser.id,
    plan_number:selectedPlan.number,
    amount_cdf:amount,
    payment_method:method,
-   payment_reference:reference,
+   payment_reference:ref,
    status:'pending'
   });
-
   if(error)throw error;
-
-  $('depositForm').reset();
-  selectedPlan=null;
-
+  $('depositForm').reset();selectedPlan=null;
   alert('Demande envoyée. Le VIP sera activé après vérification du paiement.');
-  await loadHistory();
-  showPage('orders');
- }catch(error){
-  console.error(error);
-  alert('Demande non envoyée : '+error.message);
- }finally{
-  busy(button,false);
- }
+  await loadHistory();showPage('orders');
+ }catch(err){console.error(err);alert('Demande non envoyée : '+err.message)}
+ finally{busy(btn,false)}
 }
 
-/* RETRAITS */
 async function saveWithdrawalPhone(){
  if(!currentUser)return;
-
- const phone=$('withdrawPhone').value.trim();
- const method=$('withdrawMethod').value;
-
- if(!phone||!method){
-  alert('Saisissez le numéro et choisissez l’opérateur.');
-  return;
- }
-
+ const phone=$('withdrawPhone').value.trim(),method=$('withdrawMethod').value;
+ if(!phone||!method){alert('Saisissez le numéro et choisissez l’opérateur.');return}
  localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);
  localStorage.setItem('withdrawal_method_'+currentUser.id,method);
-
  try{
-  const {error}=await db.from('sanotoleuro_profiles')
-   .update({withdrawal_phone:phone,withdrawal_method:method})
-   .eq('id',currentUser.id);
+  const {error}=await db.from('sanotoleuro_profiles').update({withdrawal_phone:phone,withdrawal_method:method}).eq('id',currentUser.id);
   if(error)console.warn(error.message);
- }catch(error){console.warn(error)}
-
+ }catch(e){}
  alert('Numéro sauvegardé.');
 }
-
 async function loadSavedPhone(){
  if(!currentUser)return;
-
  const phone=currentProfile?.withdrawal_phone||localStorage.getItem('withdrawal_phone_'+currentUser.id)||'';
  const method=currentProfile?.withdrawal_method||localStorage.getItem('withdrawal_method_'+currentUser.id)||'';
-
  $('withdrawPhone').value=phone;
  $('withdrawMethod').value=method;
 }
-
 function calculateWithdrawal(){
  const amount=Math.max(0,Number($('withdrawAmount').value)||0);
  const fee=amount*(Number(platformSettings.withdrawal_fee_percent)||0)/100;
  $('withdrawFee').textContent=formatFC(fee);
  $('withdrawNet').textContent=formatFC(amount-fee);
 }
-
-async function submitWithdrawal(event){
- event.preventDefault();
+async function submitWithdrawal(e){
+ e.preventDefault();
  if(!currentUser){showAuth();return}
-
- const button=event.submitter;
- const amount=Number($('withdrawAmount').value);
- const method=$('withdrawMethod').value;
- const phone=$('withdrawPhone').value.trim();
- const balance=Number(currentProfile?.balance_cdf||0);
- const minimum=Number(platformSettings.withdrawal_minimum_cdf)||3000;
-
- if(!Number.isFinite(amount)||amount<minimum){
-  alert('Le retrait minimum est de '+formatFC(minimum)+'.');
-  return;
- }
- if(amount>balance){
-  alert('Le montant dépasse votre solde disponible.');
-  return;
- }
- if(!method||!phone){
-  alert('Complétez les informations demandées.');
-  return;
- }
-
- busy(button,true,'Vérification…');
-
+ const btn=e.submitter,amount=Number($('withdrawAmount').value),method=$('withdrawMethod').value,phone=$('withdrawPhone').value.trim(),balance=Number(currentProfile?.balance_cdf||0),minimum=Number(platformSettings.withdrawal_minimum_cdf)||3000;
+ if(!Number.isFinite(amount)||amount<minimum){alert('Le retrait minimum est de '+formatFC(minimum)+'.');return}
+ if(amount>balance){alert('Le montant dépasse votre solde disponible.');return}
+ if(!method||!phone){alert('Complétez les informations demandées.');return}
+ busy(btn,true,'Vérification…');
  try{
-  const {data:vipData,error:vipError}=await db.from('sanotoleuro_vip_subscriptions')
-   .select('id,status,ends_at')
-   .eq('user_id',currentUser.id)
-   .eq('status','active')
-   .limit(50);
-
+  const {data:vipData,error:vipError}=await db.from('sanotoleuro_vip_subscriptions').select('id,status,ends_at').eq('user_id',currentUser.id).eq('status','active').limit(50);
   if(vipError)throw vipError;
-
   const now=new Date();
   const hasActiveVIP=(vipData||[]).some(v=>!v.ends_at||new Date(v.ends_at)>now);
-
-  if(!hasActiveVIP){
-   alert('Pour demander un retrait, vous devez avoir au moins un plan VIP actif.');
-   return;
-  }
-
-  const since=new Date();
-  since.setHours(0,0,0,0);
-
-  const {count,error:countError}=await db.from('sanotoleuro_withdrawal_requests')
-   .select('id',{count:'exact',head:true})
-   .eq('user_id',currentUser.id)
-   .gte('created_at',since.toISOString());
-
-  if(countError)throw countError;
-
-  if((count||0)>=2){
-   alert('Deux demandes de retrait maximum par jour.');
-   return;
-  }
-
+  if(!hasActiveVIP){alert('Pour demander un retrait, vous devez avoir au moins un plan VIP actif.');return}
+  const since=new Date();since.setHours(0,0,0,0);
+  const {count,error:ce}=await db.from('sanotoleuro_withdrawal_requests').select('id',{count:'exact',head:true}).eq('user_id',currentUser.id).gte('created_at',since.toISOString());
+  if(ce)throw ce;
+  if((count||0)>=2){alert('Deux demandes de retrait maximum par jour.');return}
   const fee=Number((amount*(Number(platformSettings.withdrawal_fee_percent)||0)/100).toFixed(2));
   const net=Number((amount-fee).toFixed(2));
-
   const {error}=await db.from('sanotoleuro_withdrawal_requests').insert({
-   user_id:currentUser.id,
-   amount_cdf:amount,
-   payment_method:method,
-   phone,
-   fee_cdf:fee,
-   net_amount_cdf:net,
-   status:'pending'
+   user_id:currentUser.id,amount_cdf:amount,payment_method:method,phone,fee_cdf:fee,net_amount_cdf:net,status:'pending'
   });
-
   if(error)throw error;
-
   localStorage.setItem('withdrawal_phone_'+currentUser.id,phone);
   localStorage.setItem('withdrawal_method_'+currentUser.id,method);
-
   $('withdrawForm').reset();
-  await loadSavedPhone();
-  calculateWithdrawal();
-  await loadProfile();
-
+  await loadSavedPhone();calculateWithdrawal();await loadProfile();
   alert('Demande de retrait envoyée pour vérification.');
-  await loadHistory();
-  showPage('orders');
-
- }catch(error){
-  console.error(error);
-  alert('Demande non envoyée : '+error.message);
- }finally{
-  busy(button,false);
- }
+  await loadHistory();showPage('orders');
+ }catch(err){console.error(err);alert('Demande non envoyée : '+err.message)}
+ finally{busy(btn,false)}
 }
 
-/* HISTORIQUE */
 function setHistoryType(type){
  historyType=type;
  $('historyTabDeposits').classList.toggle('active',type==='deposit');
@@ -1727,339 +987,142 @@ function setHistoryType(type){
  $('historyTabBonuses').classList.toggle('active',type==='bonus');
  renderHistoryType();
 }
-
 function renderHistoryType(){
  const box=$('historyList');
  if(!box)return;
-
- const labels={
-  deposit:'DÉPÔTS',
-  withdrawal:'RETRAITS',
-  bonus:'BONUS ADMINISTRATIFS'
- };
+ const labels={deposit:'DÉPÔTS',withdrawal:'RETRAITS',bonus:'BONUS ADMINISTRATIFS'};
  const css={deposit:'deposit',withdrawal:'withdraw',bonus:'bonus'};
  const items=historyCache[historyType]||[];
-
  let html=`<div class="history-heading ${css[historyType]}">${labels[historyType]}</div>`;
-
- if(!items.length){
-  box.innerHTML=html+'<div class="empty">Aucune opération dans cette catégorie.</div>';
-  return;
- }
-
+ if(!items.length){box.innerHTML=html+'<div class="empty">Aucune opération dans cette catégorie.</div>';return}
  items.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
-
- html+=items.map(item=>`
-  <div class="item">
-   <div class="itemtop">
-    <div>
-     <strong>${esc(item.title||labels[historyType])}</strong>
-     <div class="muted small">${esc(item.extra||'')}</div>
-    </div>
-    ${statusLabel(item.status)}
-   </div>
-   <p class="amount" style="margin:10px 0 5px">${formatFC(item.amount)}</p>
-   <div class="history-date">📅 ${esc(dateTime(item.date))}</div>
-   ${item.note?`<div class="muted small">Motif : ${esc(item.note)}</div>`:''}
-  </div>
- `).join('');
-
+ html+=items.map(x=>`<div class="item">
+  <div class="itemtop"><div><strong>${esc(x.title||labels[historyType])}</strong><div class="muted small">${esc(x.extra||'')}</div></div>${statusLabel(x.status)}</div>
+  <p class="amount" style="margin:10px 0 5px">${formatFC(x.amount)}</p>
+  <div class="muted small">📅 ${esc(dateTime(x.date))}</div>
+  ${x.note?`<div class="muted small">Motif : ${esc(x.note)}</div>`:''}
+ </div>`).join('');
  box.innerHTML=html;
 }
-
 async function loadHistory(){
  const box=$('historyList');
  if(!box||!currentUser)return;
-
  box.innerHTML='<div class="empty">Chargement…</div>';
  historyCache={deposit:[],withdrawal:[],bonus:[]};
-
  try{
   const results=await Promise.all([
    db.from('sanotoleuro_deposit_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(100),
    db.from('sanotoleuro_withdrawal_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(100),
    db.from('sanotoleuro_orders').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(100)
   ]);
-
-  if(!results[0].error){
-   (results[0].data||[]).forEach(r=>{
-    historyCache.deposit.push({
-     title:'💳 Dépôt · Plan '+(r.plan_number||'—'),
-     amount:r.amount_cdf,
-     status:r.status,
-     date:r.created_at,
-     extra:(r.payment_method||'')+(r.payment_reference?' · Référence : '+r.payment_reference:'')
-    });
-   });
-  }
-
-  if(!results[1].error){
-   (results[1].data||[]).forEach(r=>{
-    historyCache.withdrawal.push({
-     title:'💸 Retrait',
-     amount:r.amount_cdf,
-     status:r.status,
-     date:r.created_at,
-     extra:(r.payment_method||'')+(r.phone?' · '+r.phone:'')
-    });
-   });
-  }
-
-  if(!results[2].error){
-   (results[2].data||[]).forEach(r=>{
-    const title=String(r.product_name||r.type||'Commande');
-    if(/bonus|admin|adjust|prime|reward/i.test(title+' '+String(r.description||''))){
-     historyCache.bonus.push({
-      title:'🎁 Bonus administratif',
-      amount:r.amount_cdf??r.total_price_cdf??r.amount,
-      status:r.status,
-      date:r.created_at,
-      extra:title,
-      note:r.admin_note||r.description||''
-     });
-    }
-   });
-  }
-
+  if(!results[0].error)(results[0].data||[]).forEach(r=>historyCache.deposit.push({title:'💳 Dépôt · Plan '+(r.plan_number||'—'),amount:r.amount_cdf,status:r.status,date:r.created_at,extra:(r.payment_method||'')+(r.payment_reference?' · Référence : '+r.payment_reference:'')}));
+  if(!results[1].error)(results[1].data||[]).forEach(r=>historyCache.withdrawal.push({title:'💸 Retrait',amount:r.amount_cdf,status:r.status,date:r.created_at,extra:(r.payment_method||'')+(r.phone?' · '+r.phone:'')}));
+  if(!results[2].error)(results[2].data||[]).forEach(r=>{
+   const title=String(r.product_name||r.type||'Commande');
+   if(/bonus|admin|adjust|prime|reward/i.test(title+' '+String(r.description||''))){
+    historyCache.bonus.push({title:'🎁 Bonus administratif',amount:r.amount_cdf??r.total_price_cdf??r.amount,status:r.status,date:r.created_at,extra:title,note:r.admin_note||r.description||''});
+   }
+  });
   renderHistoryType();
- }catch(error){
-  console.error(error);
-  box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>';
- }
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>'}
 }
 
-/* MES PRODUITS ET RÉCOLTES */
+/* Charger les abonnements sans les afficher sur Accueil */
 async function loadMyVIP(){
  if(!currentUser)return;
-
  try{
-  const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
-   .select('*')
-   .eq('user_id',currentUser.id)
-   .limit(100);
-
+  const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select('*').eq('user_id',currentUser.id).limit(100);
   if(error)throw error;
-
   mySubscriptions=data||[];
   renderAccount();
-
-  if(!$('myproductsPage').classList.contains('hidden')){
-   await loadMyProducts();
-  }
- }catch(error){
-  console.error('Abonnements VIP:',error);
+  if(!$('myproductsPage').classList.contains('hidden'))renderMyProducts();
+ }catch(e){console.error('VIP:',e)}
+}
+function activeVIPSubscriptions(){
+ const now=new Date();
+ return (mySubscriptions||[]).filter(v=>{
+  const end=v.ends_at?new Date(v.ends_at):null;
+  return String(v.status||'').toLowerCase()==='active'&&(!end||end>now);
+ });
+}
+function renderMyProducts(){
+ const box=$('activeProductsList');
+ if(!box)return;
+ const active=activeVIPSubscriptions();
+ if(!active.length){
+  box.innerHTML='<div class="empty">Aucun produit actif pour le moment.</div>';
+  return;
  }
+ box.innerHTML=active.map(v=>{
+  const daily=Number(v.daily_amount_cdf||0);
+  const days=Number(v.duration_days||0);
+  const total=daily*days;
+  return `<div class="item">
+   <div class="itemtop"><strong>PRODUIT VIP ${esc(v.plan_number||'—')}</strong><span class="product-active">ACTIF</span></div>
+   <p class="amount">${formatFC(v.capital_cdf||0)}</p>
+   <div class="muted">Identifiant : ${esc(v.id)}</div>
+   <div class="muted">Montant quotidien : ${formatFC(daily)}</div>
+   <div class="muted">Durée : ${days} jours</div>
+   <div class="muted">Total indicatif du cycle : ${formatFC(total)}</div>
+   <div class="muted">Date d'activation : ${esc(dateTime(v.activated_at))}</div>
+   <div class="muted">Fin prévue : ${esc(dateTime(v.ends_at))}</div>
+   <div class="claimbox">
+    <div class="muted">Montant disponible pour la récolte selon votre abonnement</div>
+    <div class="claimamount">${formatFC(daily)}</div>
+    <button class="claimbutton" onclick="claimVIP('${esc(v.id)}',this)">🟢 RÉCOLTER</button>
+    <div class="claimtimer">La demande sera vérifiée par Supabase.</div>
+   </div>
+  </div>`;
+ }).join('');
 }
-
-function nextClaimDate(subscription){
- const start=subscription.last_claim_at||subscription.activated_at;
- if(!start)return null;
- const date=new Date(start);
- if(Number.isNaN(date.getTime()))return null;
- return new Date(date.getTime()+24*60*60*1000);
-}
-
-function claimIsReady(subscription){
- const now=new Date();
- const end=subscription.ends_at?new Date(subscription.ends_at):null;
-
- if(end&&now>=end)return false;
-
- const next=nextClaimDate(subscription);
- return !!next&&now>=next;
-}
-
-function renderClaimTimer(subscription){
- const next=nextClaimDate(subscription);
- if(!next)return 'Date d’activation indisponible.';
-
- const now=new Date();
- if(now>=next)return 'Vous pouvez demander une récolte.';
-
- const diff=next-now;
- const hours=Math.floor(diff/3600000);
- const minutes=Math.floor((diff%3600000)/60000);
- const seconds=Math.floor((diff%60000)/1000);
-
- return `Prochaine récolte possible dans ${hours} h ${minutes} min ${seconds} s.`;
-}
-
 async function loadMyProducts(){
  const box=$('activeProductsList');
  if(!box||!currentUser)return;
-
- box.innerHTML='<div class="empty">Chargement de vos produits...</div>';
-
+ box.innerHTML='<div class="empty">Chargement des produits actifs...</div>';
  try{
-  const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
-   .select('*')
-   .eq('user_id',currentUser.id)
-   .order('activated_at',{ascending:false})
-   .limit(100);
-
+  const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select('*').eq('user_id',currentUser.id).order('activated_at',{ascending:false}).limit(100);
   if(error)throw error;
-
   mySubscriptions=data||[];
-
-  const now=new Date();
-  const active=mySubscriptions.filter(v=>{
-   const status=String(v.status||'').toLowerCase();
-   const end=v.ends_at?new Date(v.ends_at):null;
-   return status==='active'&&(!end||end>now);
-  });
-
-  if(!active.length){
-   box.innerHTML='<div class="empty">Aucun produit actif pour le moment.</div>';
-   renderAccount();
-   return;
-  }
-
-  box.innerHTML=active.map(v=>{
-   const daily=Number(v.daily_amount_cdf||0);
-   const days=Number(v.duration_days||0);
-   const total=daily*days;
-   const ready=claimIsReady(v);
-   const next=nextClaimDate(v);
-
-   return `<div class="item">
-    <div class="itemtop">
-     <strong>PRODUIT VIP ${esc(v.plan_number||'—')}</strong>
-     <span class="product-active">ACTIF</span>
-    </div>
-
-    <p class="amount">${formatFC(v.capital_cdf||0)}</p>
-
-    <div class="muted">Montant quotidien : <strong>${formatFC(daily)}</strong></div>
-    <div class="muted">Durée : ${days} jours</div>
-    <div class="muted">Total indicatif du cycle : <strong>${formatFC(total)}</strong></div>
-    <div class="muted">Date d'activation : ${esc(dateTime(v.activated_at))}</div>
-    <div class="muted">Fin prévue : ${esc(dateTime(v.ends_at))}</div>
-
-    <div class="claimbox">
-     <div class="muted">Votre récolte quotidienne</div>
-     <div class="claimamount">${formatFC(daily)}</div>
-     <button
-      class="claimbutton"
-      id="claim-${esc(v.id)}"
-      onclick="claimVIP('${esc(v.id)}',this)"
-      ${(!ready||daily<=0)?'disabled':''}>
-      ${ready&&daily>0?'🟢 RÉCOLTER':'🔒 RÉCOLTE APRÈS 24 H'}
-     </button>
-     <div class="claimtimer" id="claimtimer-${esc(v.id)}">${esc(renderClaimTimer(v))}</div>
-    </div>
-   </div>`;
-  }).join('');
-
+  renderMyProducts();
   renderAccount();
-  startClaimCountdown();
-
- }catch(error){
-  console.error('Mes produits:',error);
-  box.innerHTML='<div class="notice">Impossible de charger vos produits actifs. Réessayez.</div>';
+ }catch(e){
+  console.error('Mes produits:',e);
+  box.innerHTML='<div class="notice">Impossible de charger les produits actifs. Réessayez.</div>';
  }
 }
-
-function startClaimCountdown(){
- if(claimTimer)clearInterval(claimTimer);
-
- claimTimer=setInterval(()=>{
-  if(!currentUser)return;
-
-  const now=new Date();
-
-  (mySubscriptions||[]).forEach(v=>{
-   if(String(v.status||'').toLowerCase()!=='active')return;
-
-   const button=$('claim-'+v.id);
-   const timer=$('claimtimer-'+v.id);
-   if(!button||!timer)return;
-
-   const end=v.ends_at?new Date(v.ends_at):null;
-   if(end&&now>=end){
-    button.disabled=true;
-    button.textContent='Abonnement terminé';
-    timer.textContent='La période de ce produit est terminée.';
-    return;
-   }
-
-   const daily=Number(v.daily_amount_cdf||0);
-   const ready=claimIsReady(v);
-
-   if(ready){
-    button.disabled=daily<=0;
-    button.textContent=daily>0?'🟢 RÉCOLTER':'Montant indisponible';
-    timer.textContent=daily>0?'Vous pouvez demander une récolte.':'Montant quotidien non renseigné.';
-   }else{
-    button.disabled=true;
-    button.textContent='🔒 RÉCOLTE APRÈS 24 H';
-    timer.textContent=renderClaimTimer(v);
-   }
-  });
- },1000);
-}
-
 async function claimVIP(subscriptionId,button){
  if(!currentUser)return;
-
- const subscription=mySubscriptions.find(v=>String(v.id)===String(subscriptionId));
- if(!subscription){
-  alert('Produit introuvable. Actualisez la page.');
-  return;
- }
-
- if(!claimIsReady(subscription)){
-  alert('La récolte n’est pas encore disponible. Respectez le délai de 24 heures.');
-  return;
- }
-
- if(!confirm('Confirmer la demande de récolte quotidienne de ce produit ?'))return;
-
+ const vip=activeVIPSubscriptions().find(v=>String(v.id)===String(subscriptionId));
+ if(!vip){alert('Produit VIP introuvable ou inactif. Actualisez vos produits.');return}
+ if(button?.disabled)return;
+ if(!confirm('Confirmer la demande de récolte de ce produit VIP ?'))return;
  busy(button,true,'Vérification…');
-
  try{
-  const {data,error}=await db.rpc('sanotoleuro_claim_vip',{
-   p_subscription_id:subscription.id
-  });
-
+  const {data,error}=await db.rpc('sanotoleuro_claim_vip',{p_subscription_id:subscriptionId});
   if(error)throw error;
-  if(!data||data.success!==true){
-   throw new Error(data?.message||'La récolte n’a pas été confirmée par Supabase.');
-  }
-
+  if(!data||data.success!==true)throw new Error(data?.message||'La récolte n’a pas été confirmée par Supabase.');
   alert('Récolte confirmée : '+formatFC(data.amount_cdf)+'.');
-
   await loadProfile();
   await loadMyVIP();
   await loadMyProducts();
   await loadHistory();
-
- }catch(error){
-  console.error('Récolte VIP:',error);
-  alert(error.message||'Récolte impossible.');
-  await loadMyVIP();
-  await loadMyProducts();
+ }catch(e){
+  console.error('Récolte VIP:',e);
+  alert(e.message||'Récolte impossible.');
  }finally{
-  if(button&&document.body.contains(button)){
-   button.disabled=false;
-   button.textContent='Récolter';
-  }
+  if(button&&document.body.contains(button))busy(button,false);
  }
 }
-
 async function refreshVIP(){
  await loadMyVIP();
- await loadMyProducts();
+ if(!$('myproductsPage').classList.contains('hidden'))await loadMyProducts();
  await loadProfile();
 }
 
-/* STATISTIQUES DE MOI */
+/* Statistiques page Moi */
 async function loadMoiDashboard(){
  if(!currentUser)return;
-
- const put=(id,value)=>{
-  if($(id))$(id).textContent=formatFC(value);
- };
-
+ const put=(id,value)=>{if($(id))$(id).textContent=formatFC(value)};
  try{
   const [deposits,withdrawals,orders,commissions,vips]=await Promise.all([
    db.from('sanotoleuro_deposit_requests').select('amount_cdf,status').eq('user_id',currentUser.id).limit(3000),
@@ -2068,32 +1131,20 @@ async function loadMoiDashboard(){
    db.from('sanotoleuro_referral_commissions').select('commission_amount_cdf,status').eq('beneficiary_user_id',currentUser.id).limit(3000),
    db.from('sanotoleuro_vip_subscriptions').select('capital_cdf,status,ends_at').eq('user_id',currentUser.id).limit(300)
   ]);
-
   const validDeposits=deposits.error?[]:(deposits.data||[]).filter(r=>isDepositValidated(r.status));
   const paidWithdrawals=withdrawals.error?[]:(withdrawals.data||[]).filter(r=>isWithdrawalPaid(r.status));
   const validOrders=orders.error?[]:(orders.data||[]).filter(r=>isWithdrawalPaid(r.status)||isDepositValidated(r.status));
-
   const recharge=validDeposits.reduce((s,r)=>s+Number(r.amount_cdf||0),0);
   const withdrawn=paidWithdrawals.reduce((s,r)=>s+Number(r.amount_cdf||0),0);
   const revenue=validOrders.reduce((s,r)=>s+Number(r.amount_cdf??r.total_price_cdf??r.amount??0),0);
-
-  const today=new Date();
-  today.setHours(0,0,0,0);
-
-  const todayRevenue=validOrders
-   .filter(r=>r.created_at&&new Date(r.created_at)>=today)
-   .reduce((s,r)=>s+Number(r.amount_cdf??r.total_price_cdf??r.amount??0),0);
-
+  const today=new Date();today.setHours(0,0,0,0);
+  const todayRevenue=validOrders.filter(r=>r.created_at&&new Date(r.created_at)>=today).reduce((s,r)=>s+Number(r.amount_cdf??r.total_price_cdf??r.amount??0),0);
   const vipRows=vips.error?(mySubscriptions||[]):(vips.data||[]);
   const assets=vipRows.filter(v=>{
    const end=v.ends_at?new Date(v.ends_at):null;
    return String(v.status||'').toLowerCase()==='active'&&(!end||end>new Date());
   }).reduce((s,v)=>s+Number(v.capital_cdf||0),0);
-
-  const teamRevenue=commissions.error?0:(commissions.data||[])
-   .filter(r=>isWithdrawalPaid(r.status))
-   .reduce((s,r)=>s+Number(r.commission_amount_cdf||0),0);
-
+  const teamRevenue=commissions.error?0:(commissions.data||[]).filter(r=>isWithdrawalPaid(r.status)).reduce((s,r)=>s+Number(r.commission_amount_cdf||0),0);
   put('moiBalance',currentProfile?.balance_cdf||0);
   put('moiRechargeWallet',recharge);
   put('moiTotalRecharge',recharge);
@@ -2102,13 +1153,10 @@ async function loadMoiDashboard(){
   put('moiTotalAssets',assets);
   put('moiTodayRevenue',todayRevenue);
   put('moiTeamRevenue',teamRevenue);
-
- }catch(error){
-  console.error('Statistiques Moi:',error);
- }
+ }catch(e){console.error('Statistiques Moi:',e)}
 }
 
-/* ÉQUIPE ET COMMISSIONS */
+/* Parrainage */
 function currentReferralRates(){
  return {
   1:Number(platformSettings.referral_rate_1??12),
@@ -2116,572 +1164,257 @@ function currentReferralRates(){
   3:Number(platformSettings.referral_rate_3??1)
  };
 }
-function normalizeReferralCode(value){
- return String(value||'').trim().toUpperCase();
-}
-
+function normalizeReferralCode(v){return String(v||'').trim().toUpperCase()}
 async function loadTeam(){
  if(!currentUser)return;
-
  const box=$('teamList');
  box.innerHTML='<div class="empty">Chargement de votre équipe…</div>';
-
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles')
-   .select('id,full_name,referral_code,referred_by,created_at')
-   .limit(5000);
-
+  const {data,error}=await db.from('sanotoleuro_profiles').select('id,full_name,referral_code,referred_by,created_at').limit(5000);
   if(error)throw error;
-
-  const profiles=data||[];
-  const levels={1:[],2:[],3:[]};
-  const assigned=new Set([currentUser.id]);
+  const profiles=data||[],levels={1:[],2:[],3:[]},assigned=new Set([currentUser.id]);
   let parents=[{id:currentUser.id,referral_code:currentProfile?.referral_code||''}];
-
-  function matches(profile,parent){
-   const referral=String(profile.referred_by||'').trim();
-   return referral===String(parent.id)||normalizeReferralCode(referral)===normalizeReferralCode(parent.referral_code);
+  function matches(p,parent){
+   const r=String(p.referred_by||'').trim();
+   return r===String(parent.id)||normalizeReferralCode(r)===normalizeReferralCode(parent.referral_code);
   }
-
   for(let level=1;level<=3;level++){
    const next=[];
    for(const parent of parents){
-    profiles.filter(p=>matches(p,parent)&&!assigned.has(String(p.id))).forEach(member=>{
-     assigned.add(String(member.id));
-     levels[level].push(member);
-     next.push(member);
+    profiles.filter(p=>matches(p,parent)&&!assigned.has(String(p.id))).forEach(c=>{
+     assigned.add(String(c.id));levels[level].push(c);next.push(c);
     });
    }
    parents=next;
   }
-
   const members=[...levels[1],...levels[2],...levels[3]];
   const ids=members.map(m=>m.id);
-
-  let deposits=[];
-  let commissions=[];
-
+  let deposits=[],commissions=[];
   if(ids.length){
-   const result=await db.from('sanotoleuro_deposit_requests')
-    .select('user_id,amount_cdf,status')
-    .in('user_id',ids)
-    .limit(5000);
-
-   if(!result.error)deposits=result.data||[];
+   const r=await db.from('sanotoleuro_deposit_requests').select('user_id,amount_cdf,status').in('user_id',ids).limit(5000);
+   if(!r.error)deposits=r.data||[];
   }
-
-  const commissionResult=await db.from('sanotoleuro_referral_commissions')
-   .select('commission_amount_cdf,status')
-   .eq('beneficiary_user_id',currentUser.id)
-   .limit(5000);
-
-  if(!commissionResult.error)commissions=commissionResult.data||[];
-
-  const validDeposits=deposits.filter(d=>isDepositValidated(d.status));
-
+  const cr=await db.from('sanotoleuro_referral_commissions').select('commission_amount_cdf,status').eq('beneficiary_user_id',currentUser.id).limit(5000);
+  if(!cr.error)commissions=cr.data||[];
+  const valid=deposits.filter(d=>isDepositValidated(d.status));
   $('teamTotal').textContent=String(members.length);
-  $('teamDepositors').textContent=String(new Set(validDeposits.map(d=>d.user_id)).size);
-  $('teamDepositTotal').textContent=formatFC(validDeposits.reduce((s,d)=>s+Number(d.amount_cdf||0),0));
-
-  $('teamCommissionTotal').textContent=formatFC(
-   commissions.filter(c=>isWithdrawalPaid(c.status)).reduce((s,c)=>s+Number(c.commission_amount_cdf||0),0)
-  );
-
+  $('teamDepositors').textContent=String(new Set(valid.map(d=>d.user_id)).size);
+  $('teamDepositTotal').textContent=formatFC(valid.reduce((s,d)=>s+Number(d.amount_cdf||0),0));
+  $('teamCommissionTotal').textContent=formatFC(commissions.filter(c=>isWithdrawalPaid(c.status)).reduce((s,c)=>s+Number(c.commission_amount_cdf||0),0));
   const rates=currentReferralRates();
   $('teamRatesText').innerHTML=`Niveau 1 : ${rates[1]} %<br>Niveau 2 : ${rates[2]} %<br>Niveau 3 : ${rates[3]} %`;
-
-  if(!members.length){
-   box.innerHTML='<div class="empty">Aucun membre trouvé dans les niveaux 1, 2 et 3.</div>';
-   return;
-  }
-
+  if(!members.length){box.innerHTML='<div class="empty">Aucun membre trouvé dans les niveaux 1, 2 et 3.</div>';return}
   let html='';
-
   for(let level=1;level<=3;level++){
    html+=`<div class="level-title">Niveau ${level} · Commission ${rates[level]}% · ${levels[level].length} membre(s)</div>`;
-
-   html+=levels[level].map(member=>{
-    const memberDeposits=deposits.filter(d=>String(d.user_id)===String(member.id));
-    const approved=memberDeposits.filter(d=>isDepositValidated(d.status));
+   html+=levels[level].map(m=>{
+    const ds=deposits.filter(d=>String(d.user_id)===String(m.id));
+    const approved=ds.filter(d=>isDepositValidated(d.status));
     const total=approved.reduce((s,d)=>s+Number(d.amount_cdf||0),0);
-
-    return `<div class="item">
-     <strong>${esc(member.full_name||'Membre')}</strong>
-     <div class="muted small">Inscription : ${esc(dateTime(member.created_at))}</div>
-     <div class="muted small">Code : ${esc(member.referral_code||'—')}</div>
-     <div class="muted small">Dépôts enregistrés : ${memberDeposits.length}</div>
-     <div class="amount">Dépôts validés : ${formatFC(total)}</div>
-    </div>`;
+    return `<div class="item"><strong>${esc(m.full_name||'Membre')}</strong><div class="muted small">Inscription : ${esc(dateTime(m.created_at))}</div><div class="muted small">Code : ${esc(m.referral_code||'—')}</div><div class="muted small">Dépôts enregistrés : ${ds.length}</div><div class="amount">Dépôts validés : ${formatFC(total)}</div></div>`;
    }).join('');
   }
-
   box.innerHTML=html;
-
- }catch(error){
-  console.error('Équipe:',error);
-  box.innerHTML='<div class="notice">Impossible de charger votre équipe. Vérifiez les autorisations Supabase.</div>';
- }
+ }catch(e){console.error('Équipe:',e);box.innerHTML='<div class="notice">Impossible de charger votre équipe. Vérifiez les autorisations Supabase.</div>'}
 }
-
-/* COPIE ET PARTAGE */
 async function copyText(value){
- try{
-  await navigator.clipboard.writeText(value);
-  alert('Copié.');
- }catch(error){
-  const textarea=document.createElement('textarea');
-  textarea.value=value;
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand('copy');
-  textarea.remove();
-  alert('Copié.');
- }
+ try{await navigator.clipboard.writeText(value);alert('Copié.')}
+ catch(e){const t=document.createElement('textarea');t.value=value;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();alert('Copié.')}
 }
-async function copyReferralCode(){
- if($('teamReferralCode').value)await copyText($('teamReferralCode').value);
- else alert('Code indisponible.');
-}
-async function copyReferralLink(){
- if($('teamReferralLink').value)await copyText($('teamReferralLink').value);
- else alert('Lien indisponible.');
-}
+async function copyReferralCode(){if($('teamReferralCode').value)await copyText($('teamReferralCode').value);else alert('Code indisponible.')}
+async function copyReferralLink(){if($('teamReferralLink').value)await copyText($('teamReferralLink').value);else alert('Lien indisponible.')}
 async function shareReferral(){
  const url=$('teamReferralLink').value;
  if(!url){alert('Lien indisponible.');return}
-
- if(navigator.share){
-  try{
-   await navigator.share({
-    title:'SANOTOLEURO S.A.',
-    text:'Voici mon lien d’invitation :',
-    url
-   });
-  }catch(error){}
- }else{
-  await copyText(url);
- }
+ if(navigator.share){try{await navigator.share({title:'SANOTOLEURO',text:'Voici mon lien d’invitation :',url})}catch(e){}}
+ else await copyText(url);
 }
 
-/* ADMINISTRATION */
+/* Administration */
 async function verifyAdmin(){
  if(!currentUser||!isAdmin)return false;
- try{
-  const {data,error}=await db.rpc('sanotoleuro_is_admin');
-  if(error)throw error;
-  return data===true;
- }catch(error){
-  console.error('Vérification administrateur:',error);
-  return false;
- }
+ try{const {data,error}=await db.rpc('sanotoleuro_is_admin');if(error)throw error;return data===true}
+ catch(e){console.error('Vérification administrateur:',e);return false}
 }
-
 async function loadAdmin(){
  if(!isAdmin||!currentUser){alert('Accès administrateur refusé.');return}
  if(!(await verifyAdmin())){alert('Accès administrateur refusé.');return}
-
- await Promise.all([
-  loadAdminOverview(),
-  loadAdminRequests('deposit'),
-  loadAdminRequests('withdrawal'),
-  loadAdminMembers(),
-  loadSettings(),
-  loadAdminVIP(),
-  loadAdminPlans()
- ]);
+ await Promise.all([loadAdminOverview(),loadAdminRequests('deposit'),loadAdminRequests('withdrawal'),loadAdminMembers(),loadSettings(),loadAdminVIP(),loadAdminPlans()]);
 }
-
 async function loadAdminOverview(){
  try{
-  const [profiles,deposits,withdrawals]=await Promise.all([
+  const [p,d,w]=await Promise.all([
    db.from('sanotoleuro_profiles').select('id,balance_cdf',{count:'exact'}).limit(5000),
    db.from('sanotoleuro_deposit_requests').select('amount_cdf,status').limit(10000),
    db.from('sanotoleuro_withdrawal_requests').select('amount_cdf,status').limit(10000)
   ]);
-
-  if(profiles.error)throw profiles.error;
-  if(deposits.error)throw deposits.error;
-  if(withdrawals.error)throw withdrawals.error;
-
-  $('adminTotalMembers').textContent=String(profiles.count??(profiles.data||[]).length);
-
-  $('adminTotalDeposits').textContent=formatFC(
-   (deposits.data||[]).filter(r=>isDepositValidated(r.status)).reduce((s,r)=>s+Number(r.amount_cdf||0),0)
-  );
-
-  $('adminTotalWithdrawals').textContent=formatFC(
-   (withdrawals.data||[]).filter(r=>isWithdrawalPaid(r.status)).reduce((s,r)=>s+Number(r.amount_cdf||0),0)
-  );
-
-  $('adminTotalBalances').textContent=formatFC(
-   (profiles.data||[]).reduce((s,r)=>s+Number(r.balance_cdf||0),0)
-  );
-
- }catch(error){
-  console.error('Résumé administration:',error);
-  $('adminTotalMembers').textContent='Indisponible';
- }
+  if(p.error)throw p.error;if(d.error)throw d.error;if(w.error)throw w.error;
+  $('adminTotalMembers').textContent=String(p.count??(p.data||[]).length);
+  $('adminTotalDeposits').textContent=formatFC((d.data||[]).filter(r=>isDepositValidated(r.status)).reduce((s,r)=>s+Number(r.amount_cdf||0),0));
+  $('adminTotalWithdrawals').textContent=formatFC((w.data||[]).filter(r=>isWithdrawalPaid(r.status)).reduce((s,r)=>s+Number(r.amount_cdf||0),0));
+  $('adminTotalBalances').textContent=formatFC((p.data||[]).reduce((s,r)=>s+Number(r.balance_cdf||0),0));
+ }catch(e){console.error(e);$('adminTotalMembers').textContent='Indisponible'}
 }
-
 async function loadAdminRequests(type){
- const isDeposit=type==='deposit';
- const box=$(isDeposit?'adminDeposits':'adminWithdrawals');
- const table=isDeposit?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';
-
+ const dep=type==='deposit';
+ const box=$(dep?'adminDeposits':'adminWithdrawals');
+ const table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';
  box.innerHTML='<div class="empty">Chargement…</div>';
-
  try{
   const {data,error}=await db.from(table).select('*').order('created_at',{ascending:false}).limit(100);
   if(error)throw error;
-
-  if(!data?.length){
-   box.innerHTML='<div class="empty">Aucune demande enregistrée.</div>';
-   return;
-  }
-
-  box.innerHTML=data.map(row=>{
-   const detail=isDeposit
-    ?`${esc(row.payment_method||'')} · Réf. ${esc(row.payment_reference||'')} · Plan ${esc(row.plan_number||'—')}`
-    :`${esc(row.payment_method||'')} · ${esc(row.phone||'')} · Frais ${formatFC(row.fee_cdf)} · Net ${formatFC(row.net_amount_cdf)}`;
-
-   const pending=String(row.status||'pending').toLowerCase()==='pending';
-
+  if(!data?.length){box.innerHTML='<div class="empty">Aucune demande enregistrée.</div>';return}
+  box.innerHTML=data.map(r=>{
+   const detail=dep?
+    `${esc(r.payment_method||'')} · Réf. ${esc(r.payment_reference||'')} · Plan ${esc(r.plan_number||'—')}`:
+    `${esc(r.payment_method||'')} · ${esc(r.phone||'')} · Frais ${formatFC(r.fee_cdf)} · Net ${formatFC(r.net_amount_cdf)}`;
+   const pending=String(r.status||'pending').toLowerCase()==='pending';
    return `<div class="item">
-    <div class="itemtop">
-     <div>
-      <strong>${isDeposit?'Dépôt':'Retrait'} · ${formatFC(row.amount_cdf)}</strong>
-      <div class="muted small">${detail}</div>
-      <div class="muted small">Membre : ${esc(row.user_id)}</div>
-      <div class="muted small">Date : ${esc(dateTime(row.created_at))}</div>
-     </div>
-     ${statusLabel(row.status)}
-    </div>
-
-    ${row.admin_note?`<p class="muted small">Note : ${esc(row.admin_note)}</p>`:''}
-
-    ${pending?`
-     <label>Note administrative</label>
-     <input id="note-${isDeposit?'d':'w'}-${row.id}" maxlength="200" placeholder="Note ou motif">
-     <div class="row" style="margin-top:10px">
-      <button class="btn primary smallbtn" onclick="updateRequest('${type}','${row.id}','success')">${isDeposit?'Valider le dépôt':'Marquer comme payé'}</button>
-      <button class="btn danger smallbtn" onclick="updateRequest('${type}','${row.id}','rejected')">Rejeter</button>
-     </div>
-    `:''}
+    <div class="itemtop"><div><strong>${dep?'Dépôt':'Retrait'} · ${formatFC(r.amount_cdf)}</strong><div class="muted small">${detail}</div><div class="muted small">Membre : ${esc(r.user_id)}</div><div class="muted small">${esc(dateTime(r.created_at))}</div></div>${statusLabel(r.status)}</div>
+    ${pending?`<label>Note administrative</label><input id="note-${dep?'d':'w'}-${r.id}" maxlength="200" placeholder="Note ou motif"><div class="row" style="margin-top:10px"><button class="btn primary smallbtn" onclick="updateRequest('${type}','${r.id}','success')">Valider</button><button class="btn danger smallbtn" onclick="updateRequest('${type}','${r.id}','rejected')">Rejeter</button></div>`:''}
    </div>`;
   }).join('');
-
- }catch(error){
-  console.error(error);
-  box.innerHTML='<div class="empty">Demandes indisponibles.</div>';
- }
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Demandes indisponibles.</div>'}
 }
-
 async function updateRequest(type,id,status){
  if(!isAdmin||!(await verifyAdmin())){alert('Accès administrateur refusé.');return}
-
- const isDeposit=type==='deposit';
- const note=($(`note-${isDeposit?'d':'w'}-${id}`)?.value||'').trim();
-
- if(!confirm(status==='success'
-  ?(isDeposit?'Confirmer après vérification du paiement réel ?':'Confirmer que le retrait a réellement été payé ?')
-  :'Confirmer le rejet ?'))return;
-
+ const dep=type==='deposit';
+ const note=($(`note-${dep?'d':'w'}-${id}`)?.value||'').trim();
+ if(!confirm(status==='success'?(dep?'Confirmer après vérification du paiement réel ?':'Confirmer que le retrait a réellement été payé ?'):'Confirmer le rejet ?'))return;
  try{
-  if(isDeposit){
-   const functionName=status==='success'
-    ?'sanotoleuro_admin_approve_deposit'
-    :'sanotoleuro_admin_reject_deposit';
-
-   const {data,error}=await db.rpc(functionName,{
-    p_deposit_id:id,
-    p_admin_note:note||null
-   });
-
+  if(dep){
+   const {data,error}=await db.rpc(status==='success'?'sanotoleuro_admin_approve_deposit':'sanotoleuro_admin_reject_deposit',{p_deposit_id:id,p_admin_note:note||null});
    if(error)throw error;
    if(!data?.success)throw new Error(data?.message||'Opération non confirmée.');
-
   }else{
-   const {data,error}=await db.from('sanotoleuro_withdrawal_requests')
-    .update({
-     status,
-     admin_note:note,
-     updated_at:new Date().toISOString()
-    })
-    .eq('id',id)
-    .eq('status','pending')
-    .select('id');
-
+   const {data,error}=await db.from('sanotoleuro_withdrawal_requests').update({status,admin_note:note,updated_at:new Date().toISOString()}).eq('id',id).eq('status','pending').select('id');
    if(error)throw error;
    if(!data?.length)throw new Error('Retrait introuvable ou déjà traité.');
   }
-
   alert('Opération terminée.');
-  await loadAdminRequests(type);
-  await loadAdminOverview();
-  await loadProfile();
-  await loadHistory();
-
- }catch(error){
-  console.error('Administration:',error);
-  alert('Échec : '+error.message);
- }
+  await loadAdminRequests(type);await loadAdminOverview();await loadProfile();await loadHistory();
+ }catch(e){console.error(e);alert('Échec : '+e.message)}
 }
-
 async function loadAdminVIP(){
- const box=$('adminVIP');
- if(!box||!isAdmin)return;
-
+ const box=$('adminVIP');if(!box||!isAdmin)return;
  try{
-  const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
-   .select('*')
-   .order('activated_at',{ascending:false})
-   .limit(300);
-
+  const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select('*').order('activated_at',{ascending:false}).limit(300);
   if(error)throw error;
-
-  if(!data?.length){
-   box.innerHTML='<div class="empty">Aucun abonnement VIP.</div>';
-   return;
-  }
-
-  box.innerHTML=data.map(v=>`
-   <div class="item">
-    <strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong>
-    <div class="muted">ID : ${esc(v.id)}</div>
-    <div class="muted">Membre : ${esc(v.user_id)}</div>
-    <div class="muted">Activation : ${esc(dateTime(v.activated_at))}</div>
-    ${statusLabel(v.status)}
-   </div>
-  `).join('');
-
- }catch(error){
-  console.error(error);
-  box.innerHTML='<div class="empty">VIP indisponibles.</div>';
- }
+  if(!data?.length){box.innerHTML='<div class="empty">Aucun abonnement VIP.</div>';return}
+  box.innerHTML=data.map(v=>`<div class="item"><strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong><div class="muted">ID : ${esc(v.id)}</div><div class="muted">Membre : ${esc(v.user_id)}</div><div class="muted">Activation : ${esc(dateTime(v.activated_at))}</div>${statusLabel(v.status)}</div>`).join('');
+ }catch(e){box.innerHTML='<div class="empty">VIP indisponibles.</div>'}
 }
-
 async function loadAdminMembers(){
- const box=$('adminMembers');
- box.innerHTML='<div class="empty">Chargement…</div>';
-
+ const box=$('adminMembers');box.innerHTML='<div class="empty">Chargement…</div>';
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles')
-   .select('id,full_name,referral_code,balance_cdf,created_at,is_blocked')
-   .order('created_at',{ascending:false})
-   .limit(500);
-
+  const {data,error}=await db.from('sanotoleuro_profiles').select('id,full_name,referral_code,balance_cdf,created_at,is_blocked').order('created_at',{ascending:false}).limit(500);
   if(error)throw error;
-
-  if(!data?.length){
-   box.innerHTML='<div class="empty">Aucun membre.</div>';
-   return;
-  }
-
-  box.innerHTML=data.map(member=>`
-   <div class="item">
-    <div class="itemtop">
-     <strong>${esc(member.full_name||'Membre')}</strong>
-     ${member.is_blocked?'<span class="status rejected">Bloqué</span>':'<span class="status success">Actif</span>'}
-    </div>
-    <div class="muted small">ID : ${esc(member.id)}</div>
-    <div class="muted small">Code : ${esc(member.referral_code||'—')}</div>
-    <div class="amount">Solde : ${formatFC(member.balance_cdf)}</div>
-    <div class="row">
-     <button class="btn light smallbtn" onclick="useMemberId('${esc(member.id)}')">Ajuster solde</button>
-     <button class="btn danger smallbtn" onclick="toggleMemberBlock('${esc(member.id)}',${!member.is_blocked})">${member.is_blocked?'Débloquer':'Bloquer'}</button>
-    </div>
-   </div>
-  `).join('');
-
- }catch(error){
-  console.error(error);
-  box.innerHTML='<div class="empty">Membres indisponibles.</div>';
- }
+  if(!data?.length){box.innerHTML='<div class="empty">Aucun membre.</div>';return}
+  box.innerHTML=data.map(m=>`<div class="item"><div class="itemtop"><strong>${esc(m.full_name||'Membre')}</strong>${m.is_blocked?'<span class="status rejected">Bloqué</span>':'<span class="status success">Actif</span>'}</div><div class="muted small">ID : ${esc(m.id)}</div><div class="muted small">Code : ${esc(m.referral_code||'—')}</div><div class="amount">Solde : ${formatFC(m.balance_cdf)}</div><div class="row"><button class="btn light smallbtn" onclick="useMemberId('${esc(m.id)}')">Ajuster solde</button><button class="btn danger smallbtn" onclick="toggleMemberBlock('${esc(m.id)}',${!m.is_blocked})">${m.is_blocked?'Débloquer':'Bloquer'}</button></div></div>`).join('');
+ }catch(e){console.error(e);box.innerHTML='<div class="empty">Membres indisponibles.</div>'}
 }
-
 async function toggleMemberBlock(id,block){
  if(!isAdmin||!(await verifyAdmin()))return;
- if(id===currentUser.id){
-  alert('Vous ne pouvez pas bloquer votre compte administrateur.');
-  return;
- }
+ if(id===currentUser.id){alert('Vous ne pouvez pas bloquer votre compte administrateur.');return}
  if(!confirm(block?'Bloquer ce membre ?':'Débloquer ce membre ?'))return;
-
  try{
   const {error}=await db.from('sanotoleuro_profiles').update({is_blocked:block}).eq('id',id);
   if(error)throw error;
   await loadAdminMembers();
- }catch(error){
-  alert(error.message);
- }
+ }catch(e){alert(e.message)}
 }
-
-function useMemberId(id){
- $('adjustUserId').value=id;
- adminTab('balance');
-}
-
-async function adjustBalance(event){
- event.preventDefault();
-
- if(!isAdmin||!(await verifyAdmin())){
-  alert('Accès refusé.');
-  return;
- }
-
- const id=$('adjustUserId').value.trim();
- const amount=Number($('adjustAmount').value);
- const reason=$('adjustReason').value.trim();
-
- if(!id||!Number.isFinite(amount)||amount===0||!reason){
-  alert('Vérifiez les champs.');
-  return;
- }
-
+function useMemberId(id){$('adjustUserId').value=id;adminTab('balance')}
+async function adjustBalance(e){
+ e.preventDefault();
+ if(!isAdmin||!(await verifyAdmin())){alert('Accès refusé.');return}
+ const id=$('adjustUserId').value.trim(),amount=Number($('adjustAmount').value),reason=$('adjustReason').value.trim();
+ if(!id||!Number.isFinite(amount)||amount===0||!reason){alert('Vérifiez les champs.');return}
  if(!confirm('Confirmer cet ajustement de solde ?'))return;
-
  try{
-  const {error}=await db.rpc('sanotoleuro_admin_adjust_balance',{
-   p_user_id:id,
-   p_amount_cdf:amount,
-   p_reason:reason
-  });
-
+  const {error}=await db.rpc('sanotoleuro_admin_adjust_balance',{p_user_id:id,p_amount_cdf:amount,p_reason:reason});
   if(error)throw error;
-
   $('adjustBalanceForm').reset();
   alert('Ajustement enregistré.');
-
-  await loadAdminMembers();
-  await loadProfile();
-  await loadHistory();
-  await loadAdminOverview();
-
- }catch(error){
-  console.error(error);
-  alert('Ajustement impossible : '+error.message);
- }
+  await loadAdminMembers();await loadProfile();await loadHistory();await loadAdminOverview();
+ }catch(e){alert('Ajustement impossible : '+e.message)}
 }
 
-/* PARAMÈTRES */
+/* Paramètres */
 async function loadSettingsPublic(){
  try{
   const {data,error}=await db.from('sanotoleuro_settings').select('setting_key,setting_value');
   if(error)throw error;
   applySettingsRows(data||[]);
- }catch(error){
-  console.warn('Paramètres non chargés:',error);
- }
+ }catch(e){console.warn('Paramètres non chargés.',e)}
 }
-
 function applySettingsRows(rows){
- for(const row of rows){
-  const key=row.setting_key;
-  const value=row.setting_value;
-
-  if(key==='platform_name')platformSettings.platform_name=typeof value==='string'?value:(value?.name||platformSettings.platform_name);
-  if(key==='primary_color')platformSettings.primary_color=typeof value==='string'?value:(value?.color||platformSettings.primary_color);
-  if(key==='withdrawal_fee_percent')platformSettings.withdrawal_fee_percent=Number(value?.value??value??platformSettings.withdrawal_fee_percent);
-  if(key==='withdrawal_minimum_cdf')platformSettings.withdrawal_minimum_cdf=Number(value?.value??value??platformSettings.withdrawal_minimum_cdf);
-  if(key==='referral_rate_1')platformSettings.referral_rate_1=Number(value?.value??value??platformSettings.referral_rate_1);
-  if(key==='referral_rate_2')platformSettings.referral_rate_2=Number(value?.value??value??platformSettings.referral_rate_2);
-  if(key==='referral_rate_3')platformSettings.referral_rate_3=Number(value?.value??value??platformSettings.referral_rate_3);
-  if(key==='customer_telegram')platformSettings.customer_telegram=typeof value==='string'?value:(value?.url||platformSettings.customer_telegram);
-  if(key==='telegram_group')platformSettings.telegram_group=typeof value==='string'?value:(value?.url||platformSettings.telegram_group);
-  if(key==='customer_whatsapp')platformSettings.customer_whatsapp=typeof value==='string'?value:(value?.url||platformSettings.customer_whatsapp);
-  if(key==='whatsapp_group')platformSettings.whatsapp_group=typeof value==='string'?value:(value?.url||platformSettings.whatsapp_group);
+ for(const r of rows){
+  const k=r.setting_key,v=r.setting_value;
+  if(k==='platform_name')platformSettings.platform_name=typeof v==='string'?v:(v?.name||platformSettings.platform_name);
+  if(k==='primary_color')platformSettings.primary_color=typeof v==='string'?v:(v?.color||platformSettings.primary_color);
+  if(k==='withdrawal_fee_percent')platformSettings.withdrawal_fee_percent=Number(v?.value??v??platformSettings.withdrawal_fee_percent);
+  if(k==='withdrawal_minimum_cdf')platformSettings.withdrawal_minimum_cdf=Number(v?.value??v??platformSettings.withdrawal_minimum_cdf);
+  if(k==='referral_rate_1')platformSettings.referral_rate_1=Number(v?.value??v??platformSettings.referral_rate_1);
+  if(k==='referral_rate_2')platformSettings.referral_rate_2=Number(v?.value??v??platformSettings.referral_rate_2);
+  if(k==='referral_rate_3')platformSettings.referral_rate_3=Number(v?.value??v??platformSettings.referral_rate_3);
+  if(k==='customer_telegram')platformSettings.customer_telegram=typeof v==='string'?v:(v?.url||platformSettings.customer_telegram);
+  if(k==='telegram_group')platformSettings.telegram_group=typeof v==='string'?v:(v?.url||platformSettings.telegram_group);
+  if(k==='customer_whatsapp')platformSettings.customer_whatsapp=typeof v==='string'?v:(v?.url||platformSettings.customer_whatsapp);
+  if(k==='whatsapp_group')platformSettings.whatsapp_group=typeof v==='string'?v:(v?.url||platformSettings.whatsapp_group);
  }
  applyBranding();
 }
-
 function applyBranding(){
- const color=/^#[0-9a-f]{6}$/i.test(platformSettings.primary_color||'')
-  ?platformSettings.primary_color:'#0B6B3A';
-
+ const color=/^#[0-9a-f]{6}$/i.test(platformSettings.primary_color||'')?platformSettings.primary_color:'#0B6B3A';
  document.documentElement.style.setProperty('--green',color);
  document.documentElement.style.setProperty('--dark',darkenHex(color));
  document.documentElement.style.setProperty('--light',lightenHex(color));
-
- $('authBrandName').textContent='SANOTOLEURO S.A.';
-
+ $('authBrandName').textContent=platformSettings.platform_name||'SANOTOLEURO RDC';
  $('customerTelegramButton').href=safeURL(platformSettings.customer_telegram)||'https://t.me/Drcprom';
  $('groupTelegramButton').href=safeURL(platformSettings.telegram_group)||'https://t.me/+dbpiuZGoZUE4MDhk';
  $('groupWhatsappButton').href=safeURL(platformSettings.whatsapp_group)||'https://chat.whatsapp.com/BfmsplXRtMaH9emWzeFP2y';
-
  $('withdrawMinimumText').textContent=formatFC(platformSettings.withdrawal_minimum_cdf);
  $('withdrawFeeText').textContent=String(platformSettings.withdrawal_fee_percent)+' %';
-
  calculateWithdrawal();
 }
-
 function darkenHex(hex){
- try{
-  const n=parseInt(hex.slice(1),16);
-  const r=Math.max(0,((n>>16)&255)-55);
-  const g=Math.max(0,((n>>8)&255)-55);
-  const b=Math.max(0,(n&255)-55);
-  return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
- }catch(error){
-  return '#07502B';
- }
+ try{const n=parseInt(hex.slice(1),16),r=Math.max(0,((n>>16)&255)-55),g=Math.max(0,((n>>8)&255)-55),b=Math.max(0,(n&255)-55);return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('')}
+ catch(e){return '#07502B'}
 }
-
 function lightenHex(hex){
- try{
-  const n=parseInt(hex.slice(1),16);
-  const c=[(n>>16)&255,(n>>8)&255,n&255].map(x=>Math.round(x+(255-x)*.78));
-  return '#'+c.map(x=>x.toString(16).padStart(2,'0')).join('');
- }catch(error){
-  return '#E8F8ED';
- }
+ try{const n=parseInt(hex.slice(1),16),c=[(n>>16)&255,(n>>8)&255,n&255].map(x=>Math.round(x+(255-x)*.78));return '#'+c.map(x=>x.toString(16).padStart(2,'0')).join('')}
+ catch(e){return '#E8F8ED'}
 }
-
 async function loadSettings(){
  if(!isAdmin)return;
-
  await loadSettingsPublic();
- const settings=platformSettings;
-
- $('settingPlatformName').value=settings.platform_name;
- $('settingColor').value=settings.primary_color||'#0B6B3A';
-
+ const s=platformSettings;
+ $('settingPlatformName').value=s.platform_name;
+ $('settingColor').value=s.primary_color||'#0B6B3A';
  try{
   const {data,error}=await db.from('sanotoleuro_settings').select('setting_key,setting_value');
   if(error)throw error;
-
-  const raw={};
-  (data||[]).forEach(row=>raw[row.setting_key]=row.setting_value);
-
+  const raw={};(data||[]).forEach(r=>raw[r.setting_key]=r.setting_value);
   $('settingAirtel').value=raw.payment_airtel?.number||'0979928885';
   $('settingAirtelName').value=raw.payment_airtel?.name||'YVETTE';
   $('settingOrange').value=raw.payment_orange?.number||'0899532643';
   $('settingOrangeName').value=raw.payment_orange?.name||'JACQUELINE';
   $('settingMpesa').value=raw.payment_mpesa?.number||'0861823718';
   $('settingMpesaName').value=raw.payment_mpesa?.name||'REGINA';
-
-  $('settingTelegram').value=settings.customer_telegram;
-  $('settingWhatsapp').value=settings.customer_whatsapp;
-  $('settingTelegramGroup').value=settings.telegram_group;
-  $('settingWhatsappGroup').value=settings.whatsapp_group;
-  $('settingRate1').value=settings.referral_rate_1;
-  $('settingRate2').value=settings.referral_rate_2;
-  $('settingRate3').value=settings.referral_rate_3;
-  $('settingWithdrawalFee').value=settings.withdrawal_fee_percent;
-  $('settingWithdrawalMinimum').value=settings.withdrawal_minimum_cdf;
-
- }catch(error){
-  console.warn('Chargement paramètres admin:',error);
- }
+  $('settingTelegram').value=s.customer_telegram;
+  $('settingWhatsapp').value=s.customer_whatsapp;
+  $('settingTelegramGroup').value=s.telegram_group;
+  $('settingWhatsappGroup').value=s.whatsapp_group;
+  $('settingRate1').value=s.referral_rate_1;
+  $('settingRate2').value=s.referral_rate_2;
+  $('settingRate3').value=s.referral_rate_3;
+  $('settingWithdrawalFee').value=s.withdrawal_fee_percent;
+  $('settingWithdrawalMinimum').value=s.withdrawal_minimum_cdf;
+ }catch(e){console.warn(e)}
 }
-
-async function saveSettings(event){
- event.preventDefault();
-
- if(!isAdmin||!(await verifyAdmin())){
-  alert('Accès refusé.');
-  return;
- }
-
+async function saveSettings(e){
+ e.preventDefault();
+ if(!isAdmin||!(await verifyAdmin())){alert('Accès refusé.');return}
  const rows=[
   {setting_key:'platform_name',setting_value:$('settingPlatformName').value.trim()},
   {setting_key:'primary_color',setting_value:$('settingColor').value},
@@ -2698,203 +1431,123 @@ async function saveSettings(event){
   {setting_key:'withdrawal_fee_percent',setting_value:Number($('settingWithdrawalFee').value)},
   {setting_key:'withdrawal_minimum_cdf',setting_value:Number($('settingWithdrawalMinimum').value)}
  ];
-
  try{
-  for(const row of rows){
-   const {error}=await db.from('sanotoleuro_settings').upsert(row,{onConflict:'setting_key'});
+  for(const r of rows){
+   const {error}=await db.from('sanotoleuro_settings').upsert(r,{onConflict:'setting_key'});
    if(error)throw error;
   }
-
   await loadSettingsPublic();
   alert('Paramètres enregistrés.');
-
- }catch(error){
-  console.error(error);
-  alert('Paramètres non enregistrés : '+error.message);
- }
+ }catch(e){console.error(e);alert('Paramètres non enregistrés : '+e.message)}
 }
-
 async function loadAdminPlans(){
- const box=$('adminPlansEditor');
- if(!box||!isAdmin)return;
-
+ const box=$('adminPlansEditor');if(!box||!isAdmin)return;
  try{
-  const {data,error}=await db.from('sanotoleuro_plans')
-   .select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active')
-   .order('plan_number');
-
+  const {data,error}=await db.from('sanotoleuro_plans').select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active').order('plan_number');
   if(error)throw error;
-
   const plans=data?.length?data:FALLBACK_PLANS;
-
-  box.innerHTML=plans.map(plan=>`
-   <form class="item" onsubmit="savePlan(event,${Number(plan.plan_number)})">
-    <strong>Plan ${esc(plan.plan_number)}</strong>
-    <label>Montant (FC)</label>
-    <input name="amount" type="number" min="1" value="${Number(plan.amount_cdf||0)}" required>
-    <label>Montant quotidien indicatif (FC)</label>
-    <input name="daily" type="number" min="0" value="${Number(plan.illustrative_daily_amount_cdf||0)}" required>
-    <label>Durée (jours)</label>
-    <input name="days" type="number" min="1" value="${Number(plan.duration_days||1)}" required>
-    <label>Actif</label>
-    <select name="active">
-     <option value="true" ${plan.active!==false?'selected':''}>Oui</option>
-     <option value="false" ${plan.active===false?'selected':''}>Non</option>
-    </select>
-    <button class="btn primary full" type="submit">Enregistrer le plan</button>
-   </form>
-  `).join('');
-
- }catch(error){
-  console.warn(error);
-  box.innerHTML='<div class="notice">Modification des plans indisponible.</div>';
- }
+  box.innerHTML=plans.map(p=>`<form class="item" onsubmit="savePlan(event,${Number(p.plan_number)})">
+   <strong>Plan ${esc(p.plan_number)}</strong>
+   <label>Montant (FC)</label><input name="amount" type="number" min="1" value="${Number(p.amount_cdf||0)}" required>
+   <label>Montant quotidien indicatif (FC)</label><input name="daily" type="number" min="0" value="${Number(p.illustrative_daily_amount_cdf||0)}" required>
+   <label>Durée (jours)</label><input name="days" type="number" min="1" value="${Number(p.duration_days||1)}" required>
+   <label>Actif</label><select name="active"><option value="true" ${p.active!==false?'selected':''}>Oui</option><option value="false" ${p.active===false?'selected':''}>Non</option></select>
+   <button class="btn primary full" type="submit">Enregistrer le plan</button>
+  </form>`).join('');
+ }catch(e){box.innerHTML='<div class="notice">Modification des plans indisponible.</div>'}
 }
-
-async function savePlan(event,number){
- event.preventDefault();
-
+async function savePlan(e,number){
+ e.preventDefault();
  if(!isAdmin||!(await verifyAdmin()))return;
-
- const form=event.currentTarget;
-
+ const f=e.currentTarget;
  try{
-  const {error}=await db.from('sanotoleuro_plans')
-   .update({
-    amount_cdf:Number(form.elements.amount.value),
-    illustrative_daily_amount_cdf:Number(form.elements.daily.value),
-    duration_days:Number(form.elements.days.value),
-    active:form.elements.active.value==='true'
-   })
-   .eq('plan_number',number);
-
+  const {error}=await db.from('sanotoleuro_plans').update({
+   amount_cdf:Number(f.elements.amount.value),
+   illustrative_daily_amount_cdf:Number(f.elements.daily.value),
+   duration_days:Number(f.elements.days.value),
+   active:f.elements.active.value==='true'
+  }).eq('plan_number',number);
   if(error)throw error;
-
   alert('Plan enregistré.');
-  await loadPlans();
-  await loadAdminPlans();
-
- }catch(error){
-  alert('Modification impossible : '+error.message);
- }
+  await loadPlans();await loadAdminPlans();
+ }catch(e){alert('Modification impossible : '+e.message)}
 }
 
-/* MES COUPONS / ROUE */
+/* Mes coupons et roulette */
 async function loadWheelStatus(){
  if(!currentUser)return;
-
  $('wheelMessage').textContent='Vérification de votre éligibilité…';
-
  try{
   const {data,error}=await db.rpc('sanotoleuro_wheel_status');
   if(error)throw error;
-
-  $('wheelMessage').textContent=data?.message||'La roue est prête.';
+  $('wheelMessage').textContent=data?.message||'Vos coupons sont prêts.';
   $('spinWheelButton').disabled=data?.can_spin===false;
-
- }catch(error){
-  console.error('Statut roue:',error);
+ }catch(e){
   $('wheelMessage').textContent='La roue nécessite une configuration Supabase valide.';
   $('spinWheelButton').disabled=true;
  }
 }
-
 async function spinWheel(){
  if(!currentUser||wheelBusy)return;
-
  wheelBusy=true;
- const button=$('spinWheelButton');
- button.disabled=true;
-
+ const btn=$('spinWheelButton');
+ btn.disabled=true;
  try{
   const {data,error}=await db.rpc('sanotoleuro_spin_wheel');
   if(error)throw error;
   if(!data||data.success!==true)throw new Error(data?.message||'Rotation refusée.');
-
   const wheel=$('bonusWheel');
   wheel.style.transform=`rotate(${360*6+Math.floor(Math.random()*360)}deg)`;
-
   await new Promise(resolve=>setTimeout(resolve,5100));
-
   $('wheelMessage').textContent=data.message||('Résultat : '+formatFC(data.amount_cdf));
   alert(data.message||('Vous avez gagné '+formatFC(data.amount_cdf)));
-
-  await loadProfile();
-  await loadWheelStatus();
-
- }catch(error){
-  console.error(error);
-  $('wheelMessage').textContent=error.message||'Rotation indisponible.';
-  alert(error.message||'Rotation impossible.');
- }finally{
-  wheelBusy=false;
-  button.disabled=false;
- }
+  await loadProfile();await loadWheelStatus();
+ }catch(e){
+  console.error(e);
+  $('wheelMessage').textContent=e.message||'Rotation indisponible.';
+  alert(e.message||'Rotation impossible.');
+ }finally{wheelBusy=false;btn.disabled=false}
 }
-
 async function applyWheelCode(){
  if(!currentUser)return;
-
  const code=$('wheelBonusCode').value.trim();
- if(!code){
-  alert('Saisissez votre code bonus.');
-  return;
- }
-
+ if(!code){alert('Saisissez votre code bonus.');return}
  try{
   const {data,error}=await db.rpc('sanotoleuro_apply_bonus_code',{p_code:code});
   if(error)throw error;
   if(!data||data.success!==true)throw new Error(data?.message||'Code refusé.');
-
   alert(data.message||'Code bonus validé.');
   $('wheelBonusCode').value='';
-
-  await loadProfile();
-  await loadWheelStatus();
-
- }catch(error){
-  alert(error.message||'Code bonus invalide ou déjà utilisé.');
- }
+  await loadProfile();await loadWheelStatus();
+ }catch(e){alert(e.message||'Code bonus invalide ou déjà utilisé.')}
 }
 
-/* INSTALLATION PWA */
+/* Installation PWA */
 async function installApp(){
  if(installPrompt){
   installPrompt.prompt();
-  try{await installPrompt.userChoice}catch(error){}
+  try{await installPrompt.userChoice}catch(e){}
   installPrompt=null;
   return;
  }
-
  alert('Ouvrez le menu ⋮ de Chrome puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».');
 }
-window.addEventListener('beforeinstallprompt',event=>{
- event.preventDefault();
- installPrompt=event;
-});
-window.addEventListener('appinstalled',()=>{
- installPrompt=null;
-});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e});
+window.addEventListener('appinstalled',()=>{installPrompt=null});
 
-/* DÉMARRAGE */
+/* Initialisation Supabase */
 async function initApp(){
- const referral=new URLSearchParams(location.search).get('ref');
- if(referral)$('regReferral').value=referral;
+ const ref=new URLSearchParams(location.search).get('ref');
+ if(ref)$('regReferral').value=ref;
 
  db.auth.onAuthStateChange((event,session)=>{
   setTimeout(async()=>{
    if(session?.user){
     currentUser=session.user;
     isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
-
-    if($('appScreen').classList.contains('hidden')){
-     await afterLogin();
-    }
+    if($('appScreen').classList.contains('hidden'))await afterLogin();
    }else{
-    currentUser=null;
-    currentProfile=null;
-    isAdmin=false;
-    mySubscriptions=[];
+    currentUser=null;currentProfile=null;isAdmin=false;mySubscriptions=[];
     showAuth();
    }
   },0);
@@ -2903,26 +1556,22 @@ async function initApp(){
  try{
   const {data,error}=await db.auth.getSession();
   if(error)throw error;
-
   if(data.session?.user){
    currentUser=data.session.user;
    await afterLogin();
   }else{
    showAuth();
   }
-
- }catch(error){
-  console.error('Initialisation:',error);
+ }catch(e){
+  console.error(e);
   showAuth();
  }
 }
 
-/* SERVICE WORKER */
+/* Service Worker PWA */
 if('serviceWorker' in navigator){
  window.addEventListener('load',()=>{
-  navigator.serviceWorker.register('/service-worker.js').catch(error=>{
-   console.error('Service Worker:',error);
-  });
+  navigator.serviceWorker.register('/service-worker.js').catch(console.error);
  });
 }
 
