@@ -168,7 +168,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
 .admin-tabs button{padding:11px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:800}
 .admin-tabs button.active{background:var(--dark);color:#fff}
 
-/* Roulette */
+/* Roue */
 .wheelwrap{max-width:350px;margin:20px auto;position:relative}
 .wheel{width:100%;aspect-ratio:1;border-radius:50%;border:8px solid #07502B;box-shadow:0 5px 20px #0002;transition:transform 5s cubic-bezier(.15,.8,.15,1);position:relative;overflow:hidden;background:conic-gradient(#F44336 0deg 45deg,#FFC107 45deg 90deg,#4CAF50 90deg 135deg,#2196F3 135deg 180deg,#9C27B0 180deg 225deg,#FF9800 225deg 270deg,#009688 270deg 315deg,#795548 315deg 360deg)}
 .wheel span{position:absolute;width:50%;height:50%;left:50%;top:0;transform-origin:0% 100%;display:flex;align-items:center;justify-content:flex-start;color:#fff;font-size:12px;font-weight:900;text-shadow:1px 1px 2px #000;transform:rotate(var(--angle));padding-left:15px}
@@ -504,10 +504,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
   <p class="muted">Saisissez un code bonus ou utilisez la roue lorsque votre compte est éligible.</p>
   <label>Code bonus</label>
   <input id="wheelBonusCode" maxlength="80" placeholder="Saisissez votre code bonus">
-  <button class="btn light full" onclick="applyWheelCode(this)">🎁 Valider mon code</button>
+  <button class="btn light full" type="button" onclick="applyWheelCode(this)">🎁 Valider mon code</button>
+
   <div class="wheelwrap">
    <div class="wheelpointer">▼</div>
-   <div id="bonusWheel" class="wheel">
+   <div id="bonusWheel" class="wheel" data-rotation="0">
     <span style="--angle:0deg">500 FC</span>
     <span style="--angle:45deg">1000 FC</span>
     <span style="--angle:90deg">0 FC</span>
@@ -519,7 +520,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
    </div>
    <div class="wheelcenter">SANO</div>
   </div>
-  <button class="claimbutton" id="spinWheelButton" onclick="spinWheel()" disabled>🎡 JOUER À LA ROULETTE</button>
+
+  <button class="claimbutton" id="spinWheelButton" type="button" onclick="spinWheel()" disabled>🎡 JOUER À LA ROULETTE</button>
   <div class="notice" id="wheelMessage">La récompense est déterminée et validée par le serveur.</div>
  </div>
 </section>
@@ -535,8 +537,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
    <button id="adminTabMembers" onclick="adminTab('members')">Membres</button>
    <button id="adminTabBalance" onclick="adminTab('balance')">Soldes</button>
    <button id="adminTabSettings" onclick="adminTab('settings')">Paramètres</button>
+   <button id="adminTabGifts" onclick="adminTab('gifts')">🎁 Codes cadeaux</button>
   </div>
  </div>
+
  <div class="card adminSection" id="adminSectionOverview">
   <h2>Résumé</h2>
   <div class="stats">
@@ -546,10 +550,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
    <div class="stat"><small>Soldes</small><strong id="adminTotalBalances">0 FC</strong></div>
   </div>
  </div>
+
  <div class="card adminSection hidden" id="adminSectionDeposits"><h2>Dépôts</h2><div id="adminDeposits"></div></div>
  <div class="card adminSection hidden" id="adminSectionWithdrawals"><h2>Retraits</h2><div id="adminWithdrawals"></div></div>
  <div class="card adminSection hidden" id="adminSectionVIP"><h2>Abonnements VIP</h2><div id="adminVIP"></div></div>
  <div class="card adminSection hidden" id="adminSectionMembers"><h2>Membres</h2><div id="adminMembers"></div></div>
+
  <div class="card adminSection hidden" id="adminSectionBalance">
   <h2>Ajustement de solde</h2>
   <form id="adjustBalanceForm" onsubmit="adjustBalance(event)">
@@ -559,15 +565,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
    <button class="btn primary full" type="submit">Enregistrer</button>
   </form>
  </div>
+
  <div class="card adminSection hidden" id="adminSectionSettings">
   <h2>Paramètres</h2>
   <form id="settingsForm" onsubmit="saveSettings(event)">
    <label>Nom</label><input id="settingPlatformName" maxlength="80">
    <label>Couleur</label><input id="settingColor" type="color" value="#0B6B3A">
-
    <label>Texte défilant de la cloche 🔔</label>
    <textarea id="settingNotificationText" maxlength="500" placeholder="Écrivez ici le message qui défile dans la cloche sur l'accueil des membres."></textarea>
-
    <label>Airtel</label><input id="settingAirtel">
    <label>Nom Airtel</label><input id="settingAirtelName">
    <label>Orange</label><input id="settingOrange">
@@ -587,6 +592,38 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
   </form>
   <hr><h3>Plans</h3><div id="adminPlansEditor"></div>
  </div>
+
+ <div class="card adminSection hidden" id="adminSectionGifts">
+  <h2>🎁 Gestion des codes cadeaux</h2>
+  <div class="notice">Créez des codes utilisables par les membres. Chaque code possède un montant et un nombre maximum d'utilisations.</div>
+
+  <form id="giftCreateForm" onsubmit="createGiftCode(event)">
+   <label>Code cadeau</label>
+   <input id="giftNewCode" type="text" maxlength="80" placeholder="Exemple : SANO2026" required>
+
+   <label>Montant à offrir (FC)</label>
+   <input id="giftNewAmount" type="number" min="1" step="1" placeholder="Exemple : 3000" required>
+
+   <label>Nombre maximum d'utilisations</label>
+   <input id="giftNewMaxUses" type="number" min="1" step="1" value="1" required>
+
+   <label>Date d'expiration (facultatif)</label>
+   <input id="giftNewExpiry" type="datetime-local">
+
+   <button class="btn primary full" type="submit">🎁 CRÉER LE CODE CADEAU</button>
+  </form>
+
+  <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+
+  <div class="itemtop">
+   <h3>Mes codes créés</h3>
+   <button class="btn light smallbtn" type="button" onclick="loadAdminGiftCodes()">Actualiser</button>
+  </div>
+
+  <div id="adminGiftCodesList">
+   <div class="empty">Les codes cadeaux apparaîtront ici.</div>
+  </div>
+ </div>
 </section>
 </section>
 </main>
@@ -601,6 +638,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--green)}
 </nav>
 
 <script>
+'use strict';
+
 const SUPABASE_URL='https://mfusevvmaknlvqrlleui.supabase.co';
 const SUPABASE_KEY='sb_publishable_XGdaDC5JYRlQlabEpjZvCw_DO3Zh_SD';
 const ADMIN_EMAIL='angenabukuze@gmail.com';
@@ -645,6 +684,7 @@ function $(id){return document.getElementById(id)}
 function formatFC(v){return new Intl.NumberFormat('fr-FR',{maximumFractionDigits:2}).format(Number(v||0))+' FC'}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function safeURL(v){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:''}catch(e){return ''}}
+
 function busy(btn,on,label){
  if(!btn)return;
  if(on){
@@ -657,17 +697,20 @@ function busy(btn,on,label){
   delete btn.dataset.old;
  }
 }
+
 function dateTime(v){
  if(!v)return 'Date et heure indisponibles';
  const d=new Date(v);
  return Number.isNaN(d.getTime())?'Date et heure indisponibles':d.toLocaleString('fr-FR');
 }
+
 function statusLabel(s){
  s=String(s||'pending').toLowerCase();
  if(['success','approved','validated','completed','active','paid'].includes(s))return '<span class="status success">Validée</span>';
  if(['rejected','refused','cancelled'].includes(s))return '<span class="status rejected">Rejetée</span>';
  return '<span class="status">En attente</span>';
 }
+
 function isDepositValidated(s){return ['success','approved','validated','completed'].includes(String(s||'').toLowerCase())}
 function isWithdrawalPaid(s){return ['success','approved','validated','completed','paid'].includes(String(s||'').toLowerCase())}
 
@@ -680,9 +723,12 @@ function getOperationAmount(row){
  }
  return 0;
 }
+
 function getOperationDate(row){
  return row?.created_at||row?.paid_at||row?.updated_at||row?.activated_at||row?.harvested_at||null;
 }
+
+/* Navigation et authentification */
 
 function showAuthForm(which){
  $('loginForm').classList.toggle('hidden',which!=='login');
@@ -690,7 +736,11 @@ function showAuthForm(which){
  $('loginTab').className=which==='login'?'btn primary':'btn light';
  $('registerTab').className=which==='register'?'btn primary':'btn light';
 }
-function setTopTitle(page){$('brandName').textContent=(page==='home'&&currentUser)?'SANOTOLEURO':''}
+
+function setTopTitle(page){
+ $('brandName').textContent=(page==='home'&&currentUser)?'SANOTOLEURO':'';
+}
+
 function showAuth(){
  $('authScreen').classList.remove('hidden');
  $('appScreen').classList.add('hidden');
@@ -699,20 +749,27 @@ function showAuth(){
  $('headerBalance').classList.add('hidden');
  setTopTitle('');
 }
+
 function showApp(){
  $('authScreen').classList.add('hidden');
  $('appScreen').classList.remove('hidden');
  $('bottomNav').classList.remove('hidden');
  $('logoutBtn').classList.remove('hidden');
 }
+
 function showPage(name){
  if(!currentUser){showAuth();return}
  if(name==='admin'&&!isAdmin)name='home';
+
  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+
  const page=$(name+'Page');
  if(page)page.classList.remove('hidden');
+
  document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+
  setTopTitle(name);
+
  if(name==='plans')loadPlans();
  if(name==='orders')loadHistory();
  if(name==='team')loadTeam();
@@ -722,33 +779,57 @@ function showPage(name){
  if(name==='admin')loadAdmin();
  if(name==='home')loadMyVIP();
  if(name==='withdraw')loadSavedPhone();
+
  window.scrollTo({top:0,behavior:'smooth'});
 }
+
 function adminTab(name){
- const names=['overview','deposits','withdrawals','vip','members','balance','settings'];
+ const names=['overview','deposits','withdrawals','vip','members','balance','settings','gifts'];
+
  names.forEach(n=>{
   const section=$('adminSection'+n.charAt(0).toUpperCase()+n.slice(1));
-  if(section)section.classList.toggle('hidden',n!==name);
   const btn=$('adminTab'+n.charAt(0).toUpperCase()+n.slice(1));
+
+  if(section)section.classList.toggle('hidden',n!==name);
   if(btn)btn.classList.toggle('active',n===name);
  });
+
+ if(name==='gifts')loadAdminGiftCodes();
 }
 
 /* Inscription */
+
 async function register(e){
  e.preventDefault();
+
  const btn=e.submitter;
  const name=$('regName').value.trim();
  const email=$('regEmail').value.trim().toLowerCase();
  const password=$('regPassword').value;
  const pass2=$('regPassword2').value;
  const ref=$('regReferral').value.trim();
- if(!/^[0-9]{6,8}$/.test(password)){alert('Le mot de passe doit contenir 6 à 8 chiffres.');return}
- if(password!==pass2){alert('Les mots de passe ne correspondent pas.');return}
+
+ if(!/^[0-9]{6,8}$/.test(password)){
+  alert('Le mot de passe doit contenir 6 à 8 chiffres.');
+  return;
+ }
+
+ if(password!==pass2){
+  alert('Les mots de passe ne correspondent pas.');
+  return;
+ }
+
  busy(btn,true,'Création…');
+
  try{
-  const {data,error}=await db.auth.signUp({email,password,options:{data:{full_name:name,referral_code_used:ref}}});
+  const {data,error}=await db.auth.signUp({
+   email,
+   password,
+   options:{data:{full_name:name,referral_code_used:ref}}
+  });
+
   if(error)throw error;
+
   if(data.user&&data.session){
    currentUser=data.user;
    await ensureProfile(name);
@@ -760,6 +841,7 @@ async function register(e){
    showAuthForm('login');
    $('loginEmail').value=email;
   }
+
  }catch(err){
   console.error(err);
   alert(err.message||'Impossible de créer le compte.');
@@ -769,18 +851,24 @@ async function register(e){
 }
 
 /* Connexion */
+
 async function login(e){
  e.preventDefault();
+
  const btn=e.submitter;
  busy(btn,true,'Connexion…');
+
  try{
   const {data,error}=await db.auth.signInWithPassword({
    email:$('loginEmail').value.trim().toLowerCase(),
    password:$('loginPassword').value
   });
+
   if(error)throw error;
+
   currentUser=data.user;
   await afterLogin();
+
  }catch(err){
   console.error(err);
   alert(err.message||'Connexion impossible.');
@@ -791,7 +879,12 @@ async function login(e){
 
 async function resetPassword(){
  const email=(currentUser?.email||$('loginEmail').value||$('regEmail').value).trim();
- if(!email){alert('Saisissez votre adresse e-mail.');return}
+
+ if(!email){
+  alert('Saisissez votre adresse e-mail.');
+  return;
+ }
+
  try{
   const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin});
   if(error)throw error;
@@ -805,35 +898,51 @@ async function resetPassword(){
 function togglePasswordForm(){
  const box=$('passwordChangeBox');
  if(!box)return;
+
  box.classList.toggle('hidden');
+
  if(!box.classList.contains('hidden')){
   $('newLoginPassword').value='';
   $('confirmLoginPassword').value='';
   box.scrollIntoView({behavior:'smooth',block:'center'});
  }
 }
+
 async function changeLoginPassword(e){
  e.preventDefault();
- if(!currentUser){alert('Connectez-vous pour modifier votre mot de passe.');return}
+
+ if(!currentUser){
+  alert('Connectez-vous pour modifier votre mot de passe.');
+  return;
+ }
+
  const btn=e.submitter;
  const password=$('newLoginPassword').value;
  const confirmation=$('confirmLoginPassword').value;
+
  if(!/^[0-9]{6,8}$/.test(password)){
   alert('Le mot de passe doit contenir 6 à 8 chiffres.');
   return;
  }
+
  if(password!==confirmation){
   alert('Les deux mots de passe ne correspondent pas.');
   return;
  }
+
  busy(btn,true,'Modification…');
+
  try{
   const {data,error}=await db.auth.updateUser({password});
   if(error)throw error;
+
   if(data?.user)currentUser=data.user;
+
   $('passwordChangeForm').reset();
   $('passwordChangeBox').classList.add('hidden');
+
   alert('Votre mot de passe a été modifié avec succès.');
+
  }catch(err){
   console.error('Changement mot de passe:',err);
   alert(err.message||'Impossible de modifier le mot de passe.');
@@ -844,22 +953,29 @@ async function changeLoginPassword(e){
 
 async function logout(){
  await db.auth.signOut();
+
  currentUser=null;
  currentProfile=null;
  isAdmin=false;
  mySubscriptions=[];
  wheelCanSpin=false;
+
  if(carouselTimer)clearInterval(carouselTimer);
  if(vipCountdownTimer)clearInterval(vipCountdownTimer);
+
  showAuth();
 }
 
 /* Initialisation du compte */
+
 async function afterLogin(){
  if(!currentUser)return;
+
  isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
+
  await ensureProfile();
  await loadProfile();
+
  if(currentProfile?.is_blocked===true&&!isAdmin){
   await db.auth.signOut();
   currentUser=null;
@@ -868,23 +984,34 @@ async function afterLogin(){
   alert('Votre compte est bloqué. Contactez le service client.');
   return;
  }
+
  showApp();
+
  $('adminTile').classList.toggle('hidden',!isAdmin);
+
  await loadSettingsPublic();
  await loadAds();
  await loadPlans();
  await loadMyVIP();
  await loadSavedPhone();
+
  showPage('home');
 }
 
 async function ensureProfile(name=''){
  if(!currentUser)return;
+
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles').select('id,signup_bonus_paid').eq('id',currentUser.id).maybeSingle();
+  const {data,error}=await db.from('sanotoleuro_profiles')
+   .select('id,signup_bonus_paid')
+   .eq('id',currentUser.id)
+   .maybeSingle();
+
   if(error)throw error;
+
   if(!data){
    const code='SANO'+currentUser.id.replace(/-/g,'').slice(0,8).toUpperCase();
+
    const result=await db.from('sanotoleuro_profiles').insert({
     id:currentUser.id,
     full_name:name||currentUser.user_metadata?.full_name||'Membre',
@@ -892,17 +1019,21 @@ async function ensureProfile(name=''){
     balance_cdf:SIGNUP_BONUS,
     signup_bonus_paid:true
    });
+
    if(result.error){
     console.warn('Création profil avec bonus:',result.error.message);
+
     const fallback=await db.from('sanotoleuro_profiles').insert({
      id:currentUser.id,
      full_name:name||currentUser.user_metadata?.full_name||'Membre',
      referral_code:code,
      balance_cdf:0
     });
+
     if(fallback.error)console.warn(fallback.error.message);
    }
   }
+
  }catch(e){
   console.warn('Profil indisponible',e);
  }
@@ -910,14 +1041,22 @@ async function ensureProfile(name=''){
 
 async function loadProfile(){
  if(!currentUser)return;
+
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles').select('*').eq('id',currentUser.id).maybeSingle();
+  const {data,error}=await db.from('sanotoleuro_profiles')
+   .select('*')
+   .eq('id',currentUser.id)
+   .maybeSingle();
+
   if(error)throw error;
+
   currentProfile=data||{};
+
  }catch(e){
   console.error('Profil:',e);
   currentProfile=currentProfile||{};
  }
+
  renderProfileSummary();
  renderAccount();
 }
@@ -926,23 +1065,30 @@ function renderProfileSummary(){
  const name=currentProfile?.full_name||currentUser?.user_metadata?.full_name||'Membre';
  const balance=Number(currentProfile?.balance_cdf||0);
  const code=currentProfile?.referral_code||'—';
+
  $('welcomeName').textContent=name;
  $('homeBalance').textContent=formatFC(balance);
  $('headerBalance').textContent=formatFC(balance);
  $('withdrawBalance').textContent=formatFC(balance);
  $('homeReferral').textContent=code;
+
  $('teamReferralCode').value=code==='—'?'':code;
  $('teamReferralLink').value=code==='—'?'':`${location.origin}${location.pathname}?ref=${encodeURIComponent(code)}`;
+
  if($('moiBalance'))$('moiBalance').textContent=formatFC(balance);
 }
 
 function renderAccount(){
  if(!currentUser)return;
+
  const name=currentProfile?.full_name||currentUser.user_metadata?.full_name||'Membre';
+
  $('moiName').textContent='👤 '+name;
  $('moiBalance').textContent=formatFC(currentProfile?.balance_cdf||0);
+
  const active=activeVIPSubscriptions();
  $('moiVIP').textContent='💎 VIP '+active.length;
+
  loadMoiDashboard();
 }
 
@@ -956,26 +1102,50 @@ async function registerReferral(code){
 }
 
 /* Publicités */
+
 async function loadAds(){
  try{
-  const {data,error}=await db.from('sanotoleuro_products').select('name,image_url,description,created_at').eq('active',true).not('image_url','is',null).order('created_at',{ascending:false}).limit(7);
+  const {data,error}=await db.from('sanotoleuro_products')
+   .select('name,image_url,description,created_at')
+   .eq('active',true)
+   .not('image_url','is',null)
+   .order('created_at',{ascending:false})
+   .limit(7);
+
   if(error)throw error;
+
   carouselImages=(data||[]).filter(x=>safeURL(x.image_url));
+
  }catch(e){
   carouselImages=[];
  }
+
  renderCarousel();
 }
+
 function renderCarousel(){
  const box=$('adCarousel');
  if(!box)return;
+
  if(carouselTimer)clearInterval(carouselTimer);
+
  if(!carouselImages.length){
   box.innerHTML='<div class="slide active"><div class="fallback"><strong>SANOTOLEURO RDC</strong><p>Matériel médical et fournitures de santé.</p></div></div>';
   return;
  }
+
  carouselIndex=0;
- box.innerHTML=carouselImages.map((x,i)=>`<div class="slide ${i===0?'active':''}"><img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'SANOTOLEURO')}"><div class="caption"><strong>${esc(x.name||'SANOTOLEURO')}</strong><span>${esc(x.description||'')}</span></div></div>`).join('');
+
+ box.innerHTML=carouselImages.map((x,i)=>`
+  <div class="slide ${i===0?'active':''}">
+   <img src="${esc(safeURL(x.image_url))}" alt="${esc(x.name||'SANOTOLEURO')}">
+   <div class="caption">
+    <strong>${esc(x.name||'SANOTOLEURO')}</strong>
+    <span>${esc(x.description||'')}</span>
+   </div>
+  </div>
+ `).join('');
+
  if(carouselImages.length>1){
   carouselTimer=setInterval(()=>{
    const slides=box.querySelectorAll('.slide');
@@ -987,30 +1157,47 @@ function renderCarousel(){
 }
 
 /* Plans */
+
 async function loadPlans(){
  const box=$('plansList');
  if(!box)return;
+
  box.innerHTML='<div class="empty">Chargement…</div>';
+
  try{
-  const {data,error}=await db.from('sanotoleuro_plans').select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active').eq('active',true).order('plan_number');
+  const {data,error}=await db.from('sanotoleuro_plans')
+   .select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active')
+   .eq('active',true)
+   .order('plan_number');
+
   if(error)throw error;
+
   knownPlans=data?.length?data:FALLBACK_PLANS;
   renderPlans(knownPlans);
+
  }catch(e){
   knownPlans=FALLBACK_PLANS;
   renderPlans(knownPlans);
  }
 }
+
 function getPlan(number){
- return knownPlans.find(p=>Number(p.plan_number)===Number(number))||FALLBACK_PLANS.find(p=>Number(p.plan_number)===Number(number))||{};
+ return knownPlans.find(p=>Number(p.plan_number)===Number(number))
+  ||FALLBACK_PLANS.find(p=>Number(p.plan_number)===Number(number))
+  ||{};
 }
+
 function renderPlans(plans){
  $('plansList').innerHTML=plans.map(p=>{
   const amount=Number(p.amount_cdf||0);
   const daily=Number(p.illustrative_daily_amount_cdf||0);
   const days=Number(p.duration_days||0);
+
   return `<div class="plancard">
-   <div class="planhead"><span class="plannumber">PLAN ${esc(p.plan_number)}</span><span class="muted">${days} jours</span></div>
+   <div class="planhead">
+    <span class="plannumber">PLAN ${esc(p.plan_number)}</span>
+    <span class="muted">${days} jours</span>
+   </div>
    <div class="price">${formatFC(amount)}</div>
    <div class="plandetails">
     <div><small>Montant quotidien indicatif</small><strong>${formatFC(daily)}</strong></div>
@@ -1022,6 +1209,7 @@ function renderPlans(plans){
   </div>`;
  }).join('');
 }
+
 function selectPlan(amount,number){
  selectedPlan={amount:Number(amount),number:Number(number)};
  $('depositPlanName').value='PLAN '+number;
@@ -1030,20 +1218,34 @@ function selectPlan(amount,number){
 }
 
 /* Dépôts */
+
 async function submitDeposit(e){
  e.preventDefault();
+
  if(!currentUser){showAuth();return}
+
  const btn=e.submitter;
  const amount=Number($('depositAmount').value);
  const method=$('depositMethod').value;
  const ref=$('depositReference').value.trim();
- if(!selectedPlan){alert('Choisissez un plan avant de continuer.');return}
- if(amount!==selectedPlan.amount){alert('Le montant ne correspond pas au plan choisi.');return}
+
+ if(!selectedPlan){
+  alert('Choisissez un plan avant de continuer.');
+  return;
+ }
+
+ if(amount!==selectedPlan.amount){
+  alert('Le montant ne correspond pas au plan choisi.');
+  return;
+ }
+
  if(!Number.isFinite(amount)||amount<25000||!method||!ref){
   alert('Vérifiez les informations du dépôt.');
   return;
  }
+
  busy(btn,true,'Envoi…');
+
  try{
   const {error}=await db.from('sanotoleuro_deposit_requests').insert({
    user_id:currentUser.id,
@@ -1053,12 +1255,17 @@ async function submitDeposit(e){
    payment_reference:ref,
    status:'pending'
   });
+
   if(error)throw error;
+
   $('depositForm').reset();
   selectedPlan=null;
+
   alert('Demande envoyée. Le VIP sera activé après vérification du paiement.');
+
   await loadHistory();
   showPage('orders');
+
  }catch(err){
   console.error(err);
   alert('Demande non envoyée : '+err.message);
@@ -1067,7 +1274,8 @@ async function submitDeposit(e){
  }
 }
 
-/* Compte de retrait : nom, numéro et opérateur */
+/* Compte de retrait */
+
 function withdrawalStorageKey(part){
  return currentUser?'withdrawal_'+part+'_'+currentUser.id:'';
 }
@@ -1077,13 +1285,16 @@ async function persistWithdrawalAccount(showMessage=true){
   if(showMessage)alert('Connectez-vous pour enregistrer votre compte.');
   return false;
  }
+
  const name=$('withdrawAccountName').value.trim();
  const phone=$('withdrawPhone').value.trim();
  const method=$('withdrawMethod').value;
+
  if(!name||!phone||!method){
   if(showMessage)alert('Complétez le nom du titulaire, le numéro et l’opérateur.');
   return false;
  }
+
  try{
   localStorage.setItem(withdrawalStorageKey('account_name'),name);
   localStorage.setItem(withdrawalStorageKey('phone'),phone);
@@ -1091,43 +1302,56 @@ async function persistWithdrawalAccount(showMessage=true){
  }catch(e){
   console.warn('Sauvegarde locale indisponible',e);
  }
+
  try{
   const {error}=await db.from('sanotoleuro_profiles').update({
    withdrawal_phone:phone,
    withdrawal_method:method
   }).eq('id',currentUser.id);
+
   if(error)console.warn('Enregistrement du numéro dans le profil:',error.message);
+
  }catch(e){
   console.warn(e);
  }
+
  try{
   const {error}=await db.from('sanotoleuro_profiles').update({
    withdrawal_account_name:name
   }).eq('id',currentUser.id);
+
   if(error)console.warn('Nom du titulaire non synchronisé dans Supabase:',error.message);
+
  }catch(e){
   console.warn(e);
  }
+
  if(currentProfile){
   currentProfile.withdrawal_phone=phone;
   currentProfile.withdrawal_method=method;
   currentProfile.withdrawal_account_name=name;
  }
+
  if(showMessage)alert('Votre compte de retrait a été enregistré ou modifié.');
+
  return true;
 }
 
 async function saveWithdrawalPhone(){
  return await persistWithdrawalAccount(true);
 }
+
 async function loadSavedPhone(){
  if(!currentUser)return;
+
  let localName='',localPhone='',localMethod='';
+
  try{
   localName=localStorage.getItem(withdrawalStorageKey('account_name'))||'';
   localPhone=localStorage.getItem(withdrawalStorageKey('phone'))||'';
   localMethod=localStorage.getItem(withdrawalStorageKey('method'))||'';
  }catch(e){}
+
  $('withdrawAccountName').value=currentProfile?.withdrawal_account_name||localName||'';
  $('withdrawPhone').value=currentProfile?.withdrawal_phone||localPhone||'';
  $('withdrawMethod').value=currentProfile?.withdrawal_method||localMethod||'';
@@ -1136,13 +1360,16 @@ async function loadSavedPhone(){
 function calculateWithdrawal(){
  const amount=Math.max(0,Number($('withdrawAmount').value)||0);
  const fee=amount*(Number(platformSettings.withdrawal_fee_percent)||0)/100;
+
  $('withdrawFee').textContent=formatFC(fee);
  $('withdrawNet').textContent=formatFC(amount-fee);
 }
 
 async function submitWithdrawal(e){
  e.preventDefault();
+
  if(!currentUser){showAuth();return}
+
  const btn=e.submitter;
  const amount=Number($('withdrawAmount').value);
  const method=$('withdrawMethod').value;
@@ -1150,39 +1377,62 @@ async function submitWithdrawal(e){
  const accountName=$('withdrawAccountName').value.trim();
  const balance=Number(currentProfile?.balance_cdf||0);
  const minimum=Number(platformSettings.withdrawal_minimum_cdf)||3000;
+
  if(!Number.isFinite(amount)||amount<minimum){
   alert('Le retrait minimum est de '+formatFC(minimum)+'.');
   return;
  }
+
  if(amount>balance){
   alert('Le montant dépasse votre solde disponible.');
   return;
  }
+
  if(!accountName||!method||!phone){
   alert('Complétez le nom du titulaire, le numéro et l’opérateur dans votre compte de retrait.');
   return;
  }
+
  busy(btn,true,'Vérification…');
+
  try{
-  const {data:vipData,error:vipError}=await db.from('sanotoleuro_vip_subscriptions').select('id,status,ends_at').eq('user_id',currentUser.id).eq('status','active').limit(100);
+  const {data:vipData,error:vipError}=await db.from('sanotoleuro_vip_subscriptions')
+   .select('id,status,ends_at')
+   .eq('user_id',currentUser.id)
+   .eq('status','active')
+   .limit(100);
+
   if(vipError)throw vipError;
+
   const now=new Date();
+
   const hasActiveVIP=(vipData||[]).some(v=>!v.ends_at||new Date(v.ends_at)>now);
+
   if(!hasActiveVIP){
    alert('Pour demander un retrait, vous devez avoir au moins un plan VIP actif.');
    return;
   }
+
   const since=new Date();
   since.setHours(0,0,0,0);
-  const {count,error:ce}=await db.from('sanotoleuro_withdrawal_requests').select('id',{count:'exact',head:true}).eq('user_id',currentUser.id).gte('created_at',since.toISOString());
+
+  const {count,error:ce}=await db.from('sanotoleuro_withdrawal_requests')
+   .select('id',{count:'exact',head:true})
+   .eq('user_id',currentUser.id)
+   .gte('created_at',since.toISOString());
+
   if(ce)throw ce;
+
   if((count||0)>=2){
    alert('Deux demandes de retrait maximum par jour.');
    return;
   }
+
   await persistWithdrawalAccount(false);
+
   const fee=Number((amount*(Number(platformSettings.withdrawal_fee_percent)||0)/100).toFixed(2));
   const net=Number((amount-fee).toFixed(2));
+
   const {error}=await db.from('sanotoleuro_withdrawal_requests').insert({
    user_id:currentUser.id,
    amount_cdf:amount,
@@ -1192,13 +1442,19 @@ async function submitWithdrawal(e){
    net_amount_cdf:net,
    status:'pending'
   });
+
   if(error)throw error;
+
   $('withdrawAmount').value='';
   calculateWithdrawal();
+
   await loadProfile();
+
   alert('Demande de retrait envoyée pour vérification.');
+
   await loadHistory();
   showPage('orders');
+
  }catch(err){
   console.error(err);
   alert('Demande non envoyée : '+err.message);
@@ -1208,73 +1464,118 @@ async function submitWithdrawal(e){
 }
 
 /* Historique */
+
 function setHistoryType(type){
  historyType=type;
+
  $('historyTabDeposits').classList.toggle('active',type==='deposit');
  $('historyTabWithdrawals').classList.toggle('active',type==='withdrawal');
  $('historyTabBonuses').classList.toggle('active',type==='bonus');
+
  renderHistoryType();
 }
+
 function renderHistoryType(){
  const box=$('historyList');
  if(!box)return;
- const labels={deposit:'DÉPÔTS',withdrawal:'RETRAITS',bonus:'BONUS ADMINISTRATIFS'};
- const css={deposit:'deposit',withdrawal:'withdraw',bonus:'bonus'};
+
+ const labels={
+  deposit:'DÉPÔTS',
+  withdrawal:'RETRAITS',
+  bonus:'BONUS ADMINISTRATIFS'
+ };
+
+ const css={
+  deposit:'deposit',
+  withdrawal:'withdraw',
+  bonus:'bonus'
+ };
+
  const items=historyCache[historyType]||[];
+
  let html=`<div class="history-heading ${css[historyType]}">${labels[historyType]}</div>`;
+
  if(!items.length){
   box.innerHTML=html+'<div class="empty">Aucune opération dans cette catégorie.</div>';
   return;
  }
+
  items.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
- html+=items.map(x=>`<div class="item">
-  <div class="itemtop"><div><strong>${esc(x.title||labels[historyType])}</strong><div class="muted small">${esc(x.extra||'')}</div></div>${statusLabel(x.status)}</div>
-  <p class="amount" style="margin:10px 0 5px">${formatFC(x.amount)}</p>
-  <div class="muted small">📅 ${esc(dateTime(x.date))}</div>
-  ${x.note?`<div class="muted small">Motif : ${esc(x.note)}</div>`:''}
- </div>`).join('');
+
+ html+=items.map(x=>`
+  <div class="item">
+   <div class="itemtop">
+    <div>
+     <strong>${esc(x.title||labels[historyType])}</strong>
+     <div class="muted small">${esc(x.extra||'')}</div>
+    </div>
+    ${statusLabel(x.status)}
+   </div>
+   <p class="amount" style="margin:10px 0 5px">${formatFC(x.amount)}</p>
+   <div class="muted small">📅 ${esc(dateTime(x.date))}</div>
+   ${x.note?`<div class="muted small">Motif : ${esc(x.note)}</div>`:''}
+  </div>
+ `).join('');
+
  box.innerHTML=html;
 }
 
 async function loadHistory(){
  const box=$('historyList');
  if(!box||!currentUser)return;
+
  box.innerHTML='<div class="empty">Chargement…</div>';
+
  historyCache={deposit:[],withdrawal:[],bonus:[]};
+
  try{
   const results=await Promise.all([
    db.from('sanotoleuro_deposit_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(100),
    db.from('sanotoleuro_withdrawal_requests').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(100),
    db.from('sanotoleuro_orders').select('*').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(100)
   ]);
+
   if(!results[0].error)(results[0].data||[]).forEach(r=>historyCache.deposit.push({
    title:'💳 Dépôt · Plan '+(r.plan_number||'—'),
-   amount:r.amount_cdf,status:r.status,date:r.created_at,
+   amount:r.amount_cdf,
+   status:r.status,
+   date:r.created_at,
    extra:(r.payment_method||'')+(r.payment_reference?' · Référence : '+r.payment_reference:'')
   }));
+
   if(!results[1].error)(results[1].data||[]).forEach(r=>historyCache.withdrawal.push({
-   title:'💸 Retrait',amount:r.amount_cdf,status:r.status,date:r.created_at,
+   title:'💸 Retrait',
+   amount:r.amount_cdf,
+   status:r.status,
+   date:r.created_at,
    extra:(r.payment_method||'')+(r.phone?' · '+r.phone:'')
   }));
+
   if(!results[2].error)(results[2].data||[]).forEach(r=>{
    const title=String(r.product_name||r.type||'Commande');
+
    if(/bonus|admin|adjust|prime|reward/i.test(title+' '+String(r.description||''))){
     historyCache.bonus.push({
      title:'🎁 Bonus administratif',
      amount:r.amount_cdf??r.total_price_cdf??r.amount,
-     status:r.status,date:r.created_at,
-     extra:title,note:r.admin_note||r.description||''
+     status:r.status,
+     date:r.created_at,
+     extra:title,
+     note:r.admin_note||r.description||''
     });
    }
   });
+
   renderHistoryType();
+
  }catch(e){
   console.error(e);
   box.innerHTML='<div class="empty">Historique momentanément indisponible.</div>';
  }
 }
 
-/* Gestion de l'heure de récolte individuelle de chaque VIP */
+/* Récolte individuelle de chaque VIP */
+
 function validDateValue(value){
  if(!value)return null;
  const d=new Date(value);
@@ -1290,14 +1591,17 @@ function getVIPIntervalMs(v){
   const n=Number(v?.[key]);
   if(Number.isFinite(n)&&n>0)return n*1000;
  }
+
  for(const key of hoursKeys){
   const n=Number(v?.[key]);
   if(Number.isFinite(n)&&n>0)return n*60*60*1000;
  }
+
  for(const key of minutesKeys){
   const n=Number(v?.[key]);
   if(Number.isFinite(n)&&n>0)return n*60*1000;
  }
+
  return 24*60*60*1000;
 }
 
@@ -1320,6 +1624,7 @@ function getVIPNextClaimAt(v){
  }
 
  const interval=getVIPIntervalMs(v);
+
  const lastKeys=[
   'last_claim_at',
   'last_claimed_at',
@@ -1338,19 +1643,28 @@ function getVIPNextClaimAt(v){
  }
 
  const base=validDateValue(v?.activated_at)||validDateValue(v?.created_at);
+
  if(!base)return new Date(Date.now());
 
  const timeKeys=['daily_harvest_time','harvest_time','claim_time','daily_claim_time'];
+
  for(const key of timeKeys){
   const value=String(v?.[key]||'').trim();
   const match=value.match(/^([0-2]?\d):([0-5]\d)(?::([0-5]\d))?$/);
+
   if(match){
-   const hour=Number(match[1]),minute=Number(match[2]),second=Number(match[3]||0);
+   const hour=Number(match[1]);
+   const minute=Number(match[2]);
+   const second=Number(match[3]||0);
+
    if(hour>23)continue;
+
    const scheduled=new Date(base);
    scheduled.setHours(hour,minute,second,0);
+
    if(scheduled.getTime()<=base.getTime())scheduled.setDate(scheduled.getDate()+1);
    if(scheduled.getTime()<=Date.now())scheduled.setDate(scheduled.getDate()+1);
+
    return scheduled;
   }
  }
@@ -1364,9 +1678,11 @@ function formatRemaining(ms){
  const hours=Math.floor((total%86400)/3600);
  const minutes=Math.floor((total%3600)/60);
  const seconds=total%60;
+
  const hh=String(hours).padStart(2,'0');
  const mm=String(minutes).padStart(2,'0');
  const ss=String(seconds).padStart(2,'0');
+
  return days>0?`${days}j ${hh}h ${mm}m ${ss}s`:`${hh}h ${mm}m ${ss}s`;
 }
 
@@ -1376,8 +1692,8 @@ function updateVIPCountdowns(){
   const remaining=nextAt-Date.now();
   const id=label.dataset.vipCountdown;
   const button=document.querySelector(`[data-vip-button="${CSS.escape(id)}"]`);
-  if(!button)return;
 
+  if(!button)return;
   if(button.dataset.claiming==='true')return;
 
   if(remaining>0){
@@ -1400,15 +1716,23 @@ function startVIPCountdown(){
  vipCountdownTimer=setInterval(updateVIPCountdowns,1000);
 }
 
-/* Produits VIP : chaque abonnement est traité individuellement */
 async function loadMyVIP(){
  if(!currentUser)return;
+
  try{
-  const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select('*').eq('user_id',currentUser.id).limit(100);
+  const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+   .select('*')
+   .eq('user_id',currentUser.id)
+   .limit(100);
+
   if(error)throw error;
+
   mySubscriptions=data||[];
+
   renderAccount();
+
   if(!$('myproductsPage').classList.contains('hidden'))renderMyProducts();
+
  }catch(e){
   console.error('VIP:',e);
  }
@@ -1416,6 +1740,7 @@ async function loadMyVIP(){
 
 function activeVIPSubscriptions(){
  const now=new Date();
+
  return (mySubscriptions||[]).filter(v=>{
   const end=v.ends_at?new Date(v.ends_at):null;
   return String(v.status||'').toLowerCase()==='active'&&(!end||end>now);
@@ -1425,7 +1750,9 @@ function activeVIPSubscriptions(){
 function renderMyProducts(){
  const box=$('activeProductsList');
  if(!box)return;
+
  const active=activeVIPSubscriptions();
+
  if(!active.length){
   box.innerHTML='<div class="empty">Aucun produit actif pour le moment.</div>';
   if(vipCountdownTimer)clearInterval(vipCountdownTimer);
@@ -1441,7 +1768,11 @@ function renderMyProducts(){
   const currentlyReady=nextTime<=Date.now();
 
   return `<div class="item">
-   <div class="itemtop"><strong>PRODUIT VIP ${esc(v.plan_number||'—')}</strong><span class="product-active">ACTIF</span></div>
+   <div class="itemtop">
+    <strong>PRODUIT VIP ${esc(v.plan_number||'—')}</strong>
+    <span class="product-active">ACTIF</span>
+   </div>
+
    <p class="amount">${formatFC(v.capital_cdf||0)}</p>
    <div class="muted">Identifiant : ${esc(v.id)}</div>
    <div class="muted">Montant quotidien : ${formatFC(daily)}</div>
@@ -1449,11 +1780,23 @@ function renderMyProducts(){
    <div class="muted">Total indicatif du cycle : ${formatFC(total)}</div>
    <div class="muted">Date d'activation : ${esc(dateTime(v.activated_at))}</div>
    <div class="muted">Fin prévue : ${esc(dateTime(v.ends_at))}</div>
+
    <div class="claimbox">
     <div class="muted">Montant disponible pour la récolte selon votre abonnement</div>
     <div class="claimamount">${formatFC(daily)}</div>
-    <button class="claimbutton" type="button" data-vip-button="${esc(v.id)}" ${currentlyReady?'':'disabled'} onclick="claimVIP('${esc(v.id)}',this)">${currentlyReady?'🟢 RÉCOLTER':'⏳ RÉCOLTE EN ATTENTE'}</button>
-    <div class="claimtimer ${currentlyReady?'ready':''}" data-vip-countdown="${esc(v.id)}" data-next-at="${nextTime}">${currentlyReady?'Votre récolte est disponible maintenant.':'Calcul du temps restant…'}</div>
+
+    <button class="claimbutton" type="button"
+     data-vip-button="${esc(v.id)}"
+     ${currentlyReady?'':'disabled'}
+     onclick="claimVIP('${esc(v.id)}',this)">
+     ${currentlyReady?'🟢 RÉCOLTER':'⏳ RÉCOLTE EN ATTENTE'}
+    </button>
+
+    <div class="claimtimer ${currentlyReady?'ready':''}"
+     data-vip-countdown="${esc(v.id)}"
+     data-next-at="${nextTime}">
+     ${currentlyReady?'Votre récolte est disponible maintenant.':'Calcul du temps restant…'}
+    </div>
    </div>
   </div>`;
  }).join('');
@@ -1464,13 +1807,23 @@ function renderMyProducts(){
 async function loadMyProducts(){
  const box=$('activeProductsList');
  if(!box||!currentUser)return;
+
  box.innerHTML='<div class="empty">Chargement des produits actifs...</div>';
+
  try{
-  const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select('*').eq('user_id',currentUser.id).order('activated_at',{ascending:false}).limit(100);
+  const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+   .select('*')
+   .eq('user_id',currentUser.id)
+   .order('activated_at',{ascending:false})
+   .limit(100);
+
   if(error)throw error;
+
   mySubscriptions=data||[];
+
   renderMyProducts();
   renderAccount();
+
  }catch(e){
   console.error('Mes produits:',e);
   box.innerHTML='<div class="notice">Impossible de charger les produits actifs. Réessayez.</div>';
@@ -1479,13 +1832,16 @@ async function loadMyProducts(){
 
 async function claimVIP(subscriptionId,button){
  if(!currentUser)return;
+
  const vip=activeVIPSubscriptions().find(v=>String(v.id)===String(subscriptionId));
+
  if(!vip){
   alert('Produit VIP introuvable ou inactif. Actualisez vos produits.');
   return;
  }
 
  const nextAt=getVIPNextClaimAt(vip);
+
  if(nextAt&&nextAt.getTime()>Date.now()){
   alert('La récolte de ce produit n’est pas encore disponible. Temps restant : '+formatRemaining(nextAt.getTime()-Date.now())+'.');
   updateVIPCountdowns();
@@ -1493,28 +1849,40 @@ async function claimVIP(subscriptionId,button){
  }
 
  if(button?.disabled||button?.dataset.claiming==='true')return;
+
  if(!confirm('Confirmer la demande de récolte de ce produit VIP ?'))return;
 
  if(button){
   button.dataset.claiming='true';
   button.disabled=true;
  }
+
  busy(button,true,'Vérification…');
 
  try{
-  const {data,error}=await db.rpc('sanotoleuro_claim_vip',{p_subscription_id:subscriptionId});
+  const {data,error}=await db.rpc('sanotoleuro_claim_vip',{
+   p_subscription_id:subscriptionId
+  });
+
   if(error)throw error;
-  if(!data||data.success!==true)throw new Error(data?.message||'La récolte n’a pas été confirmée par Supabase.');
+
+  if(!data||data.success!==true){
+   throw new Error(data?.message||'La récolte n’a pas été confirmée par Supabase.');
+  }
+
   alert('Récolte confirmée : '+formatFC(data.amount_cdf)+'.');
+
   await loadProfile();
   await loadMyVIP();
   await loadMyProducts();
   await loadHistory();
+
  }catch(e){
   console.error('Récolte VIP:',e);
   alert(e.message||'Récolte impossible.');
   await loadMyVIP();
   await loadMyProducts();
+
  }finally{
   if(button&&document.body.contains(button)){
    delete button.dataset.claiming;
@@ -1526,14 +1894,23 @@ async function claimVIP(subscriptionId,button){
 
 async function refreshVIP(){
  await loadMyVIP();
- if(!$('myproductsPage').classList.contains('hidden'))await loadMyProducts();
+
+ if(!$('myproductsPage').classList.contains('hidden')){
+  await loadMyProducts();
+ }
+
  await loadProfile();
 }
 
 /* Statistiques de la page Moi */
+
 async function loadMoiDashboard(){
  if(!currentUser)return;
- const put=(id,value)=>{if($(id))$(id).textContent=formatFC(value)};
+
+ const put=(id,value)=>{
+  if($(id))$(id).textContent=formatFC(value);
+ };
+
  try{
   const [deposits,withdrawals,orders,commissions,vips]=await Promise.all([
    db.from('sanotoleuro_deposit_requests').select('amount_cdf,status,created_at').eq('user_id',currentUser.id).limit(3000),
@@ -1546,23 +1923,29 @@ async function loadMoiDashboard(){
   const validDeposits=deposits.error?[]:(deposits.data||[]).filter(r=>isDepositValidated(r.status));
   const paidWithdrawals=withdrawals.error?[]:(withdrawals.data||[]).filter(r=>isWithdrawalPaid(r.status));
   const validOrders=orders.error?[]:(orders.data||[]).filter(r=>isWithdrawalPaid(r.status)||isDepositValidated(r.status));
+
   const recharge=validDeposits.reduce((s,r)=>s+Number(r.amount_cdf||0),0);
   const withdrawn=paidWithdrawals.reduce((s,r)=>s+Number(r.amount_cdf||0),0);
   const revenue=validOrders.reduce((s,r)=>s+getOperationAmount(r),0);
 
   const today=new Date();
   today.setHours(0,0,0,0);
+
   const tomorrow=new Date(today);
   tomorrow.setDate(tomorrow.getDate()+1);
 
   const todayRevenue=validOrders.filter(r=>{
    const dateValue=getOperationDate(r);
    if(!dateValue)return false;
+
    const d=new Date(dateValue);
+
    return !Number.isNaN(d.getTime())&&d>=today&&d<tomorrow;
+
   }).reduce((s,r)=>s+getOperationAmount(r),0);
 
   const vipRows=vips.error?(mySubscriptions||[]):(vips.data||[]);
+
   const assets=vipRows.filter(v=>{
    const end=v.ends_at?new Date(v.ends_at):null;
    return String(v.status||'').toLowerCase()==='active'&&(!end||end>new Date());
@@ -1580,12 +1963,14 @@ async function loadMoiDashboard(){
   put('moiTotalAssets',assets);
   put('moiTodayRevenue',todayRevenue);
   put('moiTeamRevenue',teamRevenue);
+
  }catch(e){
   console.error('Statistiques Moi:',e);
  }
 }
 
 /* Parrainage */
+
 function currentReferralRates(){
  return {
   1:Number(platformSettings.referral_rate_1??12),
@@ -1593,19 +1978,32 @@ function currentReferralRates(){
   3:Number(platformSettings.referral_rate_3??1)
  };
 }
-function normalizeReferralCode(v){return String(v||'').trim().toUpperCase()}
+
+function normalizeReferralCode(v){
+ return String(v||'').trim().toUpperCase();
+}
 
 async function loadTeam(){
  if(!currentUser)return;
+
  const box=$('teamList');
  box.innerHTML='<div class="empty">Chargement de votre équipe…</div>';
+
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles').select('id,full_name,referral_code,referred_by,created_at').limit(5000);
+  const {data,error}=await db.from('sanotoleuro_profiles')
+   .select('id,full_name,referral_code,referred_by,created_at')
+   .limit(5000);
+
   if(error)throw error;
+
   const profiles=data||[];
   const levels={1:[],2:[],3:[]};
   const assigned=new Set([currentUser.id]);
-  let parents=[{id:currentUser.id,referral_code:currentProfile?.referral_code||''}];
+
+  let parents=[{
+   id:currentUser.id,
+   referral_code:currentProfile?.referral_code||''
+  }];
 
   function matches(p,parent){
    const r=String(p.referred_by||'').trim();
@@ -1614,6 +2012,7 @@ async function loadTeam(){
 
   for(let level=1;level<=3;level++){
    const next=[];
+
    for(const parent of parents){
     profiles.filter(p=>matches(p,parent)&&!assigned.has(String(p.id))).forEach(c=>{
      assigned.add(String(c.id));
@@ -1621,29 +2020,46 @@ async function loadTeam(){
      next.push(c);
     });
    }
+
    parents=next;
   }
 
   const members=[...levels[1],...levels[2],...levels[3]];
   const ids=members.map(m=>m.id);
+
   let deposits=[],commissions=[];
 
   if(ids.length){
-   const r=await db.from('sanotoleuro_deposit_requests').select('user_id,amount_cdf,status').in('user_id',ids).limit(5000);
+   const r=await db.from('sanotoleuro_deposit_requests')
+    .select('user_id,amount_cdf,status')
+    .in('user_id',ids)
+    .limit(5000);
+
    if(!r.error)deposits=r.data||[];
   }
 
-  const cr=await db.from('sanotoleuro_referral_commissions').select('commission_amount_cdf,status').eq('beneficiary_user_id',currentUser.id).limit(5000);
+  const cr=await db.from('sanotoleuro_referral_commissions')
+   .select('commission_amount_cdf,status')
+   .eq('beneficiary_user_id',currentUser.id)
+   .limit(5000);
+
   if(!cr.error)commissions=cr.data||[];
 
   const valid=deposits.filter(d=>isDepositValidated(d.status));
+
   $('teamTotal').textContent=String(members.length);
   $('teamDepositors').textContent=String(new Set(valid.map(d=>d.user_id)).size);
   $('teamDepositTotal').textContent=formatFC(valid.reduce((s,d)=>s+Number(d.amount_cdf||0),0));
-  $('teamCommissionTotal').textContent=formatFC(commissions.filter(c=>isWithdrawalPaid(c.status)).reduce((s,c)=>s+Number(c.commission_amount_cdf||0),0));
+
+  $('teamCommissionTotal').textContent=formatFC(
+   commissions.filter(c=>isWithdrawalPaid(c.status))
+    .reduce((s,c)=>s+Number(c.commission_amount_cdf||0),0)
+  );
 
   const rates=currentReferralRates();
-  $('teamRatesText').innerHTML=`Niveau 1 : ${rates[1]} %<br>Niveau 2 : ${rates[2]} %<br>Niveau 3 : ${rates[3]} %`;
+
+  $('teamRatesText').innerHTML=
+   `Niveau 1 : ${rates[1]} %<br>Niveau 2 : ${rates[2]} %<br>Niveau 3 : ${rates[3]} %`;
 
   if(!members.length){
    box.innerHTML='<div class="empty">Aucun membre trouvé dans les niveaux 1, 2 et 3.</div>';
@@ -1651,12 +2067,15 @@ async function loadTeam(){
   }
 
   let html='';
+
   for(let level=1;level<=3;level++){
    html+=`<div class="level-title">Niveau ${level} · Commission ${rates[level]}% · ${levels[level].length} membre(s)</div>`;
+
    html+=levels[level].map(m=>{
     const ds=deposits.filter(d=>String(d.user_id)===String(m.id));
     const approved=ds.filter(d=>isDepositValidated(d.status));
     const total=approved.reduce((s,d)=>s+Number(d.amount_cdf||0),0);
+
     return `<div class="item">
      <strong>${esc(m.full_name||'Membre')}</strong>
      <div class="muted small">Inscription : ${esc(dateTime(m.created_at))}</div>
@@ -1666,12 +2085,16 @@ async function loadTeam(){
     </div>`;
    }).join('');
   }
+
   box.innerHTML=html;
+
  }catch(e){
   console.error('Équipe:',e);
   box.innerHTML='<div class="notice">Impossible de charger votre équipe. Vérifiez les autorisations Supabase.</div>';
  }
 }
+
+/* Copier et partager */
 
 async function copyText(value){
  try{
@@ -1687,20 +2110,32 @@ async function copyText(value){
   alert('Copié.');
  }
 }
+
 async function copyReferralCode(){
  if($('teamReferralCode').value)await copyText($('teamReferralCode').value);
  else alert('Code indisponible.');
 }
+
 async function copyReferralLink(){
  if($('teamReferralLink').value)await copyText($('teamReferralLink').value);
  else alert('Lien indisponible.');
 }
+
 async function shareReferral(){
  const url=$('teamReferralLink').value;
- if(!url){alert('Lien indisponible.');return}
+
+ if(!url){
+  alert('Lien indisponible.');
+  return;
+ }
+
  if(navigator.share){
   try{
-   await navigator.share({title:'SANOTOLEURO',text:'Voici mon lien d’invitation :',url});
+   await navigator.share({
+    title:'SANOTOLEURO',
+    text:'Voici mon lien d’invitation :',
+    url
+   });
   }catch(e){}
  }else{
   await copyText(url);
@@ -1708,8 +2143,10 @@ async function shareReferral(){
 }
 
 /* Administration */
+
 async function verifyAdmin(){
  if(!currentUser||!isAdmin)return false;
+
  try{
   const {data,error}=await db.rpc('sanotoleuro_is_admin');
   if(error)throw error;
@@ -1725,10 +2162,12 @@ async function loadAdmin(){
   alert('Accès administrateur refusé.');
   return;
  }
+
  if(!(await verifyAdmin())){
   alert('Accès administrateur refusé.');
   return;
  }
+
  await Promise.all([
   loadAdminOverview(),
   loadAdminRequests('deposit'),
@@ -1736,7 +2175,8 @@ async function loadAdmin(){
   loadAdminMembers(),
   loadSettings(),
   loadAdminVIP(),
-  loadAdminPlans()
+  loadAdminPlans(),
+  loadAdminGiftCodes()
  ]);
 }
 
@@ -1747,13 +2187,27 @@ async function loadAdminOverview(){
    db.from('sanotoleuro_deposit_requests').select('amount_cdf,status').limit(10000),
    db.from('sanotoleuro_withdrawal_requests').select('amount_cdf,status').limit(10000)
   ]);
+
   if(p.error)throw p.error;
   if(d.error)throw d.error;
   if(w.error)throw w.error;
+
   $('adminTotalMembers').textContent=String(p.count??(p.data||[]).length);
-  $('adminTotalDeposits').textContent=formatFC((d.data||[]).filter(r=>isDepositValidated(r.status)).reduce((s,r)=>s+Number(r.amount_cdf||0),0));
-  $('adminTotalWithdrawals').textContent=formatFC((w.data||[]).filter(r=>isWithdrawalPaid(r.status)).reduce((s,r)=>s+Number(r.amount_cdf||0),0));
-  $('adminTotalBalances').textContent=formatFC((p.data||[]).reduce((s,r)=>s+Number(r.balance_cdf||0),0));
+
+  $('adminTotalDeposits').textContent=formatFC(
+   (d.data||[]).filter(r=>isDepositValidated(r.status))
+    .reduce((s,r)=>s+Number(r.amount_cdf||0),0)
+  );
+
+  $('adminTotalWithdrawals').textContent=formatFC(
+   (w.data||[]).filter(r=>isWithdrawalPaid(r.status))
+    .reduce((s,r)=>s+Number(r.amount_cdf||0),0)
+  );
+
+  $('adminTotalBalances').textContent=formatFC(
+   (p.data||[]).reduce((s,r)=>s+Number(r.balance_cdf||0),0)
+  );
+
  }catch(e){
   console.error(e);
   $('adminTotalMembers').textContent='Indisponible';
@@ -1764,19 +2218,29 @@ async function loadAdminRequests(type){
  const dep=type==='deposit';
  const box=$(dep?'adminDeposits':'adminWithdrawals');
  const table=dep?'sanotoleuro_deposit_requests':'sanotoleuro_withdrawal_requests';
+
  box.innerHTML='<div class="empty">Chargement…</div>';
+
  try{
-  const {data,error}=await db.from(table).select('*').order('created_at',{ascending:false}).limit(100);
+  const {data,error}=await db.from(table)
+   .select('*')
+   .order('created_at',{ascending:false})
+   .limit(100);
+
   if(error)throw error;
+
   if(!data?.length){
    box.innerHTML='<div class="empty">Aucune demande enregistrée.</div>';
    return;
   }
+
   box.innerHTML=data.map(r=>{
-   const detail=dep?
-    `${esc(r.payment_method||'')} · Réf. ${esc(r.payment_reference||'')} · Plan ${esc(r.plan_number||'—')}`:
-    `${esc(r.payment_method||'')} · ${esc(r.phone||'')} · Frais ${formatFC(r.fee_cdf)} · Net ${formatFC(r.net_amount_cdf)}`;
+   const detail=dep
+    ?`${esc(r.payment_method||'')} · Réf. ${esc(r.payment_reference||'')} · Plan ${esc(r.plan_number||'—')}`
+    :`${esc(r.payment_method||'')} · ${esc(r.phone||'')} · Frais ${formatFC(r.fee_cdf)} · Net ${formatFC(r.net_amount_cdf)}`;
+
    const pending=String(r.status||'pending').toLowerCase()==='pending';
+
    return `<div class="item">
     <div class="itemtop">
      <div>
@@ -1787,9 +2251,18 @@ async function loadAdminRequests(type){
      </div>
      ${statusLabel(r.status)}
     </div>
-    ${pending?`<label>Note administrative</label><input id="note-${dep?'d':'w'}-${r.id}" maxlength="200" placeholder="Note ou motif"><div class="row" style="margin-top:10px"><button class="btn primary smallbtn" onclick="updateRequest('${type}','${r.id}','success')">Valider</button><button class="btn danger smallbtn" onclick="updateRequest('${type}','${r.id}','rejected')">Rejeter</button></div>`:''}
+
+    ${pending?`
+     <label>Note administrative</label>
+     <input id="note-${dep?'d':'w'}-${r.id}" maxlength="200" placeholder="Note ou motif">
+     <div class="row" style="margin-top:10px">
+      <button class="btn primary smallbtn" onclick="updateRequest('${type}','${r.id}','success')">Valider</button>
+      <button class="btn danger smallbtn" onclick="updateRequest('${type}','${r.id}','rejected')">Rejeter</button>
+     </div>
+    `:''}
    </div>`;
   }).join('');
+
  }catch(e){
   console.error(e);
   box.innerHTML='<div class="empty">Demandes indisponibles.</div>';
@@ -1801,31 +2274,49 @@ async function updateRequest(type,id,status){
   alert('Accès administrateur refusé.');
   return;
  }
+
  const dep=type==='deposit';
  const note=($(`note-${dep?'d':'w'}-${id}`)?.value||'').trim();
- if(!confirm(status==='success'?(dep?'Confirmer après vérification du paiement réel ?':'Confirmer que le retrait a réellement été payé ?'):'Confirmer le rejet ?'))return;
+
+ if(!confirm(status==='success'
+  ?(dep?'Confirmer après vérification du paiement réel ?':'Confirmer que le retrait a réellement été payé ?')
+  :'Confirmer le rejet ?'))return;
+
  try{
   if(dep){
-   const {data,error}=await db.rpc(status==='success'?'sanotoleuro_admin_approve_deposit':'sanotoleuro_admin_reject_deposit',{
-    p_deposit_id:id,
-    p_admin_note:note||null
-   });
+   const {data,error}=await db.rpc(
+    status==='success'?'sanotoleuro_admin_approve_deposit':'sanotoleuro_admin_reject_deposit',
+    {
+     p_deposit_id:id,
+     p_admin_note:note||null
+    }
+   );
+
    if(error)throw error;
    if(!data?.success)throw new Error(data?.message||'Opération non confirmée.');
+
   }else{
-   const {data,error}=await db.from('sanotoleuro_withdrawal_requests').update({
-    status,
-    admin_note:note,
-    updated_at:new Date().toISOString()
-   }).eq('id',id).eq('status','pending').select('id');
+   const {data,error}=await db.from('sanotoleuro_withdrawal_requests')
+    .update({
+     status,
+     admin_note:note,
+     updated_at:new Date().toISOString()
+    })
+    .eq('id',id)
+    .eq('status','pending')
+    .select('id');
+
    if(error)throw error;
    if(!data?.length)throw new Error('Retrait introuvable ou déjà traité.');
   }
+
   alert('Opération terminée.');
+
   await loadAdminRequests(type);
   await loadAdminOverview();
   await loadProfile();
   await loadHistory();
+
  }catch(e){
   console.error(e);
   alert('Échec : '+e.message);
@@ -1835,21 +2326,31 @@ async function updateRequest(type,id,status){
 async function loadAdminVIP(){
  const box=$('adminVIP');
  if(!box||!isAdmin)return;
+
  try{
-  const {data,error}=await db.from('sanotoleuro_vip_subscriptions').select('*').order('activated_at',{ascending:false}).limit(300);
+  const {data,error}=await db.from('sanotoleuro_vip_subscriptions')
+   .select('*')
+   .order('activated_at',{ascending:false})
+   .limit(300);
+
   if(error)throw error;
+
   if(!data?.length){
    box.innerHTML='<div class="empty">Aucun abonnement VIP.</div>';
    return;
   }
-  box.innerHTML=data.map(v=>`<div class="item">
-   <strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong>
-   <div class="muted">ID : ${esc(v.id)}</div>
-   <div class="muted">Membre : ${esc(v.user_id)}</div>
-   <div class="muted">Activation : ${esc(dateTime(v.activated_at))}</div>
-   <div class="muted">Prochaine récolte : ${esc(dateTime(getVIPNextClaimAt(v)))}</div>
-   ${statusLabel(v.status)}
-  </div>`).join('');
+
+  box.innerHTML=data.map(v=>`
+   <div class="item">
+    <strong>VIP ${esc(v.plan_number)} · ${formatFC(v.capital_cdf)}</strong>
+    <div class="muted">ID : ${esc(v.id)}</div>
+    <div class="muted">Membre : ${esc(v.user_id)}</div>
+    <div class="muted">Activation : ${esc(dateTime(v.activated_at))}</div>
+    <div class="muted">Prochaine récolte : ${esc(dateTime(getVIPNextClaimAt(v)))}</div>
+    ${statusLabel(v.status)}
+   </div>
+  `).join('');
+
  }catch(e){
   box.innerHTML='<div class="empty">VIP indisponibles.</div>';
  }
@@ -1858,23 +2359,36 @@ async function loadAdminVIP(){
 async function loadAdminMembers(){
  const box=$('adminMembers');
  box.innerHTML='<div class="empty">Chargement…</div>';
+
  try{
-  const {data,error}=await db.from('sanotoleuro_profiles').select('id,full_name,referral_code,balance_cdf,created_at,is_blocked').order('created_at',{ascending:false}).limit(500);
+  const {data,error}=await db.from('sanotoleuro_profiles')
+   .select('id,full_name,referral_code,balance_cdf,created_at,is_blocked')
+   .order('created_at',{ascending:false})
+   .limit(500);
+
   if(error)throw error;
+
   if(!data?.length){
    box.innerHTML='<div class="empty">Aucun membre.</div>';
    return;
   }
-  box.innerHTML=data.map(m=>`<div class="item">
-   <div class="itemtop"><strong>${esc(m.full_name||'Membre')}</strong>${m.is_blocked?'<span class="status rejected">Bloqué</span>':'<span class="status success">Actif</span>'}</div>
-   <div class="muted small">ID : ${esc(m.id)}</div>
-   <div class="muted small">Code : ${esc(m.referral_code||'—')}</div>
-   <div class="amount">Solde : ${formatFC(m.balance_cdf)}</div>
-   <div class="row">
-    <button class="btn light smallbtn" onclick="useMemberId('${esc(m.id)}')">Ajuster solde</button>
-    <button class="btn danger smallbtn" onclick="toggleMemberBlock('${esc(m.id)}',${!m.is_blocked})">${m.is_blocked?'Débloquer':'Bloquer'}</button>
+
+  box.innerHTML=data.map(m=>`
+   <div class="item">
+    <div class="itemtop">
+     <strong>${esc(m.full_name||'Membre')}</strong>
+     ${m.is_blocked?'<span class="status rejected">Bloqué</span>':'<span class="status success">Actif</span>'}
+    </div>
+    <div class="muted small">ID : ${esc(m.id)}</div>
+    <div class="muted small">Code : ${esc(m.referral_code||'—')}</div>
+    <div class="amount">Solde : ${formatFC(m.balance_cdf)}</div>
+    <div class="row">
+     <button class="btn light smallbtn" onclick="useMemberId('${esc(m.id)}')">Ajuster solde</button>
+     <button class="btn danger smallbtn" onclick="toggleMemberBlock('${esc(m.id)}',${!m.is_blocked})">${m.is_blocked?'Débloquer':'Bloquer'}</button>
+    </div>
    </div>
-  </div>`).join('');
+  `).join('');
+
  }catch(e){
   console.error(e);
   box.innerHTML='<div class="empty">Membres indisponibles.</div>';
@@ -1883,19 +2397,28 @@ async function loadAdminMembers(){
 
 async function toggleMemberBlock(id,block){
  if(!isAdmin||!(await verifyAdmin()))return;
+
  if(id===currentUser.id){
   alert('Vous ne pouvez pas bloquer votre compte administrateur.');
   return;
  }
+
  if(!confirm(block?'Bloquer ce membre ?':'Débloquer ce membre ?'))return;
+
  try{
-  const {error}=await db.from('sanotoleuro_profiles').update({is_blocked:block}).eq('id',id);
+  const {error}=await db.from('sanotoleuro_profiles')
+   .update({is_blocked:block})
+   .eq('id',id);
+
   if(error)throw error;
+
   await loadAdminMembers();
+
  }catch(e){
   alert(e.message);
  }
 }
+
 function useMemberId(id){
  $('adjustUserId').value=id;
  adminTab('balance');
@@ -1903,37 +2426,48 @@ function useMemberId(id){
 
 async function adjustBalance(e){
  e.preventDefault();
+
  if(!isAdmin||!(await verifyAdmin())){
   alert('Accès refusé.');
   return;
  }
+
  const id=$('adjustUserId').value.trim();
  const amount=Number($('adjustAmount').value);
  const reason=$('adjustReason').value.trim();
+
  if(!id||!Number.isFinite(amount)||amount===0||!reason){
   alert('Vérifiez les champs.');
   return;
  }
+
  if(!confirm('Confirmer cet ajustement de solde ?'))return;
+
  try{
   const {error}=await db.rpc('sanotoleuro_admin_adjust_balance',{
    p_user_id:id,
    p_amount_cdf:amount,
    p_reason:reason
   });
+
   if(error)throw error;
+
   $('adjustBalanceForm').reset();
+
   alert('Ajustement enregistré.');
+
   await loadAdminMembers();
   await loadProfile();
   await loadHistory();
   await loadAdminOverview();
+
  }catch(e){
   alert('Ajustement impossible : '+e.message);
  }
 }
 
 /* Paramètres */
+
 async function loadSettingsPublic(){
  try{
   const {data,error}=await db.from('sanotoleuro_settings').select('setting_key,setting_value');
@@ -1952,21 +2486,28 @@ function applySettingsRows(rows){
   if(k==='platform_name')platformSettings.platform_name=typeof v==='string'?v:(v?.name||platformSettings.platform_name);
   if(k==='primary_color')platformSettings.primary_color=typeof v==='string'?v:(v?.color||platformSettings.primary_color);
   if(k==='notification_text')platformSettings.notification_text=typeof v==='string'?v:(v?.text||platformSettings.notification_text);
+
   if(k==='withdrawal_fee_percent')platformSettings.withdrawal_fee_percent=Number(v?.value??v??platformSettings.withdrawal_fee_percent);
   if(k==='withdrawal_minimum_cdf')platformSettings.withdrawal_minimum_cdf=Number(v?.value??v??platformSettings.withdrawal_minimum_cdf);
+
   if(k==='referral_rate_1')platformSettings.referral_rate_1=Number(v?.value??v??platformSettings.referral_rate_1);
   if(k==='referral_rate_2')platformSettings.referral_rate_2=Number(v?.value??v??platformSettings.referral_rate_2);
   if(k==='referral_rate_3')platformSettings.referral_rate_3=Number(v?.value??v??platformSettings.referral_rate_3);
+
   if(k==='customer_telegram')platformSettings.customer_telegram=typeof v==='string'?v:(v?.url||platformSettings.customer_telegram);
   if(k==='telegram_group')platformSettings.telegram_group=typeof v==='string'?v:(v?.url||platformSettings.telegram_group);
   if(k==='customer_whatsapp')platformSettings.customer_whatsapp=typeof v==='string'?v:(v?.url||platformSettings.customer_whatsapp);
   if(k==='whatsapp_group')platformSettings.whatsapp_group=typeof v==='string'?v:(v?.url||platformSettings.whatsapp_group);
  }
+
  applyBranding();
 }
 
 function applyBranding(){
- const color=/^#[0-9a-f]{6}$/i.test(platformSettings.primary_color||'')?platformSettings.primary_color:'#0B6B3A';
+ const color=/^#[0-9a-f]{6}$/i.test(platformSettings.primary_color||'')
+  ?platformSettings.primary_color
+  :'#0B6B3A';
+
  document.documentElement.style.setProperty('--green',color);
  document.documentElement.style.setProperty('--dark',darkenHex(color));
  document.documentElement.style.setProperty('--light',lightenHex(color));
@@ -1983,6 +2524,7 @@ function applyBranding(){
 
  const tickerText=String(platformSettings.notification_text||'').trim();
  $('referralTickerText').textContent=tickerText||'Bienvenue sur SANOTOLEURO RDC.';
+
  calculateWithdrawal();
 }
 
@@ -1992,15 +2534,18 @@ function darkenHex(hex){
   const r=Math.max(0,((n>>16)&255)-55);
   const g=Math.max(0,((n>>8)&255)-55);
   const b=Math.max(0,(n&255)-55);
+
   return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
  }catch(e){
   return '#07502B';
  }
 }
+
 function lightenHex(hex){
  try{
   const n=parseInt(hex.slice(1),16);
   const c=[(n>>16)&255,(n>>8)&255,n&255].map(x=>Math.round(x+(255-x)*.78));
+
   return '#'+c.map(x=>x.toString(16).padStart(2,'0')).join('');
  }catch(e){
   return '#E8F8ED';
@@ -2009,22 +2554,29 @@ function lightenHex(hex){
 
 async function loadSettings(){
  if(!isAdmin)return;
+
  await loadSettingsPublic();
+
  const s=platformSettings;
+
  $('settingPlatformName').value=s.platform_name;
  $('settingColor').value=s.primary_color||'#0B6B3A';
  $('settingNotificationText').value=s.notification_text||'';
 
  try{
   const {data,error}=await db.from('sanotoleuro_settings').select('setting_key,setting_value');
+
   if(error)throw error;
+
   const raw={};
   (data||[]).forEach(r=>raw[r.setting_key]=r.setting_value);
 
   $('settingAirtel').value=raw.payment_airtel?.number||'0979928885';
   $('settingAirtelName').value=raw.payment_airtel?.name||'YVETTE';
+
   $('settingOrange').value=raw.payment_orange?.number||'0899532643';
   $('settingOrangeName').value=raw.payment_orange?.name||'JACQUELINE';
+
   $('settingMpesa').value=raw.payment_mpesa?.number||'0861823718';
   $('settingMpesaName').value=raw.payment_mpesa?.name||'REGINA';
 
@@ -2032,11 +2584,14 @@ async function loadSettings(){
   $('settingWhatsapp').value=s.customer_whatsapp;
   $('settingTelegramGroup').value=s.telegram_group;
   $('settingWhatsappGroup').value=s.whatsapp_group;
+
   $('settingRate1').value=s.referral_rate_1;
   $('settingRate2').value=s.referral_rate_2;
   $('settingRate3').value=s.referral_rate_3;
+
   $('settingWithdrawalFee').value=s.withdrawal_fee_percent;
   $('settingWithdrawalMinimum').value=s.withdrawal_minimum_cdf;
+
  }catch(e){
   console.warn(e);
  }
@@ -2044,6 +2599,7 @@ async function loadSettings(){
 
 async function saveSettings(e){
  e.preventDefault();
+
  if(!isAdmin||!(await verifyAdmin())){
   alert('Accès refusé.');
   return;
@@ -2053,16 +2609,20 @@ async function saveSettings(e){
   {setting_key:'platform_name',setting_value:$('settingPlatformName').value.trim()},
   {setting_key:'primary_color',setting_value:$('settingColor').value},
   {setting_key:'notification_text',setting_value:$('settingNotificationText').value.trim()},
+
   {setting_key:'payment_airtel',setting_value:{number:$('settingAirtel').value.trim(),name:$('settingAirtelName').value.trim()}},
   {setting_key:'payment_orange',setting_value:{number:$('settingOrange').value.trim(),name:$('settingOrangeName').value.trim()}},
   {setting_key:'payment_mpesa',setting_value:{number:$('settingMpesa').value.trim(),name:$('settingMpesaName').value.trim()}},
+
   {setting_key:'customer_telegram',setting_value:$('settingTelegram').value.trim()},
   {setting_key:'customer_whatsapp',setting_value:$('settingWhatsapp').value.trim()},
   {setting_key:'telegram_group',setting_value:$('settingTelegramGroup').value.trim()},
   {setting_key:'whatsapp_group',setting_value:$('settingWhatsappGroup').value.trim()},
+
   {setting_key:'referral_rate_1',setting_value:Number($('settingRate1').value)},
   {setting_key:'referral_rate_2',setting_value:Number($('settingRate2').value)},
   {setting_key:'referral_rate_3',setting_value:Number($('settingRate3').value)},
+
   {setting_key:'withdrawal_fee_percent',setting_value:Number($('settingWithdrawalFee').value)},
   {setting_key:'withdrawal_minimum_cdf',setting_value:Number($('settingWithdrawalMinimum').value)}
  ];
@@ -2072,29 +2632,55 @@ async function saveSettings(e){
    const {error}=await db.from('sanotoleuro_settings').upsert(r,{onConflict:'setting_key'});
    if(error)throw error;
   }
+
   await loadSettingsPublic();
+
   alert('Paramètres enregistrés. Le texte de la cloche est maintenant mis à jour.');
+
  }catch(e){
   console.error(e);
   alert('Paramètres non enregistrés : '+e.message);
  }
 }
 
+/* Plans administration */
+
 async function loadAdminPlans(){
  const box=$('adminPlansEditor');
  if(!box||!isAdmin)return;
+
  try{
-  const {data,error}=await db.from('sanotoleuro_plans').select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active').order('plan_number');
+  const {data,error}=await db.from('sanotoleuro_plans')
+   .select('plan_number,amount_cdf,duration_days,illustrative_daily_amount_cdf,active')
+   .order('plan_number');
+
   if(error)throw error;
+
   const plans=data?.length?data:FALLBACK_PLANS;
-  box.innerHTML=plans.map(p=>`<form class="item" onsubmit="savePlan(event,${Number(p.plan_number)})">
-   <strong>Plan ${esc(p.plan_number)}</strong>
-   <label>Montant (FC)</label><input name="amount" type="number" min="1" value="${Number(p.amount_cdf||0)}" required>
-   <label>Montant quotidien indicatif (FC)</label><input name="daily" type="number" min="0" value="${Number(p.illustrative_daily_amount_cdf||0)}" required>
-   <label>Durée (jours)</label><input name="days" type="number" min="1" value="${Number(p.duration_days||1)}" required>
-   <label>Actif</label><select name="active"><option value="true" ${p.active!==false?'selected':''}>Oui</option><option value="false" ${p.active===false?'selected':''}>Non</option></select>
-   <button class="btn primary full" type="submit">Enregistrer le plan</button>
-  </form>`).join('');
+
+  box.innerHTML=plans.map(p=>`
+   <form class="item" onsubmit="savePlan(event,${Number(p.plan_number)})">
+    <strong>Plan ${esc(p.plan_number)}</strong>
+
+    <label>Montant (FC)</label>
+    <input name="amount" type="number" min="1" value="${Number(p.amount_cdf||0)}" required>
+
+    <label>Montant quotidien indicatif (FC)</label>
+    <input name="daily" type="number" min="0" value="${Number(p.illustrative_daily_amount_cdf||0)}" required>
+
+    <label>Durée (jours)</label>
+    <input name="days" type="number" min="1" value="${Number(p.duration_days||1)}" required>
+
+    <label>Actif</label>
+    <select name="active">
+     <option value="true" ${p.active!==false?'selected':''}>Oui</option>
+     <option value="false" ${p.active===false?'selected':''}>Non</option>
+    </select>
+
+    <button class="btn primary full" type="submit">Enregistrer le plan</button>
+   </form>
+  `).join('');
+
  }catch(e){
   box.innerHTML='<div class="notice">Modification des plans indisponible.</div>';
  }
@@ -2102,8 +2688,11 @@ async function loadAdminPlans(){
 
 async function savePlan(e,number){
  e.preventDefault();
+
  if(!isAdmin||!(await verifyAdmin()))return;
+
  const f=e.currentTarget;
+
  try{
   const {error}=await db.from('sanotoleuro_plans').update({
    amount_cdf:Number(f.elements.amount.value),
@@ -2111,35 +2700,262 @@ async function savePlan(e,number){
    duration_days:Number(f.elements.days.value),
    active:f.elements.active.value==='true'
   }).eq('plan_number',number);
+
   if(error)throw error;
+
   alert('Plan enregistré.');
+
   await loadPlans();
   await loadAdminPlans();
+
  }catch(e){
   alert('Modification impossible : '+e.message);
  }
 }
 
-/* Coupons et roulette : les validations restent faites par Supabase */
+/* =========================================================
+   CODES CADEAUX - ADMINISTRATION
+   Les crédits sont enregistrés côté serveur par Supabase.
+   ========================================================= */
+
+function normalizeRPCResponse(data){
+ if(typeof data==='string'){
+  try{return JSON.parse(data)}catch(e){return {}}
+ }
+ return data||{};
+}
+
+async function createGiftCode(e){
+ e.preventDefault();
+
+ if(!currentUser||!isAdmin){
+  alert('Accès administrateur refusé.');
+  return;
+ }
+
+ if(!(await verifyAdmin())){
+  alert('Vérification administrateur impossible.');
+  return;
+ }
+
+ const form=e.currentTarget;
+ const button=form.querySelector('button[type="submit"]');
+
+ const code=$('giftNewCode').value.trim().toUpperCase();
+ const amount=Number($('giftNewAmount').value);
+ const maxUses=Number($('giftNewMaxUses').value);
+ const expiryValue=$('giftNewExpiry').value;
+
+ if(!code){
+  alert('Saisissez un code cadeau.');
+  return;
+ }
+
+ if(!Number.isFinite(amount)||amount<=0){
+  alert('Le montant doit être supérieur à zéro.');
+  return;
+ }
+
+ if(!Number.isInteger(maxUses)||maxUses<1){
+  alert('Le nombre maximum d’utilisations doit être au moins égal à 1.');
+  return;
+ }
+
+ let expiry=null;
+
+ if(expiryValue){
+  const expiryDate=new Date(expiryValue);
+
+  if(Number.isNaN(expiryDate.getTime())){
+   alert('La date d’expiration est invalide.');
+   return;
+  }
+
+  if(expiryDate.getTime()<=Date.now()){
+   alert('La date d’expiration doit être dans le futur.');
+   return;
+  }
+
+  expiry=expiryDate.toISOString();
+ }
+
+ busy(button,true,'Création du code...');
+
+ try{
+  const {data,error}=await db.rpc('sanotoleuro_admin_create_gift_code',{
+   p_code:code,
+   p_amount:amount,
+   p_max_uses:maxUses,
+   p_expires_at:expiry
+  });
+
+  if(error)throw error;
+
+  const result=normalizeRPCResponse(data);
+
+  if(result.success!==true){
+   throw new Error(result.message||'Création du code impossible.');
+  }
+
+  form.reset();
+  $('giftNewMaxUses').value='1';
+
+  alert(result.message||'Code cadeau créé avec succès.');
+
+  await loadAdminGiftCodes();
+
+ }catch(err){
+  console.error('Création code cadeau:',err);
+  alert(err.message||'Impossible de créer le code cadeau.');
+ }finally{
+  busy(button,false);
+ }
+}
+
+async function loadAdminGiftCodes(){
+ const box=$('adminGiftCodesList');
+ if(!box)return;
+
+ if(!currentUser||!isAdmin){
+  box.innerHTML='<div class="empty">Accès refusé.</div>';
+  return;
+ }
+
+ box.innerHTML='<div class="empty">Chargement des codes cadeaux...</div>';
+
+ try{
+  const {data,error}=await db.rpc('sanotoleuro_admin_list_gift_codes');
+
+  if(error)throw error;
+
+  const result=normalizeRPCResponse(data);
+
+  if(result.success!==true){
+   throw new Error('Impossible de récupérer les codes cadeaux.');
+  }
+
+  const codes=Array.isArray(result.codes)?result.codes:[];
+
+  if(!codes.length){
+   box.innerHTML='<div class="empty">Aucun code cadeau créé pour le moment.</div>';
+   return;
+  }
+
+  box.innerHTML=codes.map(g=>{
+   const active=g.active===true;
+   const used=Number(g.used_count||0);
+   const maximum=Number(g.max_uses||0);
+   const expiry=g.expires_at?dateTime(g.expires_at):'Aucune expiration';
+   const expired=g.expires_at&&new Date(g.expires_at).getTime()<=Date.now();
+   const available=active&&!expired&&used<maximum;
+
+   return `<div class="item">
+    <div class="itemtop">
+     <strong style="font-size:17px">🎁 ${esc(g.code)}</strong>
+     ${
+      available
+       ?'<span class="status success">Actif</span>'
+       :'<span class="status rejected">Inactif / épuisé / expiré</span>'
+     }
+    </div>
+
+    <p class="amount" style="font-size:20px;margin:12px 0">${formatFC(g.amount)}</p>
+
+    <div class="muted">Utilisations : ${used} / ${maximum}</div>
+    <div class="muted">Créé le : ${esc(dateTime(g.created_at))}</div>
+    <div class="muted">Expiration : ${esc(expiry)}</div>
+
+    ${
+     active
+      ?`<button class="btn danger full" type="button" onclick="disableGiftCode(${Number(g.id)})">Désactiver ce code</button>`
+      :''
+    }
+   </div>`;
+  }).join('');
+
+ }catch(err){
+  console.error('Liste codes cadeaux:',err);
+  box.innerHTML=`
+   <div class="notice">
+    Impossible de charger les codes cadeaux :
+    ${esc(err.message||'Erreur Supabase')}
+   </div>
+  `;
+ }
+}
+
+async function disableGiftCode(id){
+ if(!currentUser||!isAdmin){
+  alert('Accès administrateur refusé.');
+  return;
+ }
+
+ if(!(await verifyAdmin())){
+  alert('Accès administrateur refusé.');
+  return;
+ }
+
+ if(!confirm('Voulez-vous désactiver ce code cadeau ?'))return;
+
+ try{
+  const {data,error}=await db.rpc('sanotoleuro_admin_disable_gift_code',{
+   p_id:id
+  });
+
+  if(error)throw error;
+
+  const result=normalizeRPCResponse(data);
+
+  if(result.success!==true){
+   throw new Error(result.message||'Désactivation impossible.');
+  }
+
+  alert(result.message||'Code désactivé.');
+
+  await loadAdminGiftCodes();
+
+ }catch(err){
+  console.error('Désactivation code:',err);
+  alert(err.message||'Impossible de désactiver ce code.');
+ }
+}
+
+/* =========================================================
+   ROUE - RESULTAT TIRE ET VALIDE PAR SUPABASE
+   ========================================================= */
+
 async function loadWheelStatus(){
  if(!currentUser)return;
+
  wheelCanSpin=false;
+
  $('spinWheelButton').disabled=true;
  $('wheelMessage').textContent='Vérification de votre éligibilité…';
 
  try{
   const {data,error}=await db.rpc('sanotoleuro_wheel_status');
+
   if(error)throw error;
 
-  wheelCanSpin=data?.can_spin===true;
-  $('wheelMessage').textContent=data?.message||(
-   wheelCanSpin?'Votre compte est éligible. Vous pouvez jouer.':'La roulette n’est pas encore disponible pour votre compte.'
+  const result=normalizeRPCResponse(data);
+
+  wheelCanSpin=result.can_spin===true;
+
+  $('wheelMessage').textContent=result.message||(
+   wheelCanSpin
+    ?'Votre compte est éligible. Vous pouvez jouer.'
+    :'La roulette n’est pas encore disponible pour votre compte.'
   );
+
   $('spinWheelButton').disabled=!wheelCanSpin||wheelBusy;
+
  }catch(e){
   console.error('Statut roulette:',e);
+
   wheelCanSpin=false;
+
   $('wheelMessage').textContent=e.message||'La roue nécessite une configuration Supabase valide.';
+
   $('spinWheelButton').disabled=true;
  }
 }
@@ -2148,6 +2964,8 @@ async function spinWheel(){
  if(!currentUser||wheelBusy)return;
 
  const btn=$('spinWheelButton');
+ const wheel=$('bonusWheel');
+
  wheelBusy=true;
  btn.disabled=true;
 
@@ -2155,28 +2973,79 @@ async function spinWheel(){
   await loadWheelStatus();
 
   if(!wheelCanSpin){
-   throw new Error('Votre compte ne peut pas encore utiliser la roulette. Vérifiez votre éligibilité.');
+   throw new Error('Votre compte ne peut pas encore utiliser la roulette.');
   }
 
   btn.disabled=true;
 
   const {data,error}=await db.rpc('sanotoleuro_spin_wheel');
+
   if(error)throw error;
-  if(!data||data.success!==true)throw new Error(data?.message||'Rotation refusée.');
 
-  const wheel=$('bonusWheel');
-  wheel.style.transform=`rotate(${360*6+Math.floor(Math.random()*360)}deg)`;
+  const result=normalizeRPCResponse(data);
 
-  await new Promise(resolve=>setTimeout(resolve,5100));
+  if(result.success!==true){
+   throw new Error(result.message||'Rotation refusée par Supabase.');
+  }
 
-  $('wheelMessage').textContent=data.message||('Résultat : '+formatFC(data.amount_cdf));
-  alert(data.message||('Vous avez gagné '+formatFC(data.amount_cdf)));
+  /*
+   * L'ordre correspond aux huit segments enregistrés
+   * dans la fonction Supabase de la roue.
+   */
+  const rewards=[500,1000,0,2000,500,0,3000,1000];
+
+  let index=Number(result.segment_index);
+
+  /*
+   * La fonction SQL envoie segment_index.
+   * Cette vérification protège aussi l'affichage
+   * si une réponse ne contient pas cet index.
+   */
+  if(!Number.isInteger(index)||index<0||index>7){
+   index=rewards.indexOf(Number(result.amount_cdf));
+   if(index<0)index=0;
+  }
+
+  /*
+   * La flèche est en haut de la roue.
+   * Le centre du segment index 0 est à 22,5 degrés.
+   * On fait tourner le segment gagné sous la flèche.
+   */
+  const segmentCenter=index*45+22.5;
+  const targetAngle=(360-segmentCenter+360)%360;
+
+  const previous=Number(wheel.dataset.rotation||0);
+  const currentAngle=((previous%360)+360)%360;
+  const adjustment=(targetAngle-currentAngle+360)%360;
+  const finalRotation=previous+2160+adjustment;
+
+  wheel.style.transition='none';
+  wheel.style.transform=`rotate(${previous}deg)`;
+
+  void wheel.offsetWidth;
+
+  wheel.style.transition='transform 5s cubic-bezier(.15,.8,.15,1)';
+  wheel.style.transform=`rotate(${finalRotation}deg)`;
+
+  wheel.dataset.rotation=String(finalRotation);
+
+  await new Promise(resolve=>setTimeout(resolve,5200));
+
+  const amount=Number(result.amount_cdf||0);
+
+  $('wheelMessage').textContent=result.message||'Résultat : '+formatFC(amount);
+
+  alert(result.message||'Vous avez gagné '+formatFC(amount));
 
   await loadProfile();
+
  }catch(e){
   console.error('Roulette:',e);
-  $('wheelMessage').textContent=e.message||'Rotation indisponible.';
+
+  $('wheelMessage').textContent=e.message||'Rotation impossible.';
+
   alert(e.message||'Rotation impossible.');
+
  }finally{
   wheelBusy=false;
   await loadWheelStatus();
@@ -2184,28 +3053,42 @@ async function spinWheel(){
  }
 }
 
+/* Utilisation d'un code cadeau côté Supabase */
+
 async function applyWheelCode(button){
  if(!currentUser||wheelCodeBusy)return;
 
  const code=$('wheelBonusCode').value.trim();
+
  if(!code){
   alert('Saisissez votre code bonus.');
   return;
  }
 
  wheelCodeBusy=true;
+
  busy(button,true,'Vérification du code…');
 
  try{
-  const {data,error}=await db.rpc('sanotoleuro_apply_bonus_code',{p_code:code});
-  if(error)throw error;
-  if(!data||data.success!==true)throw new Error(data?.message||'Code refusé.');
+  const {data,error}=await db.rpc('sanotoleuro_apply_bonus_code',{
+   p_code:code
+  });
 
-  alert(data.message||'Code bonus validé.');
+  if(error)throw error;
+
+  const result=normalizeRPCResponse(data);
+
+  if(result.success!==true){
+   throw new Error(result.message||'Code refusé.');
+  }
+
+  alert(result.message||'Code bonus validé.');
+
   $('wheelBonusCode').value='';
 
   await loadProfile();
   await loadWheelStatus();
+
  }catch(e){
   console.error('Code bonus:',e);
   alert(e.message||'Code bonus invalide ou déjà utilisé.');
@@ -2216,28 +3099,36 @@ async function applyWheelCode(button){
 }
 
 /* Installation PWA */
+
 async function installApp(){
  if(installPrompt){
   installPrompt.prompt();
+
   try{
    await installPrompt.userChoice;
   }catch(e){}
+
   installPrompt=null;
   return;
  }
+
  alert('Ouvrez le menu ⋮ de Chrome puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».');
 }
+
 window.addEventListener('beforeinstallprompt',e=>{
  e.preventDefault();
  installPrompt=e;
 });
+
 window.addEventListener('appinstalled',()=>{
  installPrompt=null;
 });
 
 /* Initialisation Supabase */
+
 async function initApp(){
  const ref=new URLSearchParams(location.search).get('ref');
+
  if(ref)$('regReferral').value=ref;
 
  db.auth.onAuthStateChange((event,session)=>{
@@ -2245,14 +3136,20 @@ async function initApp(){
    if(session?.user){
     currentUser=session.user;
     isAdmin=(currentUser.email||'').toLowerCase()===ADMIN_EMAIL.toLowerCase();
-    if($('appScreen').classList.contains('hidden'))await afterLogin();
+
+    if($('appScreen').classList.contains('hidden')){
+     await afterLogin();
+    }
+
    }else{
     currentUser=null;
     currentProfile=null;
     isAdmin=false;
     mySubscriptions=[];
     wheelCanSpin=false;
+
     if(vipCountdownTimer)clearInterval(vipCountdownTimer);
+
     showAuth();
    }
   },0);
@@ -2260,13 +3157,16 @@ async function initApp(){
 
  try{
   const {data,error}=await db.auth.getSession();
+
   if(error)throw error;
+
   if(data.session?.user){
    currentUser=data.session.user;
    await afterLogin();
   }else{
    showAuth();
   }
+
  }catch(e){
   console.error(e);
   showAuth();
@@ -2274,6 +3174,7 @@ async function initApp(){
 }
 
 /* Service Worker PWA */
+
 if('serviceWorker' in navigator){
  window.addEventListener('load',()=>{
   navigator.serviceWorker.register('/service-worker.js').catch(console.error);
